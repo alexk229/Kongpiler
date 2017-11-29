@@ -66,25 +66,25 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         return visitChildren(ctx);
 	}
 	
-	@Override
-	public Integer visitVariableAssignment(VariableAssignmentContext ctx) {
-		Integer value = visit(ctx.variableDeclaratorId());
-		
-		String typeIndicator = (ctx.variableInitializer().getClass().getName().equalsIgnoreCase("int")) ? "I"
-							 : (ctx.variableInitializer().getClass().getName().equalsIgnoreCase("double")) ? "D"
-							 :	"?";
-		
-		System.out.println("\tputstatic\t" + className
-                +  "/" + ctx.variableDeclaratorId().Identifier().toString()
-                + " " + typeIndicator);
-								 
-        // Emit a field put instruction.
-        jFile.println("\tputstatic\t" + className
-                           +  "/" + ctx.variableDeclaratorId().Identifier().toString()
-                           + " " + typeIndicator);
-								 
-		return value;
-	}
+//	@Override
+//	public Integer visitVariableAssignment(VariableAssignmentContext ctx) {
+//		Integer value = visit(ctx.variableDeclaratorId());
+//		
+//		String typeIndicator = (ctx.variableInitializer().getClass().getName().equalsIgnoreCase("int")) ? "I"
+//							 : (ctx.variableInitializer().getClass().getName().equalsIgnoreCase("double")) ? "D"
+//							 :	"?";
+//		
+//		System.out.println("\tputstatic\t" + className
+//                +  "/" + ctx.variableDeclaratorId().Identifier().toString()
+//                + " " + typeIndicator);
+//								 
+//        // Emit a field put instruction.
+//        jFile.println("\tputstatic\t" + className
+//                           +  "/" + ctx.variableDeclaratorId().Identifier().toString()
+//                           + " " + typeIndicator);
+//								 
+//		return value;
+//	}
 	
 	@Override
 	public Integer visitWhenStatment(WhenStatmentContext ctx) {

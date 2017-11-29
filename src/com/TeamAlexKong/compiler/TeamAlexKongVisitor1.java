@@ -15,6 +15,7 @@ import com.TeamAlexKong.parser.HelloParser.FloatingPointConstContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerLiteralContext;
 import com.TeamAlexKong.parser.HelloParser.LiteralContext;
+import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorIdContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorsContext;
@@ -162,6 +163,19 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     public Integer visitFloatingPointConst(FloatingPointConstContext ctx) {
     	ctx.typeLiteral = Predefined.realType;
     	return visitChildren(ctx);
+    }
+    
+    @Override
+    public Integer visitVariableAssignment(VariableAssignmentContext ctx) {
+    	String variableName = ctx.variableDeclaratorId().getText();
+    	
+        for (SymTabEntry id : variableIdList) {
+            if(variableName.equals(id.getName())) {
+            	
+            }
+        }
+    	
+    	return super.visitVariableAssignment(ctx);
     }
 }
 
