@@ -1,15 +1,15 @@
 class HelloWorld {
 
-    private var someInt: Int = 12;
-    private var someChar: Char = 'c';
+    private var someInt: Int;
+    private var someDouble: Double;
 	
 	init() {
 		super();
 	}
 
 	fun main() {
-		if(someInt == 12) {
-			
+		when(x) {
+		
 		}
 	}
 }

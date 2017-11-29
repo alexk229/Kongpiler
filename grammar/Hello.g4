@@ -5,6 +5,11 @@ grammar Hello;
   protected boolean assertIsKeyword = true;
 }
 
+@header {
+    import wci.intermediate.*;
+    import wci.intermediate.symtabimpl.*;
+}
+
 // starting point for parsing a file
 
 
@@ -142,8 +147,12 @@ variableDeclarators
     ;
     
 variableDeclarator
-    :   variableDeclaratorId (':' variableType)? ('=' variableInitializer)?
+    :   variableDeclaratorId (':' variableType)? ('=' variableInitializer)? ';'*
     ;
+    
+variableAssignment
+	:	variableDeclaratorId ('=' variableInitializer) ';'*
+	;
 
 constantDeclaratorsRest
     :   constantDeclaratorRest (',' constantDeclarator)*
@@ -157,16 +166,12 @@ variableDeclaratorId
     :   Identifier
     ;
     
-variableAssignment
-	:	variableDeclaratorId '=' variableInitializer
-	;
-    
 variableType
 	: type
 	| ('[' type ']')
 	;
 
-variableInitializer
+variableInitializer 
     :   arrayInitializer
     |   expression
     ;
@@ -259,20 +264,20 @@ qualifiedName
     :   Identifier ('.' Identifier)*
     ;
 
-literal
-    :   integerLiteral
-    |   FloatingPointLiteral
-    |   CharacterLiteral
-    |   StringLiteral
-    |   booleanLiteral
-    |   'null'
+literal locals [ TypeSpec typeLiteral = null ]
+    :   integerLiteral	# integerConst
+    |   FloatingPointLiteral # floatingPointConst
+    |   CharacterLiteral	# characterConst
+    |   StringLiteral	# stringConst
+    |   booleanLiteral # booleanConst
+    |   'null'	# nullConst
     ;
 
-integerLiteral
+integerLiteral locals [ TypeSpec typeLiteral = null ]
     :   DecimalLiteral
     ;
 
-booleanLiteral
+booleanLiteral locals [ TypeSpec typeLiteral = null ]
     :   'true'
     |   'false'
     ;
@@ -289,11 +294,12 @@ blockStatement
     ;
 
 localVariableDeclarationStatement
-    :    localVariableDeclaration ';'
+    :    localVariableDeclaration ';'*
     ;
 
 localVariableDeclaration
-    :   variableModifiers type variableDeclarators
+    :   variableModifiers fieldDeclaration
+    |	variableAssignment
     ;
 
 variableModifiers
@@ -307,18 +313,30 @@ statement
     |   'for' '(' forControl ')' statement
     |   'while' parExpression statement
     |   'do' statement 'while' parExpression ';'
-    |	'when' ('(' expression ')') '{' whenEntry* '}'
+    |	'when' '(' whenExpression ')' statement
     |   'return' expression? ';'
     |   'break' Identifier? ';'
     |   ';'
     |   statementExpression ';'
+    |	localVariableDeclarationStatement
+    |	whenStatment
     |   Identifier ':' statement
     ;
     
+whenExpression
+	: expression
+	;
+    
 // When statement entry
-whenEntry
-  : expression (',' expression)* '->' expression ';'
-  | 'else' '->' expression ';'
+whenStatment
+  : whenCondition (',' whenCondition)* '->' statement
+  | 'else' '->' statement
+  ;
+  
+whenCondition
+  : expression
+  | ('in' | '!in') expression
+  | ('is' | '!is') type
   ;
 
 formalParameter
@@ -363,7 +381,7 @@ constantExpression
     ;
 
 // Self expression
-expression
+expression locals [ TypeSpec typeExp = null ]
     :   primary
     |   expression '.' Identifier
     |   'self' '.' expression
@@ -381,14 +399,23 @@ expression
     |   expression ('<' '<' | '>' '>' '>' | '>' '>') expression
     |   expression ('<' '=' | '>' '=' | '>' | '<') expression
     |   expression 'instanceof' type
-    |   expression ('==' | '!=') expression
+    |   expression equalityExpression expression
     |   expression '&' expression
     |   expression '^' expression
     |   expression '|' expression
     |   expression '&&' expression
     |   expression '||' expression
     |   expression '?' expression ':' expression
+    |	expression rangeExpression expression
     ;
+    
+equalityExpression
+	: ('==' | '!=')
+	;
+    
+rangeExpression
+  : ('..')
+  ;
 
 primary
     :   '(' expression ')'
@@ -414,7 +441,7 @@ arguments
 
 DecimalLiteral : ('0' | '1'..'9' '0'..'9'*) IntegerTypeSuffix? ;
 
-fragment
+fragment 
 IntegerTypeSuffix : ('l'|'L') ;
 
 FloatingPointLiteral

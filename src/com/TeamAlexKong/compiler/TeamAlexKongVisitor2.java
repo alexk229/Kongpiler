@@ -10,8 +10,10 @@ import com.TeamAlexKong.parser.HelloParser.ClassDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.CompilationUnitContext;
 import com.TeamAlexKong.parser.HelloParser.ConstructorDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.ForControlContext;
+import com.TeamAlexKong.parser.HelloParser.LocalVariableDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorContext;
+import com.TeamAlexKong.parser.HelloParser.WhenStatmentContext;
 import com.pcl2.parser.Pcl2Parser;
 
 import wci.intermediate.*;
@@ -66,13 +68,27 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	
 	@Override
 	public Integer visitVariableAssignment(VariableAssignmentContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitVariableAssignment(ctx);
+		Integer value = visit(ctx.variableDeclaratorId());
+		
+		String typeIndicator = (ctx.variableInitializer().getClass().getName().equalsIgnoreCase("int")) ? "I"
+							 : (ctx.variableInitializer().getClass().getName().equalsIgnoreCase("double")) ? "D"
+							 :	"?";
+		
+		System.out.println("\tputstatic\t" + className
+                +  "/" + ctx.variableDeclaratorId().Identifier().toString()
+                + " " + typeIndicator);
+								 
+        // Emit a field put instruction.
+        jFile.println("\tputstatic\t" + className
+                           +  "/" + ctx.variableDeclaratorId().Identifier().toString()
+                           + " " + typeIndicator);
+								 
+		return value;
 	}
 	
 	@Override
-	public Integer visitForControl(ForControlContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitForControl(ctx);
+	public Integer visitWhenStatment(WhenStatmentContext ctx) {
+		
+		return super.visitWhenStatment(ctx);
 	}
 }

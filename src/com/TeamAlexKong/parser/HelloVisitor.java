@@ -1,5 +1,9 @@
 // Generated from Hello.g4 by ANTLR 4.7
 package com.TeamAlexKong.parser;
+
+    import wci.intermediate.*;
+    import wci.intermediate.symtabimpl.*;
+
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
@@ -179,6 +183,12 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariableDeclarator(HelloParser.VariableDeclaratorContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#variableAssignment}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariableAssignment(HelloParser.VariableAssignmentContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#constantDeclaratorsRest}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -196,12 +206,6 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitVariableDeclaratorId(HelloParser.VariableDeclaratorIdContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link HelloParser#variableAssignment}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitVariableAssignment(HelloParser.VariableAssignmentContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#variableType}.
 	 * @param ctx the parse tree
@@ -323,11 +327,47 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitQualifiedName(HelloParser.QualifiedNameContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HelloParser#literal}.
+	 * Visit a parse tree produced by the {@code integerConst}
+	 * labeled alternative in {@link HelloParser#literal}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitLiteral(HelloParser.LiteralContext ctx);
+	T visitIntegerConst(HelloParser.IntegerConstContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code floatingPointConst}
+	 * labeled alternative in {@link HelloParser#literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFloatingPointConst(HelloParser.FloatingPointConstContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code characterConst}
+	 * labeled alternative in {@link HelloParser#literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCharacterConst(HelloParser.CharacterConstContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code stringConst}
+	 * labeled alternative in {@link HelloParser#literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitStringConst(HelloParser.StringConstContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code booleanConst}
+	 * labeled alternative in {@link HelloParser#literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBooleanConst(HelloParser.BooleanConstContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code nullConst}
+	 * labeled alternative in {@link HelloParser#literal}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNullConst(HelloParser.NullConstContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#integerLiteral}.
 	 * @param ctx the parse tree
@@ -377,11 +417,23 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(HelloParser.StatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HelloParser#whenEntry}.
+	 * Visit a parse tree produced by {@link HelloParser#whenExpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitWhenEntry(HelloParser.WhenEntryContext ctx);
+	T visitWhenExpression(HelloParser.WhenExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#whenStatment}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhenStatment(HelloParser.WhenStatmentContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#whenCondition}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhenCondition(HelloParser.WhenConditionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#formalParameter}.
 	 * @param ctx the parse tree
@@ -442,6 +494,18 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitExpression(HelloParser.ExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#equalityExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqualityExpression(HelloParser.EqualityExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#rangeExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRangeExpression(HelloParser.RangeExpressionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#primary}.
 	 * @param ctx the parse tree

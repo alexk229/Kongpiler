@@ -11,10 +11,15 @@ import com.TeamAlexKong.parser.HelloParser.CompilationUnitContext;
 import com.TeamAlexKong.parser.HelloParser.ConstructorDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.ExpressionContext;
 import com.TeamAlexKong.parser.HelloParser.FieldDeclarationContext;
+import com.TeamAlexKong.parser.HelloParser.FloatingPointConstContext;
+import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
+import com.TeamAlexKong.parser.HelloParser.IntegerLiteralContext;
+import com.TeamAlexKong.parser.HelloParser.LiteralContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorIdContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorsContext;
 import com.TeamAlexKong.parser.HelloParser.VariableTypeContext;
+import com.pcl2.parser.Pcl2Parser;
 
 import wci.intermediate.*;
 import wci.intermediate.symtabimpl.*;
@@ -128,9 +133,9 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
             type = Predefined.integerType;
             typeIndicator = "I";
         }
-        else if (typeName.equalsIgnoreCase("char")) {
-            type = Predefined.charType;
-            typeIndicator = "C";
+        else if (typeName.equalsIgnoreCase("double")) {
+            type = Predefined.realType;
+            typeIndicator = "D";
         } 
         else {
             type = null;
@@ -147,5 +152,16 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         return visitChildren(ctx);
     }
     
+    @Override
+    public Integer visitIntegerConst(IntegerConstContext ctx) {
+        ctx.typeLiteral = Predefined.integerType;
+        return visitChildren(ctx); 
+    }
     
+    @Override
+    public Integer visitFloatingPointConst(FloatingPointConstContext ctx) {
+    	ctx.typeLiteral = Predefined.realType;
+    	return visitChildren(ctx);
+    }
 }
+
