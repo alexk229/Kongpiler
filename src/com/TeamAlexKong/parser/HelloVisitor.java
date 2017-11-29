@@ -207,6 +207,18 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariableDeclaratorId(HelloParser.VariableDeclaratorIdContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#variableId}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariableId(HelloParser.VariableIdContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#variable}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariable(HelloParser.VariableContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#variableType}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

@@ -9,9 +9,12 @@ import com.TeamAlexKong.parser.HelloParser;
 import com.TeamAlexKong.parser.HelloParser.ClassDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.CompilationUnitContext;
 import com.TeamAlexKong.parser.HelloParser.ConstructorDeclarationContext;
+import com.TeamAlexKong.parser.HelloParser.FloatingPointConstContext;
 import com.TeamAlexKong.parser.HelloParser.ForControlContext;
+import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
 import com.TeamAlexKong.parser.HelloParser.LocalVariableDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
+import com.TeamAlexKong.parser.HelloParser.VariableContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorContext;
 import com.TeamAlexKong.parser.HelloParser.WhenStatmentContext;
 import com.pcl2.parser.Pcl2Parser;
@@ -55,36 +58,68 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         if (methodName.equals("main")) {
             jFile.println();
             jFile.println(".method public static "+ methodName + "([Ljava/lang/String;)V");
-            jFile.println("\t.limit stack 2");
-            jFile.println("\tgetstatic java/lang/System/out Ljava/io/PrintStream");
-            jFile.println("\tldc " + "'c'");
-            jFile.println("\tinvokevirtual java/io/PrintStream/println(Ljava/lang/String;)V");
         }
+        
+        Integer value = visitChildren(ctx);
+        
+        jFile.println();
         jFile.println("\treturn");
+        jFile.println();
+        jFile.println(".limit locals 16");
+        jFile.println(".limit stack 16");
         jFile.println(".end method");
+        
+        return value;
+	}
+	
+	@Override
+	public Integer visitVariableAssignment(VariableAssignmentContext ctx) {
+		Integer value = visit(ctx.variableInitializer());
+		
+		String typeIndicator = (ctx.variable().typeVar == Predefined.integerType) ? "I"
+							 : (ctx.variable().typeVar == Predefined.realType) ? "D"
+							 :	"?";
+								 
+        // Emit a field put instruction.
+        jFile.println("\tputstatic\t" + className
+                           +  "/" + ctx.variable().Identifier().toString()
+                           + " " + typeIndicator);
+								 
+		return value;
+	}
+	
+	@Override
+	public Integer visitVariable(VariableContext ctx) {
+        String variableName = ctx.Identifier().toString();
+        TypeSpec type = ctx.typeVar;
+        
+        String typeIndicator = (type == Predefined.integerType) ? "I"
+                             : (type == Predefined.realType)    ? "F"
+                             :                                    "?";
+        
+        // Emit a field get instruction.
+        jFile.println("\tgetstatic\t" + className +
+                      "/" + variableName + " " + typeIndicator);
+        
+        return visitChildren(ctx); 
+	}
+	
+	@Override
+	public Integer visitIntegerConst(IntegerConstContext ctx) {
+        // Emit a load constant instruction.
+        jFile.println("\tldc\t" + ctx.getText());
         
         return visitChildren(ctx);
 	}
 	
-//	@Override
-//	public Integer visitVariableAssignment(VariableAssignmentContext ctx) {
-//		Integer value = visit(ctx.variableDeclaratorId());
-//		
-//		String typeIndicator = (ctx.variableInitializer().getClass().getName().equalsIgnoreCase("int")) ? "I"
-//							 : (ctx.variableInitializer().getClass().getName().equalsIgnoreCase("double")) ? "D"
-//							 :	"?";
-//		
-//		System.out.println("\tputstatic\t" + className
-//                +  "/" + ctx.variableDeclaratorId().Identifier().toString()
-//                + " " + typeIndicator);
-//								 
-//        // Emit a field put instruction.
-//        jFile.println("\tputstatic\t" + className
-//                           +  "/" + ctx.variableDeclaratorId().Identifier().toString()
-//                           + " " + typeIndicator);
-//								 
-//		return value;
-//	}
+	@Override
+	public Integer visitFloatingPointConst(FloatingPointConstContext ctx) {
+        // Emit a load constant instruction.
+        jFile.println("\tldc\t" + ctx.getText());
+        
+        return visitChildren(ctx); 
+	}
+
 	
 	@Override
 	public Integer visitWhenStatment(WhenStatmentContext ctx) {

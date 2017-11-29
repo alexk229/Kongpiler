@@ -16,9 +16,11 @@ import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerLiteralContext;
 import com.TeamAlexKong.parser.HelloParser.LiteralContext;
 import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
+import com.TeamAlexKong.parser.HelloParser.VariableContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorIdContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorsContext;
+import com.TeamAlexKong.parser.HelloParser.VariableIdContext;
 import com.TeamAlexKong.parser.HelloParser.VariableTypeContext;
 import com.pcl2.parser.Pcl2Parser;
 
@@ -118,6 +120,7 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
        
         SymTabEntry variableId = symTabStack.enterLocal(variableName);
         variableId.setDefinition(VARIABLE);
+        
         variableIdList.add(variableId);
         
         return visitChildren(ctx); 
@@ -154,6 +157,17 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     }
     
     @Override
+    public Integer visitVariable(VariableContext ctx) {
+    	String variableName = ctx.Identifier().toString();
+    	SymTabEntry variableId = symTabStack.lookup(variableName);
+    	
+    	ctx.typeVar = variableId.getTypeSpec();
+    	
+    	return visitChildren(ctx); 
+    }
+    
+    
+    @Override
     public Integer visitIntegerConst(IntegerConstContext ctx) {
         ctx.typeLiteral = Predefined.integerType;
         return visitChildren(ctx); 
@@ -163,19 +177,6 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     public Integer visitFloatingPointConst(FloatingPointConstContext ctx) {
     	ctx.typeLiteral = Predefined.realType;
     	return visitChildren(ctx);
-    }
-    
-    @Override
-    public Integer visitVariableAssignment(VariableAssignmentContext ctx) {
-    	String variableName = ctx.variableDeclaratorId().getText();
-    	
-        for (SymTabEntry id : variableIdList) {
-            if(variableName.equals(id.getName())) {
-            	
-            }
-        }
-    	
-    	return super.visitVariableAssignment(ctx);
     }
 }
 

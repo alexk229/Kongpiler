@@ -151,7 +151,7 @@ variableDeclarator
     ;
     
 variableAssignment
-	:	variableDeclaratorId ('=' variableInitializer) ';'*
+	:	variable ('=' variableInitializer) ';'*
 	;
 
 constantDeclaratorsRest
@@ -162,9 +162,17 @@ constantDeclaratorRest
     :   ('[' ']')* '=' variableInitializer
     ;
 
-variableDeclaratorId
+variableDeclaratorId locals [ TypeSpec typeVar = null ]
     :   Identifier
     ;
+    
+variableId locals [ TypeSpec typeVar = null ]
+	: 	Identifier
+	;
+	
+variable locals [ TypeSpec typeVar = null ]
+	: 	Identifier
+	;
     
 variableType
 	: type

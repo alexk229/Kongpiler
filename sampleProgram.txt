@@ -9,8 +9,6 @@ class HelloWorld {
 
 	fun main() {
 		someInt = 12;
-		when(x) {
-			
-		}
+		someDouble = 13.2;
 	}
 }

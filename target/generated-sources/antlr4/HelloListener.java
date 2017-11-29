@@ -248,6 +248,16 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitConstantDeclaratorRest(@NotNull HelloParser.ConstantDeclaratorRestContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link HelloParser#variableId}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariableId(@NotNull HelloParser.VariableIdContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#variableId}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariableId(@NotNull HelloParser.VariableIdContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link HelloParser#expressionList}.
 	 * @param ctx the parse tree
 	 */
@@ -823,6 +833,16 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitForInit(@NotNull HelloParser.ForInitContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#variable}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariable(@NotNull HelloParser.VariableContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#variable}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariable(@NotNull HelloParser.VariableContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#integerLiteral}.
 	 * @param ctx the parse tree
