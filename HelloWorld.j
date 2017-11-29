@@ -21,15 +21,12 @@
 
 .method public static main([Ljava/lang/String;)V
 	ldc	12
-	putstatic	HelloWorld/someInt I
+	putstatic	HelloWorld/someInt ?
 	ldc	13.2
-	putstatic	HelloWorld/someDouble D
-	ldc	1
-	ldc	13
-	putstatic	HelloWorld/someInt I
-	ldc	2
-	ldc	14
-	putstatic	HelloWorld/someInt I
+	putstatic	HelloWorld/someDouble ?
+	getstatic	HelloWorld/someInt I
+	ldc	12
+	????
 
 	return
 

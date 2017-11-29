@@ -10,5 +10,9 @@ class HelloWorld {
 	fun main() {
 		someInt = 12;
 		someDouble = 13.2;
+		
+		when(someInt == 12) {
+		
+		}
 	}
 }

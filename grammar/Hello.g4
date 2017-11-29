@@ -165,12 +165,8 @@ constantDeclaratorRest
 variableDeclaratorId locals [ TypeSpec typeVar = null ]
     :   Identifier
     ;
-    
-variableId locals [ TypeSpec typeVar = null ]
-	: 	Identifier
-	;
 	
-variable locals [ TypeSpec typeVar = null ]
+variable
 	: 	Identifier
 	;
     
@@ -321,7 +317,7 @@ statement
     |   'for' '(' forControl ')' statement
     |   'while' parExpression statement
     |   'do' statement 'while' parExpression ';'
-    |	'when' '(' whenExpression ')' statement
+    |	'when' parExpression statement
     |   'return' expression? ';'
     |   'break' Identifier? ';'
     |   ';'
@@ -331,22 +327,12 @@ statement
     |   Identifier ':' statement
     ;
     
-whenExpression
-	: expression
-	;
-    
 // When statement entry
 whenStatment
-  : whenCondition (',' whenCondition)* '->' statement
+  : expression (',' expression)* '->' statement
   | 'else' '->' statement
   ;
   
-whenCondition
-  : expression
-  | ('in' | '!in') expression
-  | ('is' | '!is') type
-  ;
-
 formalParameter
     :   variableModifiers type variableDeclaratorId
     ;
@@ -390,47 +376,43 @@ constantExpression
 
 // Self expression
 expression locals [ TypeSpec typeExp = null ]
-    :   primary
-    |   expression '.' Identifier
-    |   'self' '.' expression
-    |   expression '.' 'super' '(' expressionList? ')'
-    |   expression '.' 'new' Identifier '(' expressionList? ')'
-    |   expression '.' 'super' '.' Identifier arguments?
-    |   expression '[' expression ']'
-    |   expression '(' expressionList? ')'
-    |   expression ('++' | '--')
-    |   ('+'|'-'|'++'|'--') expression
-    |   ('~'|'!') expression
-    |   '(' type ')' expression
-    |   expression ('*'|'/'|'%') expression
-    |   expression ('+'|'-') expression
-    |   expression ('<' '<' | '>' '>' '>' | '>' '>') expression
-    |   expression ('<' '=' | '>' '=' | '>' | '<') expression
-    |   expression 'instanceof' type
-    |   expression equalityExpression expression
-    |   expression '&' expression
-    |   expression '^' expression
-    |   expression '|' expression
-    |   expression '&&' expression
-    |   expression '||' expression
-    |   expression '?' expression ':' expression
-    |	expression rangeExpression expression
+    :   primary		# primaryExp
+    |   expression '.' Identifier	# identifierExpr
+    |   'self' '.' expression	# selfExpr
+    |   expression '.' 'super' '(' expressionList? ')'	# superExprList
+    |   expression '.' 'new' Identifier '(' expressionList? ')'	# newExpr
+    |   expression '.' 'super' '.' Identifier arguments?	# superIndentifierExpr
+    |   expression '[' expression ']'	# arrayExpr
+    |   expression '(' expressionList? ')'	# listExpr
+    |   expression ('++' | '--')	# addSubOneExpr
+    |   ('+'|'-'|'++'|'--') expression # unaryOpExpr
+    |   ('~'|'!') expression	# notExpr
+    |   '(' type ')' expression	# typeExpr
+    |   expression ('*'|'/'|'%') expression	# multiplicativeExpr
+    |   expression ('+'|'-') expression	# additiveExpr
+    |   expression ('<' '<' | '>' '>' '>' | '>' '>') expression	# assignmentExpr
+    |   expression ('<' '=' | '>' '=' | '>' | '<') expression # relationalExpr
+    |   expression 'instanceof' type	# instanceOfExpr
+    |   expression equalityOp expression # equalityExpr
+    |   expression '&' expression	# bitwiseAndExpr
+    |   expression '^' expression	# bitwiseXorExpr
+    |   expression '|' expression	# bitwiseOrExpr
+    |   expression '&&' expression # logicalAndExpr
+    |   expression '||' expression # logicalOrExpr
+    |   expression '?' expression ':' expression # tenaryOpExpr
+    |	expression ('..') expression # rangeExpr
+    |	variable	# variableExpr
     ;
     
-equalityExpression
+equalityOp
 	: ('==' | '!=')
-	;
-    
-rangeExpression
-  : ('..')
-  ;
+;
 
 primary
     :   '(' expression ')'
     |   'self'
     |   'super'
     |   literal
-    |   Identifier
     |   type '.' 'class'
     |   'void' '.' 'class'
     ;

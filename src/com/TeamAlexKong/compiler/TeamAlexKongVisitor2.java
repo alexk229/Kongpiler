@@ -9,13 +9,16 @@ import com.TeamAlexKong.parser.HelloParser;
 import com.TeamAlexKong.parser.HelloParser.ClassDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.CompilationUnitContext;
 import com.TeamAlexKong.parser.HelloParser.ConstructorDeclarationContext;
+import com.TeamAlexKong.parser.HelloParser.EqualityExprContext;
 import com.TeamAlexKong.parser.HelloParser.FloatingPointConstContext;
 import com.TeamAlexKong.parser.HelloParser.ForControlContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
 import com.TeamAlexKong.parser.HelloParser.LocalVariableDeclarationContext;
+import com.TeamAlexKong.parser.HelloParser.StringConstContext;
 import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
 import com.TeamAlexKong.parser.HelloParser.VariableContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorContext;
+import com.TeamAlexKong.parser.HelloParser.VariableExprContext;
 import com.TeamAlexKong.parser.HelloParser.WhenStatmentContext;
 import com.pcl2.parser.Pcl2Parser;
 
@@ -74,10 +77,10 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	
 	@Override
 	public Integer visitVariableAssignment(VariableAssignmentContext ctx) {
-		Integer value = visit(ctx.variableInitializer());
+		Integer value = visit(ctx.variableInitializer().expression());
 		
-		String typeIndicator = (ctx.variable().typeVar == Predefined.integerType) ? "I"
-							 : (ctx.variable().typeVar == Predefined.realType) ? "D"
+		String typeIndicator = (ctx.variableInitializer().expression().typeExp == Predefined.integerType) ? "I"
+							 : (ctx.variableInitializer().expression().typeExp == Predefined.realType) ? "D"
 							 :	"?";
 								 
         // Emit a field put instruction.
@@ -89,9 +92,9 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	}
 	
 	@Override
-	public Integer visitVariable(VariableContext ctx) {
-        String variableName = ctx.Identifier().toString();
-        TypeSpec type = ctx.typeVar;
+	public Integer visitVariableExpr(VariableExprContext ctx) {
+        String variableName = ctx.variable().Identifier().toString();
+        TypeSpec type = ctx.typeExp;
         
         String typeIndicator = (type == Predefined.integerType) ? "I"
                              : (type == Predefined.realType)    ? "F"
@@ -102,6 +105,38 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
                       "/" + variableName + " " + typeIndicator);
         
         return visitChildren(ctx); 
+	}
+	
+	@Override
+	public Integer visitEqualityExpr(EqualityExprContext ctx) {
+        Integer value = visitChildren(ctx);
+        
+        TypeSpec type1 = ctx.expression(0).typeExp;
+        TypeSpec type2 = ctx.expression(1).typeExp;
+        
+        boolean integerMode =    (type1 == Predefined.integerType)
+                && (type2 == Predefined.integerType);
+        boolean realMode    =    (type1 == Predefined.realType)
+                && (type2 == Predefined.realType);
+        
+        String op = ctx.equalityOp().getText();
+        String opcode;
+        
+        if (op.equals("==")) {
+            opcode = integerMode ? "iadd"
+                   : realMode    ? "fadd"
+                   :               "????";
+        }
+        else {
+            opcode = integerMode ? "isub"
+                   : realMode    ? "fsub"
+                   :               "????";
+        }
+        
+        // Emit an add or subtract instruction.
+        jFile.println("\t" + opcode);
+        
+        return value; 
 	}
 	
 	@Override
@@ -116,14 +151,21 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	public Integer visitFloatingPointConst(FloatingPointConstContext ctx) {
         // Emit a load constant instruction.
         jFile.println("\tldc\t" + ctx.getText());
-        
         return visitChildren(ctx); 
 	}
-
+	
+	@Override
+	public Integer visitStringConst(StringConstContext ctx) {
+        // Emit a load constant instruction.
+        jFile.println("\tldc\t" + ctx.getText());
+        
+		return super.visitStringConst(ctx);
+	}
 	
 	@Override
 	public Integer visitWhenStatment(WhenStatmentContext ctx) {
-		
-		return super.visitWhenStatment(ctx);
+		Integer value = visitChildren(ctx);
+		return value;
 	}
+	
 }

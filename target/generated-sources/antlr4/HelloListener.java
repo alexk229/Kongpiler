@@ -12,6 +12,534 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface HelloListener extends ParseTreeListener {
 	/**
+	 * Enter a parse tree produced by the {@code assignmentExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAssignmentExpr(@NotNull HelloParser.AssignmentExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code assignmentExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAssignmentExpr(@NotNull HelloParser.AssignmentExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code superIndentifierExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterSuperIndentifierExpr(@NotNull HelloParser.SuperIndentifierExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code superIndentifierExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitSuperIndentifierExpr(@NotNull HelloParser.SuperIndentifierExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code instanceOfExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterInstanceOfExpr(@NotNull HelloParser.InstanceOfExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code instanceOfExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitInstanceOfExpr(@NotNull HelloParser.InstanceOfExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code characterConst}
+	 * labeled alternative in {@link HelloParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void enterCharacterConst(@NotNull HelloParser.CharacterConstContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code characterConst}
+	 * labeled alternative in {@link HelloParser#literal}.
+	 * @param ctx the parse tree
+	 */
+	void exitCharacterConst(@NotNull HelloParser.CharacterConstContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code bitwiseOrExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBitwiseOrExpr(@NotNull HelloParser.BitwiseOrExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code bitwiseOrExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBitwiseOrExpr(@NotNull HelloParser.BitwiseOrExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code bitwiseAndExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBitwiseAndExpr(@NotNull HelloParser.BitwiseAndExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code bitwiseAndExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBitwiseAndExpr(@NotNull HelloParser.BitwiseAndExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code additiveExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterAdditiveExpr(@NotNull HelloParser.AdditiveExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code additiveExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitAdditiveExpr(@NotNull HelloParser.AdditiveExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void enterType(@NotNull HelloParser.TypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#type}.
+	 * @param ctx the parse tree
+	 */
+	void exitType(@NotNull HelloParser.TypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#variableType}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariableType(@NotNull HelloParser.VariableTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#variableType}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariableType(@NotNull HelloParser.VariableTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#classBodyDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassBodyDeclaration(@NotNull HelloParser.ClassBodyDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#classBodyDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassBodyDeclaration(@NotNull HelloParser.ClassBodyDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void enterBlock(@NotNull HelloParser.BlockContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#block}.
+	 * @param ctx the parse tree
+	 */
+	void exitBlock(@NotNull HelloParser.BlockContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#variableModifiers}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariableModifiers(@NotNull HelloParser.VariableModifiersContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#variableModifiers}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariableModifiers(@NotNull HelloParser.VariableModifiersContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#enumBodyDeclarations}.
+	 * @param ctx the parse tree
+	 */
+	void enterEnumBodyDeclarations(@NotNull HelloParser.EnumBodyDeclarationsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#enumBodyDeclarations}.
+	 * @param ctx the parse tree
+	 */
+	void exitEnumBodyDeclarations(@NotNull HelloParser.EnumBodyDeclarationsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#forUpdate}.
+	 * @param ctx the parse tree
+	 */
+	void enterForUpdate(@NotNull HelloParser.ForUpdateContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#forUpdate}.
+	 * @param ctx the parse tree
+	 */
+	void exitForUpdate(@NotNull HelloParser.ForUpdateContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#method}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethod(@NotNull HelloParser.MethodContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#method}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethod(@NotNull HelloParser.MethodContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#enhancedForControl}.
+	 * @param ctx the parse tree
+	 */
+	void enterEnhancedForControl(@NotNull HelloParser.EnhancedForControlContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#enhancedForControl}.
+	 * @param ctx the parse tree
+	 */
+	void exitEnhancedForControl(@NotNull HelloParser.EnhancedForControlContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#constantDeclaratorRest}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstantDeclaratorRest(@NotNull HelloParser.ConstantDeclaratorRestContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#constantDeclaratorRest}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstantDeclaratorRest(@NotNull HelloParser.ConstantDeclaratorRestContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code relationalExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterRelationalExpr(@NotNull HelloParser.RelationalExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code relationalExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitRelationalExpr(@NotNull HelloParser.RelationalExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#expressionList}.
+	 * @param ctx the parse tree
+	 */
+	void enterExpressionList(@NotNull HelloParser.ExpressionListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#expressionList}.
+	 * @param ctx the parse tree
+	 */
+	void exitExpressionList(@NotNull HelloParser.ExpressionListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#typeBound}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeBound(@NotNull HelloParser.TypeBoundContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#typeBound}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeBound(@NotNull HelloParser.TypeBoundContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#variableDeclaratorId}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariableDeclaratorId(@NotNull HelloParser.VariableDeclaratorIdContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#variableDeclaratorId}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariableDeclaratorId(@NotNull HelloParser.VariableDeclaratorIdContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void enterPrimary(@NotNull HelloParser.PrimaryContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#primary}.
+	 * @param ctx the parse tree
+	 */
+	void exitPrimary(@NotNull HelloParser.PrimaryContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#typeArguments}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeArguments(@NotNull HelloParser.TypeArgumentsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#typeArguments}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeArguments(@NotNull HelloParser.TypeArgumentsContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code newExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNewExpr(@NotNull HelloParser.NewExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code newExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNewExpr(@NotNull HelloParser.NewExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#whenStatment}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhenStatment(@NotNull HelloParser.WhenStatmentContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#whenStatment}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhenStatment(@NotNull HelloParser.WhenStatmentContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#typeName}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeName(@NotNull HelloParser.TypeNameContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#typeName}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeName(@NotNull HelloParser.TypeNameContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#formalParameterDeclsRest}.
+	 * @param ctx the parse tree
+	 */
+	void enterFormalParameterDeclsRest(@NotNull HelloParser.FormalParameterDeclsRestContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#formalParameterDeclsRest}.
+	 * @param ctx the parse tree
+	 */
+	void exitFormalParameterDeclsRest(@NotNull HelloParser.FormalParameterDeclsRestContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#typeParameters}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeParameters(@NotNull HelloParser.TypeParametersContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#typeParameters}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeParameters(@NotNull HelloParser.TypeParametersContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#constructorBody}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstructorBody(@NotNull HelloParser.ConstructorBodyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#constructorBody}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstructorBody(@NotNull HelloParser.ConstructorBodyContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code variableExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariableExpr(@NotNull HelloParser.VariableExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code variableExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariableExpr(@NotNull HelloParser.VariableExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#variableDeclarator}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariableDeclarator(@NotNull HelloParser.VariableDeclaratorContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#variableDeclarator}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariableDeclarator(@NotNull HelloParser.VariableDeclaratorContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#typeList}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeList(@NotNull HelloParser.TypeListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#typeList}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeList(@NotNull HelloParser.TypeListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#enumConstants}.
+	 * @param ctx the parse tree
+	 */
+	void enterEnumConstants(@NotNull HelloParser.EnumConstantsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#enumConstants}.
+	 * @param ctx the parse tree
+	 */
+	void exitEnumConstants(@NotNull HelloParser.EnumConstantsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#member}.
+	 * @param ctx the parse tree
+	 */
+	void enterMember(@NotNull HelloParser.MemberContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#member}.
+	 * @param ctx the parse tree
+	 */
+	void exitMember(@NotNull HelloParser.MemberContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#classBody}.
+	 * @param ctx the parse tree
+	 */
+	void enterClassBody(@NotNull HelloParser.ClassBodyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#classBody}.
+	 * @param ctx the parse tree
+	 */
+	void exitClassBody(@NotNull HelloParser.ClassBodyContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#enumDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterEnumDeclaration(@NotNull HelloParser.EnumDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#enumDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitEnumDeclaration(@NotNull HelloParser.EnumDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#formalParameter}.
+	 * @param ctx the parse tree
+	 */
+	void enterFormalParameter(@NotNull HelloParser.FormalParameterContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#formalParameter}.
+	 * @param ctx the parse tree
+	 */
+	void exitFormalParameter(@NotNull HelloParser.FormalParameterContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#parExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterParExpression(@NotNull HelloParser.ParExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#parExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitParExpression(@NotNull HelloParser.ParExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#variableInitializer}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariableInitializer(@NotNull HelloParser.VariableInitializerContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#variableInitializer}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariableInitializer(@NotNull HelloParser.VariableInitializerContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#formalParameterDecls}.
+	 * @param ctx the parse tree
+	 */
+	void enterFormalParameterDecls(@NotNull HelloParser.FormalParameterDeclsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#formalParameterDecls}.
+	 * @param ctx the parse tree
+	 */
+	void exitFormalParameterDecls(@NotNull HelloParser.FormalParameterDeclsContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code bitwiseXorExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBitwiseXorExpr(@NotNull HelloParser.BitwiseXorExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code bitwiseXorExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBitwiseXorExpr(@NotNull HelloParser.BitwiseXorExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#constantExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstantExpression(@NotNull HelloParser.ConstantExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#constantExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstantExpression(@NotNull HelloParser.ConstantExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code selfExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterSelfExpr(@NotNull HelloParser.SelfExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code selfExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitSelfExpr(@NotNull HelloParser.SelfExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#qualifiedNameList}.
+	 * @param ctx the parse tree
+	 */
+	void enterQualifiedNameList(@NotNull HelloParser.QualifiedNameListContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#qualifiedNameList}.
+	 * @param ctx the parse tree
+	 */
+	void exitQualifiedNameList(@NotNull HelloParser.QualifiedNameListContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#constructorDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void enterConstructorDeclaration(@NotNull HelloParser.ConstructorDeclarationContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#constructorDeclaration}.
+	 * @param ctx the parse tree
+	 */
+	void exitConstructorDeclaration(@NotNull HelloParser.ConstructorDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code logicalOrExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLogicalOrExpr(@NotNull HelloParser.LogicalOrExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code logicalOrExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLogicalOrExpr(@NotNull HelloParser.LogicalOrExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#forControl}.
+	 * @param ctx the parse tree
+	 */
+	void enterForControl(@NotNull HelloParser.ForControlContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#forControl}.
+	 * @param ctx the parse tree
+	 */
+	void exitForControl(@NotNull HelloParser.ForControlContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#variableDeclarators}.
+	 * @param ctx the parse tree
+	 */
+	void enterVariableDeclarators(@NotNull HelloParser.VariableDeclaratorsContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#variableDeclarators}.
+	 * @param ctx the parse tree
+	 */
+	void exitVariableDeclarators(@NotNull HelloParser.VariableDeclaratorsContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#integerLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterIntegerLiteral(@NotNull HelloParser.IntegerLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#integerLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitIntegerLiteral(@NotNull HelloParser.IntegerLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code superExprList}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterSuperExprList(@NotNull HelloParser.SuperExprListContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code superExprList}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitSuperExprList(@NotNull HelloParser.SuperExprListContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link HelloParser#enumConstantName}.
 	 * @param ctx the parse tree
 	 */
@@ -44,18 +572,6 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitIntegerConst(@NotNull HelloParser.IntegerConstContext ctx);
 	/**
-	 * Enter a parse tree produced by the {@code characterConst}
-	 * labeled alternative in {@link HelloParser#literal}.
-	 * @param ctx the parse tree
-	 */
-	void enterCharacterConst(@NotNull HelloParser.CharacterConstContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code characterConst}
-	 * labeled alternative in {@link HelloParser#literal}.
-	 * @param ctx the parse tree
-	 */
-	void exitCharacterConst(@NotNull HelloParser.CharacterConstContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link HelloParser#modifier}.
 	 * @param ctx the parse tree
 	 */
@@ -66,35 +582,17 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitModifier(@NotNull HelloParser.ModifierContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#whenExpression}.
+	 * Enter a parse tree produced by the {@code addSubOneExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterWhenExpression(@NotNull HelloParser.WhenExpressionContext ctx);
+	void enterAddSubOneExpr(@NotNull HelloParser.AddSubOneExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HelloParser#whenExpression}.
+	 * Exit a parse tree produced by the {@code addSubOneExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitWhenExpression(@NotNull HelloParser.WhenExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#type}.
-	 * @param ctx the parse tree
-	 */
-	void enterType(@NotNull HelloParser.TypeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#type}.
-	 * @param ctx the parse tree
-	 */
-	void exitType(@NotNull HelloParser.TypeContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#variableType}.
-	 * @param ctx the parse tree
-	 */
-	void enterVariableType(@NotNull HelloParser.VariableTypeContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#variableType}.
-	 * @param ctx the parse tree
-	 */
-	void exitVariableType(@NotNull HelloParser.VariableTypeContext ctx);
+	void exitAddSubOneExpr(@NotNull HelloParser.AddSubOneExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#variableModifier}.
 	 * @param ctx the parse tree
@@ -116,16 +614,6 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitMethodDeclarationRest(@NotNull HelloParser.MethodDeclarationRestContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#classBodyDeclaration}.
-	 * @param ctx the parse tree
-	 */
-	void enterClassBodyDeclaration(@NotNull HelloParser.ClassBodyDeclarationContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#classBodyDeclaration}.
-	 * @param ctx the parse tree
-	 */
-	void exitClassBodyDeclaration(@NotNull HelloParser.ClassBodyDeclarationContext ctx);
-	/**
 	 * Enter a parse tree produced by the {@code booleanConst}
 	 * labeled alternative in {@link HelloParser#literal}.
 	 * @param ctx the parse tree
@@ -138,16 +626,6 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitBooleanConst(@NotNull HelloParser.BooleanConstContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#block}.
-	 * @param ctx the parse tree
-	 */
-	void enterBlock(@NotNull HelloParser.BlockContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#block}.
-	 * @param ctx the parse tree
-	 */
-	void exitBlock(@NotNull HelloParser.BlockContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link HelloParser#arrayInitializer}.
 	 * @param ctx the parse tree
 	 */
@@ -157,26 +635,6 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitArrayInitializer(@NotNull HelloParser.ArrayInitializerContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#variableModifiers}.
-	 * @param ctx the parse tree
-	 */
-	void enterVariableModifiers(@NotNull HelloParser.VariableModifiersContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#variableModifiers}.
-	 * @param ctx the parse tree
-	 */
-	void exitVariableModifiers(@NotNull HelloParser.VariableModifiersContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#enumBodyDeclarations}.
-	 * @param ctx the parse tree
-	 */
-	void enterEnumBodyDeclarations(@NotNull HelloParser.EnumBodyDeclarationsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#enumBodyDeclarations}.
-	 * @param ctx the parse tree
-	 */
-	void exitEnumBodyDeclarations(@NotNull HelloParser.EnumBodyDeclarationsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#booleanLiteral}.
 	 * @param ctx the parse tree
@@ -188,25 +646,17 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitBooleanLiteral(@NotNull HelloParser.BooleanLiteralContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#forUpdate}.
+	 * Enter a parse tree produced by the {@code listExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterForUpdate(@NotNull HelloParser.ForUpdateContext ctx);
+	void enterListExpr(@NotNull HelloParser.ListExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HelloParser#forUpdate}.
+	 * Exit a parse tree produced by the {@code listExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitForUpdate(@NotNull HelloParser.ForUpdateContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#method}.
-	 * @param ctx the parse tree
-	 */
-	void enterMethod(@NotNull HelloParser.MethodContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#method}.
-	 * @param ctx the parse tree
-	 */
-	void exitMethod(@NotNull HelloParser.MethodContext ctx);
+	void exitListExpr(@NotNull HelloParser.ListExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#constantDeclaratorsRest}.
 	 * @param ctx the parse tree
@@ -228,45 +678,17 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitQualifiedName(@NotNull HelloParser.QualifiedNameContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#enhancedForControl}.
+	 * Enter a parse tree produced by the {@code unaryOpExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterEnhancedForControl(@NotNull HelloParser.EnhancedForControlContext ctx);
+	void enterUnaryOpExpr(@NotNull HelloParser.UnaryOpExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HelloParser#enhancedForControl}.
+	 * Exit a parse tree produced by the {@code unaryOpExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitEnhancedForControl(@NotNull HelloParser.EnhancedForControlContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#constantDeclaratorRest}.
-	 * @param ctx the parse tree
-	 */
-	void enterConstantDeclaratorRest(@NotNull HelloParser.ConstantDeclaratorRestContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#constantDeclaratorRest}.
-	 * @param ctx the parse tree
-	 */
-	void exitConstantDeclaratorRest(@NotNull HelloParser.ConstantDeclaratorRestContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#variableId}.
-	 * @param ctx the parse tree
-	 */
-	void enterVariableId(@NotNull HelloParser.VariableIdContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#variableId}.
-	 * @param ctx the parse tree
-	 */
-	void exitVariableId(@NotNull HelloParser.VariableIdContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#expressionList}.
-	 * @param ctx the parse tree
-	 */
-	void enterExpressionList(@NotNull HelloParser.ExpressionListContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#expressionList}.
-	 * @param ctx the parse tree
-	 */
-	void exitExpressionList(@NotNull HelloParser.ExpressionListContext ctx);
+	void exitUnaryOpExpr(@NotNull HelloParser.UnaryOpExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#compilationUnit}.
 	 * @param ctx the parse tree
@@ -278,25 +700,29 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitCompilationUnit(@NotNull HelloParser.CompilationUnitContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#equalityExpression}.
+	 * Enter a parse tree produced by the {@code notExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterEqualityExpression(@NotNull HelloParser.EqualityExpressionContext ctx);
+	void enterNotExpr(@NotNull HelloParser.NotExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HelloParser#equalityExpression}.
+	 * Exit a parse tree produced by the {@code notExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitEqualityExpression(@NotNull HelloParser.EqualityExpressionContext ctx);
+	void exitNotExpr(@NotNull HelloParser.NotExprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#rangeExpression}.
+	 * Enter a parse tree produced by the {@code primaryExp}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterRangeExpression(@NotNull HelloParser.RangeExpressionContext ctx);
+	void enterPrimaryExp(@NotNull HelloParser.PrimaryExpContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HelloParser#rangeExpression}.
+	 * Exit a parse tree produced by the {@code primaryExp}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitRangeExpression(@NotNull HelloParser.RangeExpressionContext ctx);
+	void exitPrimaryExp(@NotNull HelloParser.PrimaryExpContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code nullConst}
 	 * labeled alternative in {@link HelloParser#literal}.
@@ -310,26 +736,6 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitNullConst(@NotNull HelloParser.NullConstContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#typeBound}.
-	 * @param ctx the parse tree
-	 */
-	void enterTypeBound(@NotNull HelloParser.TypeBoundContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#typeBound}.
-	 * @param ctx the parse tree
-	 */
-	void exitTypeBound(@NotNull HelloParser.TypeBoundContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#variableDeclaratorId}.
-	 * @param ctx the parse tree
-	 */
-	void enterVariableDeclaratorId(@NotNull HelloParser.VariableDeclaratorIdContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#variableDeclaratorId}.
-	 * @param ctx the parse tree
-	 */
-	void exitVariableDeclaratorId(@NotNull HelloParser.VariableDeclaratorIdContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link HelloParser#classType}.
 	 * @param ctx the parse tree
 	 */
@@ -339,6 +745,18 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitClassType(@NotNull HelloParser.ClassTypeContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code equalityExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterEqualityExpr(@NotNull HelloParser.EqualityExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code equalityExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitEqualityExpr(@NotNull HelloParser.EqualityExprContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code stringConst}
 	 * labeled alternative in {@link HelloParser#literal}.
@@ -351,26 +769,6 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitStringConst(@NotNull HelloParser.StringConstContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void enterPrimary(@NotNull HelloParser.PrimaryContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#primary}.
-	 * @param ctx the parse tree
-	 */
-	void exitPrimary(@NotNull HelloParser.PrimaryContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#typeArguments}.
-	 * @param ctx the parse tree
-	 */
-	void enterTypeArguments(@NotNull HelloParser.TypeArgumentsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#typeArguments}.
-	 * @param ctx the parse tree
-	 */
-	void exitTypeArguments(@NotNull HelloParser.TypeArgumentsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#typeParameter}.
 	 * @param ctx the parse tree
@@ -391,16 +789,6 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitMethodDeclaration(@NotNull HelloParser.MethodDeclarationContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#whenStatment}.
-	 * @param ctx the parse tree
-	 */
-	void enterWhenStatment(@NotNull HelloParser.WhenStatmentContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#whenStatment}.
-	 * @param ctx the parse tree
-	 */
-	void exitWhenStatment(@NotNull HelloParser.WhenStatmentContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#methodBody}.
 	 * @param ctx the parse tree
@@ -431,16 +819,6 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVoidMethodDeclaratorRest(@NotNull HelloParser.VoidMethodDeclaratorRestContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#typeName}.
-	 * @param ctx the parse tree
-	 */
-	void enterTypeName(@NotNull HelloParser.TypeNameContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#typeName}.
-	 * @param ctx the parse tree
-	 */
-	void exitTypeName(@NotNull HelloParser.TypeNameContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#enumBody}.
 	 * @param ctx the parse tree
@@ -482,36 +860,6 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitModifiers(@NotNull HelloParser.ModifiersContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#formalParameterDeclsRest}.
-	 * @param ctx the parse tree
-	 */
-	void enterFormalParameterDeclsRest(@NotNull HelloParser.FormalParameterDeclsRestContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#formalParameterDeclsRest}.
-	 * @param ctx the parse tree
-	 */
-	void exitFormalParameterDeclsRest(@NotNull HelloParser.FormalParameterDeclsRestContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#typeParameters}.
-	 * @param ctx the parse tree
-	 */
-	void enterTypeParameters(@NotNull HelloParser.TypeParametersContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#typeParameters}.
-	 * @param ctx the parse tree
-	 */
-	void exitTypeParameters(@NotNull HelloParser.TypeParametersContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#constructorBody}.
-	 * @param ctx the parse tree
-	 */
-	void enterConstructorBody(@NotNull HelloParser.ConstructorBodyContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#constructorBody}.
-	 * @param ctx the parse tree
-	 */
-	void exitConstructorBody(@NotNull HelloParser.ConstructorBodyContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link HelloParser#classDeclaration}.
 	 * @param ctx the parse tree
 	 */
@@ -522,16 +870,6 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitClassDeclaration(@NotNull HelloParser.ClassDeclarationContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#variableDeclarator}.
-	 * @param ctx the parse tree
-	 */
-	void enterVariableDeclarator(@NotNull HelloParser.VariableDeclaratorContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#variableDeclarator}.
-	 * @param ctx the parse tree
-	 */
-	void exitVariableDeclarator(@NotNull HelloParser.VariableDeclaratorContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link HelloParser#enumConstant}.
 	 * @param ctx the parse tree
 	 */
@@ -541,36 +879,6 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitEnumConstant(@NotNull HelloParser.EnumConstantContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#typeList}.
-	 * @param ctx the parse tree
-	 */
-	void enterTypeList(@NotNull HelloParser.TypeListContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#typeList}.
-	 * @param ctx the parse tree
-	 */
-	void exitTypeList(@NotNull HelloParser.TypeListContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#enumConstants}.
-	 * @param ctx the parse tree
-	 */
-	void enterEnumConstants(@NotNull HelloParser.EnumConstantsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#enumConstants}.
-	 * @param ctx the parse tree
-	 */
-	void exitEnumConstants(@NotNull HelloParser.EnumConstantsContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#member}.
-	 * @param ctx the parse tree
-	 */
-	void enterMember(@NotNull HelloParser.MemberContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#member}.
-	 * @param ctx the parse tree
-	 */
-	void exitMember(@NotNull HelloParser.MemberContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code floatingPointConst}
 	 * labeled alternative in {@link HelloParser#literal}.
@@ -594,16 +902,6 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitStatement(@NotNull HelloParser.StatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#classBody}.
-	 * @param ctx the parse tree
-	 */
-	void enterClassBody(@NotNull HelloParser.ClassBodyContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#classBody}.
-	 * @param ctx the parse tree
-	 */
-	void exitClassBody(@NotNull HelloParser.ClassBodyContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link HelloParser#importDeclaration}.
 	 * @param ctx the parse tree
 	 */
@@ -613,16 +911,6 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitImportDeclaration(@NotNull HelloParser.ImportDeclarationContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#enumDeclaration}.
-	 * @param ctx the parse tree
-	 */
-	void enterEnumDeclaration(@NotNull HelloParser.EnumDeclarationContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#enumDeclaration}.
-	 * @param ctx the parse tree
-	 */
-	void exitEnumDeclaration(@NotNull HelloParser.EnumDeclarationContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#primitiveType}.
 	 * @param ctx the parse tree
@@ -634,36 +922,6 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitPrimitiveType(@NotNull HelloParser.PrimitiveTypeContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#formalParameter}.
-	 * @param ctx the parse tree
-	 */
-	void enterFormalParameter(@NotNull HelloParser.FormalParameterContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#formalParameter}.
-	 * @param ctx the parse tree
-	 */
-	void exitFormalParameter(@NotNull HelloParser.FormalParameterContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#parExpression}.
-	 * @param ctx the parse tree
-	 */
-	void enterParExpression(@NotNull HelloParser.ParExpressionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#parExpression}.
-	 * @param ctx the parse tree
-	 */
-	void exitParExpression(@NotNull HelloParser.ParExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#variableInitializer}.
-	 * @param ctx the parse tree
-	 */
-	void enterVariableInitializer(@NotNull HelloParser.VariableInitializerContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#variableInitializer}.
-	 * @param ctx the parse tree
-	 */
-	void exitVariableInitializer(@NotNull HelloParser.VariableInitializerContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link HelloParser#localVariableDeclarationStatement}.
 	 * @param ctx the parse tree
 	 */
@@ -673,16 +931,6 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitLocalVariableDeclarationStatement(@NotNull HelloParser.LocalVariableDeclarationStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#formalParameterDecls}.
-	 * @param ctx the parse tree
-	 */
-	void enterFormalParameterDecls(@NotNull HelloParser.FormalParameterDeclsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#formalParameterDecls}.
-	 * @param ctx the parse tree
-	 */
-	void exitFormalParameterDecls(@NotNull HelloParser.FormalParameterDeclsContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#blockStatement}.
 	 * @param ctx the parse tree
@@ -694,35 +942,51 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitBlockStatement(@NotNull HelloParser.BlockStatementContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#expression}.
+	 * Enter a parse tree produced by the {@code logicalAndExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpression(@NotNull HelloParser.ExpressionContext ctx);
+	void enterLogicalAndExpr(@NotNull HelloParser.LogicalAndExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HelloParser#expression}.
+	 * Exit a parse tree produced by the {@code logicalAndExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpression(@NotNull HelloParser.ExpressionContext ctx);
+	void exitLogicalAndExpr(@NotNull HelloParser.LogicalAndExprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#constantExpression}.
+	 * Enter a parse tree produced by the {@code arrayExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterConstantExpression(@NotNull HelloParser.ConstantExpressionContext ctx);
+	void enterArrayExpr(@NotNull HelloParser.ArrayExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HelloParser#constantExpression}.
+	 * Exit a parse tree produced by the {@code arrayExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitConstantExpression(@NotNull HelloParser.ConstantExpressionContext ctx);
+	void exitArrayExpr(@NotNull HelloParser.ArrayExprContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#qualifiedNameList}.
+	 * Enter a parse tree produced by {@link HelloParser#equalityOp}.
 	 * @param ctx the parse tree
 	 */
-	void enterQualifiedNameList(@NotNull HelloParser.QualifiedNameListContext ctx);
+	void enterEqualityOp(@NotNull HelloParser.EqualityOpContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HelloParser#qualifiedNameList}.
+	 * Exit a parse tree produced by {@link HelloParser#equalityOp}.
 	 * @param ctx the parse tree
 	 */
-	void exitQualifiedNameList(@NotNull HelloParser.QualifiedNameListContext ctx);
+	void exitEqualityOp(@NotNull HelloParser.EqualityOpContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code typeExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeExpr(@NotNull HelloParser.TypeExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code typeExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeExpr(@NotNull HelloParser.TypeExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#fieldDeclaration}.
 	 * @param ctx the parse tree
@@ -754,25 +1018,17 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitStatementExpression(@NotNull HelloParser.StatementExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#constructorDeclaration}.
+	 * Enter a parse tree produced by the {@code tenaryOpExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterConstructorDeclaration(@NotNull HelloParser.ConstructorDeclarationContext ctx);
+	void enterTenaryOpExpr(@NotNull HelloParser.TenaryOpExprContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link HelloParser#constructorDeclaration}.
+	 * Exit a parse tree produced by the {@code tenaryOpExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitConstructorDeclaration(@NotNull HelloParser.ConstructorDeclarationContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#forControl}.
-	 * @param ctx the parse tree
-	 */
-	void enterForControl(@NotNull HelloParser.ForControlContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#forControl}.
-	 * @param ctx the parse tree
-	 */
-	void exitForControl(@NotNull HelloParser.ForControlContext ctx);
+	void exitTenaryOpExpr(@NotNull HelloParser.TenaryOpExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#packageDeclaration}.
 	 * @param ctx the parse tree
@@ -804,26 +1060,6 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitNonWildcardTypeArguments(@NotNull HelloParser.NonWildcardTypeArgumentsContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#whenCondition}.
-	 * @param ctx the parse tree
-	 */
-	void enterWhenCondition(@NotNull HelloParser.WhenConditionContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#whenCondition}.
-	 * @param ctx the parse tree
-	 */
-	void exitWhenCondition(@NotNull HelloParser.WhenConditionContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#variableDeclarators}.
-	 * @param ctx the parse tree
-	 */
-	void enterVariableDeclarators(@NotNull HelloParser.VariableDeclaratorsContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#variableDeclarators}.
-	 * @param ctx the parse tree
-	 */
-	void exitVariableDeclarators(@NotNull HelloParser.VariableDeclaratorsContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link HelloParser#forInit}.
 	 * @param ctx the parse tree
 	 */
@@ -843,16 +1079,6 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitVariable(@NotNull HelloParser.VariableContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link HelloParser#integerLiteral}.
-	 * @param ctx the parse tree
-	 */
-	void enterIntegerLiteral(@NotNull HelloParser.IntegerLiteralContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#integerLiteral}.
-	 * @param ctx the parse tree
-	 */
-	void exitIntegerLiteral(@NotNull HelloParser.IntegerLiteralContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#formalParameters}.
 	 * @param ctx the parse tree
@@ -883,4 +1109,40 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitGenericMethodDeclaration(@NotNull HelloParser.GenericMethodDeclarationContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code multiplicativeExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiplicativeExpr(@NotNull HelloParser.MultiplicativeExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code multiplicativeExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiplicativeExpr(@NotNull HelloParser.MultiplicativeExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code rangeExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterRangeExpr(@NotNull HelloParser.RangeExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code rangeExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitRangeExpr(@NotNull HelloParser.RangeExprContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code identifierExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifierExpr(@NotNull HelloParser.IdentifierExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code identifierExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifierExpr(@NotNull HelloParser.IdentifierExprContext ctx);
 }

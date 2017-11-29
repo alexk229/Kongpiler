@@ -207,12 +207,6 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariableDeclaratorId(HelloParser.VariableDeclaratorIdContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HelloParser#variableId}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitVariableId(HelloParser.VariableIdContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link HelloParser#variable}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -429,23 +423,11 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(HelloParser.StatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HelloParser#whenExpression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitWhenExpression(HelloParser.WhenExpressionContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link HelloParser#whenStatment}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitWhenStatment(HelloParser.WhenStatmentContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link HelloParser#whenCondition}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitWhenCondition(HelloParser.WhenConditionContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#formalParameter}.
 	 * @param ctx the parse tree
@@ -501,23 +483,193 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitConstantExpression(HelloParser.ConstantExpressionContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HelloParser#expression}.
+	 * Visit a parse tree produced by the {@code assignmentExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpression(HelloParser.ExpressionContext ctx);
+	T visitAssignmentExpr(HelloParser.AssignmentExprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HelloParser#equalityExpression}.
+	 * Visit a parse tree produced by the {@code newExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitEqualityExpression(HelloParser.EqualityExpressionContext ctx);
+	T visitNewExpr(HelloParser.NewExprContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HelloParser#rangeExpression}.
+	 * Visit a parse tree produced by the {@code superIndentifierExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitRangeExpression(HelloParser.RangeExpressionContext ctx);
+	T visitSuperIndentifierExpr(HelloParser.SuperIndentifierExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code instanceOfExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInstanceOfExpr(HelloParser.InstanceOfExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code bitwiseOrExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBitwiseOrExpr(HelloParser.BitwiseOrExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code addSubOneExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddSubOneExpr(HelloParser.AddSubOneExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code bitwiseAndExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBitwiseAndExpr(HelloParser.BitwiseAndExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code additiveExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAdditiveExpr(HelloParser.AdditiveExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code variableExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVariableExpr(HelloParser.VariableExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code listExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitListExpr(HelloParser.ListExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code bitwiseXorExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBitwiseXorExpr(HelloParser.BitwiseXorExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code logicalAndExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogicalAndExpr(HelloParser.LogicalAndExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code arrayExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitArrayExpr(HelloParser.ArrayExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code typeExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTypeExpr(HelloParser.TypeExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code selfExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSelfExpr(HelloParser.SelfExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code tenaryOpExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTenaryOpExpr(HelloParser.TenaryOpExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code relationalExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRelationalExpr(HelloParser.RelationalExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code logicalOrExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLogicalOrExpr(HelloParser.LogicalOrExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code unaryOpExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitUnaryOpExpr(HelloParser.UnaryOpExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code notExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNotExpr(HelloParser.NotExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code primaryExp}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitPrimaryExp(HelloParser.PrimaryExpContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code superExprList}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitSuperExprList(HelloParser.SuperExprListContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code multiplicativeExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiplicativeExpr(HelloParser.MultiplicativeExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code equalityExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqualityExpr(HelloParser.EqualityExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code rangeExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRangeExpr(HelloParser.RangeExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code identifierExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIdentifierExpr(HelloParser.IdentifierExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#equalityOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqualityOp(HelloParser.EqualityOpContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#primary}.
 	 * @param ctx the parse tree
