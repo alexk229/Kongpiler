@@ -12,7 +12,8 @@ class HelloWorld {
 		someDouble = 13.2;
 		
 		when(someInt == 12) {
-		
+			true -> someInt = 13;
+			else -> someDouble = 13.3;
 		}
 	}
 }

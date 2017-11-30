@@ -20,13 +20,27 @@
 .end method
 
 .method public static main([Ljava/lang/String;)V
+
 	ldc	12
-	putstatic	HelloWorld/someInt ?
+	putstatic	HelloWorld/someInt I
+
 	ldc	13.2
-	putstatic	HelloWorld/someDouble ?
+	putstatic	HelloWorld/someDouble D
+
+	whenLabel0:
+
+	whenLabel1:
+
 	getstatic	HelloWorld/someInt I
 	ldc	12
 	if_icmpeq
+
+	ldc	13
+	putstatic	HelloWorld/someInt I
+
+	ldc	13.3
+	putstatic	HelloWorld/someDouble D
+
 
 	return
 

@@ -308,18 +308,6 @@ public class HelloBaseListener implements HelloListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterWhenStatment(@NotNull HelloParser.WhenStatmentContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitWhenStatment(@NotNull HelloParser.WhenStatmentContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterTypeName(@NotNull HelloParser.TypeNameContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -363,6 +351,18 @@ public class HelloBaseListener implements HelloListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitConstructorBody(@NotNull HelloParser.ConstructorBodyContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWhenStatement(@NotNull HelloParser.WhenStatementContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWhenStatement(@NotNull HelloParser.WhenStatementContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -675,6 +675,18 @@ public class HelloBaseListener implements HelloListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitAddSubOneExpr(@NotNull HelloParser.AddSubOneExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterWhenEntry(@NotNull HelloParser.WhenEntryContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWhenEntry(@NotNull HelloParser.WhenEntryContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

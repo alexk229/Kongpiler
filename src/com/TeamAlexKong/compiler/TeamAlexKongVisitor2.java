@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.TeamAlexKong.parser.HelloBaseVisitor;
 import com.TeamAlexKong.parser.HelloParser;
+import com.TeamAlexKong.parser.HelloParser.BooleanConstContext;
 import com.TeamAlexKong.parser.HelloParser.ClassDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.CompilationUnitContext;
 import com.TeamAlexKong.parser.HelloParser.ConstructorDeclarationContext;
@@ -20,7 +21,8 @@ import com.TeamAlexKong.parser.HelloParser.VariableContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorContext;
 import com.TeamAlexKong.parser.HelloParser.VariableExprContext;
 import com.TeamAlexKong.parser.HelloParser.VariableInitializerContext;
-import com.TeamAlexKong.parser.HelloParser.WhenStatmentContext;
+import com.TeamAlexKong.parser.HelloParser.WhenEntryContext;
+import com.TeamAlexKong.parser.HelloParser.WhenStatementContext;
 import com.pcl2.parser.Pcl2Parser;
 
 import wci.intermediate.*;
@@ -62,6 +64,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         if (methodName.equals("main")) {
             jFile.println();
             jFile.println(".method public static "+ methodName + "([Ljava/lang/String;)V");
+            jFile.println();
         }
         
         Integer value = visitChildren(ctx);
@@ -88,6 +91,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         jFile.println("\tputstatic\t" + className
                            +  "/" + ctx.variable().Identifier().toString()
                            + " " + typeIndicator);
+        jFile.println();
 								 
 		return value;
 	}
@@ -95,7 +99,6 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	@Override
 	public Integer visitVariableInitializer(VariableInitializerContext ctx) {
 		String value = ctx.getText();
-		System.out.println(value);
 		return super.visitVariableInitializer(ctx);
 	}
 	
@@ -128,8 +131,9 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         	opcode = "if_icmpne";
         }
         
-        // Emit an add or subtract instruction.
+        // Emit an == or != instruction.
         jFile.println("\t" + opcode);
+        jFile.println();
         
         return value; 
 	}
@@ -153,14 +157,33 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	public Integer visitStringConst(StringConstContext ctx) {
         // Emit a load constant instruction.
         jFile.println("\tldc\t" + ctx.getText());
-        
-		return super.visitStringConst(ctx);
+        return visitChildren(ctx);
 	}
 	
 	@Override
-	public Integer visitWhenStatment(WhenStatmentContext ctx) {
-		Integer value = visitChildren(ctx);
-		return value;
+	public Integer visitBooleanConst(BooleanConstContext ctx) {
+		
+        // Emit a load constant instruction.
+        jFile.println("\tldc\t" + ctx.getText());
+        return visitChildren(ctx);
+	}
+	
+	@Override
+	public Integer visitWhenStatement(WhenStatementContext ctx) {
+		Integer whenEntries = ctx.statement().block().getChildCount() - 2;
+		
+		for(int i = 0; i < whenEntries; i++) {
+			jFile.println("\twhenLabel" + i + ":");
+			jFile.println();
+			visit(ctx.statement());
+		}
+		return super.visitWhenStatement(ctx);
+	}
+	
+	@Override
+	public Integer visitWhenEntry(WhenEntryContext ctx) {
+		
+		return super.visitWhenEntry(ctx);
 	}
 	
 }

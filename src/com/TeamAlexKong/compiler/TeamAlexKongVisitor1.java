@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.TeamAlexKong.parser.HelloBaseVisitor;
 import com.TeamAlexKong.parser.HelloParser;
+import com.TeamAlexKong.parser.HelloParser.BooleanConstContext;
 import com.TeamAlexKong.parser.HelloParser.ClassDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.CompilationUnitContext;
 import com.TeamAlexKong.parser.HelloParser.ConstructorDeclarationContext;
@@ -16,6 +17,7 @@ import com.TeamAlexKong.parser.HelloParser.FloatingPointConstContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerLiteralContext;
 import com.TeamAlexKong.parser.HelloParser.LiteralContext;
+import com.TeamAlexKong.parser.HelloParser.PrimaryExpContext;
 import com.TeamAlexKong.parser.HelloParser.StringConstContext;
 import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
 import com.TeamAlexKong.parser.HelloParser.VariableContext;
@@ -184,6 +186,19 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     public Integer visitStringConst(StringConstContext ctx) {
     	ctx.typeExpr = Predefined.charType;
     	return visitChildren(ctx);
+    }
+    
+    @Override
+    public Integer visitBooleanConst(BooleanConstContext ctx) {
+    	ctx.typeExpr = Predefined.booleanType;
+    	return visitChildren(ctx);
+    }
+    
+    @Override
+    public Integer visitPrimaryExp(PrimaryExpContext ctx) {
+    	Integer value = visit(ctx.primary());
+    	ctx.typeExpr = ctx.primary().literal().typeExpr;
+    	return value;
     }
 }
 

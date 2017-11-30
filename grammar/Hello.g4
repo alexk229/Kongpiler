@@ -317,18 +317,22 @@ statement
     |   'for' '(' forControl ')' statement
     |   'while' parExpression statement
     |   'do' statement 'while' parExpression ';'
-    |	'when' parExpression statement
+    |	whenStatement
     |   'return' expression? ';'
     |   'break' Identifier? ';'
     |   ';'
     |   statementExpression ';'
     |	localVariableDeclarationStatement
-    |	whenStatment
+    |	whenEntry
     |   Identifier ':' statement
     ;
     
+whenStatement
+	:	'when' parExpression statement
+	;
+    
 // When statement entry
-whenStatment
+whenEntry
   : expression (',' expression)* '->' statement
   | 'else' '->' statement
   ;

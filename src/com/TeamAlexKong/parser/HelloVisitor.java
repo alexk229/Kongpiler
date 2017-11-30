@@ -423,11 +423,17 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(HelloParser.StatementContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HelloParser#whenStatment}.
+	 * Visit a parse tree produced by {@link HelloParser#whenStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitWhenStatment(HelloParser.WhenStatmentContext ctx);
+	T visitWhenStatement(HelloParser.WhenStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#whenEntry}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhenEntry(HelloParser.WhenEntryContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#formalParameter}.
 	 * @param ctx the parse tree
