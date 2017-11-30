@@ -27,19 +27,23 @@
 	ldc	13.2
 	putstatic	HelloWorld/someDouble D
 
-	whenLabel0:
-
-	whenLabel1:
-
-	getstatic	HelloWorld/someInt I
-	ldc	12
-	if_icmpeq
-
+whenLabel0:
 	ldc	13
 	putstatic	HelloWorld/someInt I
 
 	ldc	13.3
 	putstatic	HelloWorld/someDouble D
+
+whenLabel1:
+	ldc	13
+	putstatic	HelloWorld/someInt I
+
+	ldc	13.3
+	putstatic	HelloWorld/someDouble D
+
+	getstatic	HelloWorld/someInt I
+	ldc	12
+	if_icmpeq whenLabel0
 
 
 	return

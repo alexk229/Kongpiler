@@ -34,10 +34,8 @@ import static wci.intermediate.symtabimpl.DefinitionImpl.*;
 
 public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	
-    private SymTabStack symTabStack;
-    private SymTabEntry programId;
-    private ArrayList<SymTabEntry> variableIdList;
     private PrintWriter jFile;
+    private Integer labelToJump;
     String className, classImplementationName;
     
     public TeamAlexKongVisitor2(PrintWriter jFile) {
@@ -160,30 +158,23 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         return visitChildren(ctx);
 	}
 	
-	@Override
-	public Integer visitBooleanConst(BooleanConstContext ctx) {
-		
-        // Emit a load constant instruction.
-        jFile.println("\tldc\t" + ctx.getText());
-        return visitChildren(ctx);
-	}
+//	@Override
+//	public Integer visitBooleanConst(BooleanConstContext ctx) {
+//		
+//        // Emit a load constant instruction.
+//        jFile.println("\tldc\t" + ctx.getText());
+//        return visitChildren(ctx);
+//	}
 	
 	@Override
 	public Integer visitWhenStatement(WhenStatementContext ctx) {
 		Integer whenEntries = ctx.statement().block().getChildCount() - 2;
 		
 		for(int i = 0; i < whenEntries; i++) {
-			jFile.println("\twhenLabel" + i + ":");
-			jFile.println();
+			jFile.println("whenLabel" + i + ":");
 			visit(ctx.statement());
 		}
-		return super.visitWhenStatement(ctx);
+		Integer value = visit(ctx.parExpression());
+		return value;
 	}
-	
-	@Override
-	public Integer visitWhenEntry(WhenEntryContext ctx) {
-		
-		return super.visitWhenEntry(ctx);
-	}
-	
 }
