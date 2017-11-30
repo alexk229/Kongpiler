@@ -268,7 +268,7 @@ qualifiedName
     :   Identifier ('.' Identifier)*
     ;
 
-literal locals [ TypeSpec typeLiteral = null ]
+literal locals [ TypeSpec typeExpr = null ]
     :   integerLiteral	# integerConst
     |   FloatingPointLiteral # floatingPointConst
     |   CharacterLiteral	# characterConst
@@ -277,11 +277,11 @@ literal locals [ TypeSpec typeLiteral = null ]
     |   'null'	# nullConst
     ;
 
-integerLiteral locals [ TypeSpec typeLiteral = null ]
+integerLiteral
     :   DecimalLiteral
     ;
 
-booleanLiteral locals [ TypeSpec typeLiteral = null ]
+booleanLiteral
     :   'true'
     |   'false'
     ;
@@ -375,7 +375,7 @@ constantExpression
     ;
 
 // Self expression
-expression locals [ TypeSpec typeExp = null ]
+expression locals [ TypeSpec typeExpr = null ]
     :   primary		# primaryExp
     |   expression '.' Identifier	# identifierExpr
     |   'self' '.' expression	# selfExpr

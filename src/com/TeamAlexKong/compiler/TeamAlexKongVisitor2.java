@@ -19,6 +19,7 @@ import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
 import com.TeamAlexKong.parser.HelloParser.VariableContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorContext;
 import com.TeamAlexKong.parser.HelloParser.VariableExprContext;
+import com.TeamAlexKong.parser.HelloParser.VariableInitializerContext;
 import com.TeamAlexKong.parser.HelloParser.WhenStatmentContext;
 import com.pcl2.parser.Pcl2Parser;
 
@@ -77,10 +78,10 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	
 	@Override
 	public Integer visitVariableAssignment(VariableAssignmentContext ctx) {
-		Integer value = visit(ctx.variableInitializer().expression());
+		Integer value = visit(ctx.variableInitializer());
 		
-		String typeIndicator = (ctx.variableInitializer().expression().typeExp == Predefined.integerType) ? "I"
-							 : (ctx.variableInitializer().expression().typeExp == Predefined.realType) ? "D"
+		String typeIndicator = (ctx.variableInitializer().expression().typeExpr == Predefined.integerType) ? "I"
+							 : (ctx.variableInitializer().expression().typeExpr == Predefined.realType) ? "D"
 							 :	"?";
 								 
         // Emit a field put instruction.
@@ -92,9 +93,16 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	}
 	
 	@Override
+	public Integer visitVariableInitializer(VariableInitializerContext ctx) {
+		String value = ctx.getText();
+		System.out.println(value);
+		return super.visitVariableInitializer(ctx);
+	}
+	
+	@Override
 	public Integer visitVariableExpr(VariableExprContext ctx) {
         String variableName = ctx.variable().Identifier().toString();
-        TypeSpec type = ctx.typeExp;
+        TypeSpec type = ctx.typeExpr;
         
         String typeIndicator = (type == Predefined.integerType) ? "I"
                              : (type == Predefined.realType)    ? "F"
@@ -111,26 +119,13 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	public Integer visitEqualityExpr(EqualityExprContext ctx) {
         Integer value = visitChildren(ctx);
         
-        TypeSpec type1 = ctx.expression(0).typeExp;
-        TypeSpec type2 = ctx.expression(1).typeExp;
-        
-        boolean integerMode =    (type1 == Predefined.integerType)
-                && (type2 == Predefined.integerType);
-        boolean realMode    =    (type1 == Predefined.realType)
-                && (type2 == Predefined.realType);
-        
         String op = ctx.equalityOp().getText();
         String opcode;
         
         if (op.equals("==")) {
-            opcode = integerMode ? "iadd"
-                   : realMode    ? "fadd"
-                   :               "????";
-        }
-        else {
-            opcode = integerMode ? "isub"
-                   : realMode    ? "fsub"
-                   :               "????";
+            opcode = "if_icmpeq";
+        } else {
+        	opcode = "if_icmpne";
         }
         
         // Emit an add or subtract instruction.

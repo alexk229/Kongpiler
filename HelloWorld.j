@@ -26,7 +26,7 @@
 	putstatic	HelloWorld/someDouble ?
 	getstatic	HelloWorld/someInt I
 	ldc	12
-	????
+	if_icmpeq
 
 	return
 

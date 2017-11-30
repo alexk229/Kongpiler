@@ -163,47 +163,26 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     	String variableName = ctx.variable().Identifier().toString();
     	SymTabEntry variableId = symTabStack.lookup(variableName);
     	
-    	ctx.typeExp = variableId.getTypeSpec();
+    	ctx.typeExpr = variableId.getTypeSpec();
     	
     	return visitChildren(ctx); 
     }
     
     @Override
-    public Integer visitEqualityExpr(EqualityExprContext ctx) {
-    	Integer value = visitChildren(ctx);
-    	
-    	TypeSpec type1 = ctx.expression(0).typeExp;
-    	TypeSpec type2 = ctx.expression(1).typeExp;
-    	
-        boolean integerMode =    (type1 == Predefined.integerType)
-                			  && (type2 == Predefined.integerType);
-        boolean realMode    =    (type1 == Predefined.realType)
-                			  && (type2 == Predefined.realType);
-    			
-        TypeSpec type = integerMode ? Predefined.integerType
-                : realMode    ? Predefined.realType
-                :               null;
-        
-        ctx.typeExp = type;
-    	
-    	return value;
-    }
-    
-    @Override
     public Integer visitIntegerConst(IntegerConstContext ctx) {
-        ctx.typeLiteral = Predefined.integerType;
+        ctx.typeExpr = Predefined.integerType;
         return visitChildren(ctx); 
     }
     
     @Override
     public Integer visitFloatingPointConst(FloatingPointConstContext ctx) {
-    	ctx.typeLiteral = Predefined.realType;
+    	ctx.typeExpr = Predefined.realType;
     	return visitChildren(ctx);
     }
     
     @Override
     public Integer visitStringConst(StringConstContext ctx) {
-    	ctx.typeLiteral = Predefined.charType;
+    	ctx.typeExpr = Predefined.charType;
     	return visitChildren(ctx);
     }
 }

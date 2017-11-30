@@ -3343,7 +3343,7 @@ public class HelloParser extends Parser {
 	}
 
 	public static class LiteralContext extends ParserRuleContext {
-		public TypeSpec typeLiteral = null;
+		public TypeSpec typeExpr = null;
 		public LiteralContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -3352,7 +3352,7 @@ public class HelloParser extends Parser {
 		public LiteralContext() { }
 		public void copyFrom(LiteralContext ctx) {
 			super.copyFrom(ctx);
-			this.typeLiteral = ctx.typeLiteral;
+			this.typeExpr = ctx.typeExpr;
 		}
 	}
 	public static class BooleanConstContext extends LiteralContext {
@@ -3485,7 +3485,6 @@ public class HelloParser extends Parser {
 	}
 
 	public static class IntegerLiteralContext extends ParserRuleContext {
-		public TypeSpec typeLiteral = null;
 		public TerminalNode DecimalLiteral() { return getToken(HelloParser.DecimalLiteral, 0); }
 		public IntegerLiteralContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -3520,7 +3519,6 @@ public class HelloParser extends Parser {
 	}
 
 	public static class BooleanLiteralContext extends ParserRuleContext {
-		public TypeSpec typeLiteral = null;
 		public BooleanLiteralContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -4594,7 +4592,7 @@ public class HelloParser extends Parser {
 	}
 
 	public static class ExpressionContext extends ParserRuleContext {
-		public TypeSpec typeExp = null;
+		public TypeSpec typeExpr = null;
 		public ExpressionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
@@ -4603,7 +4601,7 @@ public class HelloParser extends Parser {
 		public ExpressionContext() { }
 		public void copyFrom(ExpressionContext ctx) {
 			super.copyFrom(ctx);
-			this.typeExp = ctx.typeExp;
+			this.typeExpr = ctx.typeExpr;
 		}
 	}
 	public static class AssignmentExprContext extends ExpressionContext {
