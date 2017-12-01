@@ -21,29 +21,22 @@
 
 .method public static main([Ljava/lang/String;)V
 
-	ldc	12
+	ldc 12
 	putstatic	HelloWorld/someInt I
 
-	ldc	13.2
-	putstatic	HelloWorld/someDouble D
-
-whenLabel0:
-	ldc	13
-	putstatic	HelloWorld/someInt I
-
-	ldc	13.3
-	putstatic	HelloWorld/someDouble D
-
-whenLabel1:
-	ldc	13
-	putstatic	HelloWorld/someInt I
-
-	ldc	13.3
+	ldc 13.2
 	putstatic	HelloWorld/someDouble D
 
 	getstatic	HelloWorld/someInt I
-	ldc	12
-	if_icmpeq whenLabel0
+	lookupswitch
+		12: label
+	ldc 13
+	putstatic	HelloWorld/someInt I
+
+			ldc 13.3
+	putstatic	HelloWorld/someDouble D
+
+	end:
 
 
 	return

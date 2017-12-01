@@ -1070,6 +1070,16 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitNonWildcardTypeArguments(@NotNull HelloParser.NonWildcardTypeArgumentsContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link HelloParser#whenCondition}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhenCondition(@NotNull HelloParser.WhenConditionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#whenCondition}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhenCondition(@NotNull HelloParser.WhenConditionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link HelloParser#forInit}.
 	 * @param ctx the parse tree
 	 */

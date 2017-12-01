@@ -333,8 +333,14 @@ whenStatement
     
 // When statement entry
 whenEntry
-  : expression (',' expression)* '->' statement
+  : whenCondition (',' whenCondition)* '->' statement
   | 'else' '->' statement
+  ;
+ 
+whenCondition
+  : expression
+  | ('in' | '!in') expression
+  | ('is' | '!is') type
   ;
   
 formalParameter

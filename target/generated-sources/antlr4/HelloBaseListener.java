@@ -1220,6 +1220,18 @@ public class HelloBaseListener implements HelloListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterWhenCondition(@NotNull HelloParser.WhenConditionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitWhenCondition(@NotNull HelloParser.WhenConditionContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterForInit(@NotNull HelloParser.ForInitContext ctx) { }
 	/**
 	 * {@inheritDoc}
