@@ -423,6 +423,12 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(HelloParser.StatementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#whileStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitWhileStatement(HelloParser.WhileStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#whenStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -676,6 +682,18 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIdentifierExpr(HelloParser.IdentifierExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#addSubOneOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAddSubOneOp(HelloParser.AddSubOneOpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#relationalOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRelationalOp(HelloParser.RelationalOpContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#equalityOp}.
 	 * @param ctx the parse tree

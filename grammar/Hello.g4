@@ -315,7 +315,7 @@ statement
     : block
     |   'if' parExpression statement ('else' statement)?
     |   'for' '(' forControl ')' statement
-    |   'while' parExpression statement
+    |   whileStatement
     |   'do' statement 'while' parExpression ';'
     |	whenStatement
     |   'return' expression? ';'
@@ -323,17 +323,20 @@ statement
     |   ';'
     |   statementExpression ';'
     |	localVariableDeclarationStatement
-    |	whenEntry
     |   Identifier ':' statement
     ;
     
+whileStatement
+	:	'while' parExpression statement
+	;
+    
 whenStatement
-	:	'when' parExpression statement
+	:	'when' parExpression '{' whenEntry* '}'
 	;
     
 // When statement entry
 whenEntry
-  : whenCondition (',' whenCondition)* '->' statement
+  : whenCondition '->' statement
   | 'else' '->' statement
   ;
  
@@ -394,14 +397,14 @@ expression locals [ TypeSpec typeExpr = null ]
     |   expression '.' 'super' '.' Identifier arguments?	# superIndentifierExpr
     |   expression '[' expression ']'	# arrayExpr
     |   expression '(' expressionList? ')'	# listExpr
-    |   expression ('++' | '--')	# addSubOneExpr
+    |   expression addSubOneOp	# addSubOneExpr
     |   ('+'|'-'|'++'|'--') expression # unaryOpExpr
     |   ('~'|'!') expression	# notExpr
     |   '(' type ')' expression	# typeExpr
     |   expression ('*'|'/'|'%') expression	# multiplicativeExpr
     |   expression ('+'|'-') expression	# additiveExpr
     |   expression ('<' '<' | '>' '>' '>' | '>' '>') expression	# assignmentExpr
-    |   expression ('<' '=' | '>' '=' | '>' | '<') expression # relationalExpr
+    |   expression relationalOp expression # relationalExpr
     |   expression 'instanceof' type	# instanceOfExpr
     |   expression equalityOp expression # equalityExpr
     |   expression '&' expression	# bitwiseAndExpr
@@ -413,6 +416,14 @@ expression locals [ TypeSpec typeExpr = null ]
     |	expression ('..') expression # rangeExpr
     |	variable	# variableExpr
     ;
+    
+addSubOneOp
+	: ('++' | '--')
+;
+    
+relationalOp
+	: ('<' '=' | '>' '=' | '>' | '<')
+;
     
 equalityOp
 	: ('==' | '!=')

@@ -1,19 +1,24 @@
 class HelloWorld {
 
     private var someInt: Int;
-    private var someDouble: Double;
+    private var someFloat: Float;
 	
 	init() {
 		super();
 	}
 
 	fun main() {
-		someInt = 12;
-		someDouble = 13.2;
+		someInt = 0;
+		someFloat = 13.2;
 		
-		when(someInt) {
-			12 -> someInt = 13;
-			else -> someDouble = 13.3;
+		while(someInt < 3) {
+			someInt++;
+			when(someInt) {
+				0 -> someFloat = 13.0;
+				1 -> someFloat = 13.1;
+				else -> someFloat = 13.2;
+			}
 		}
+		
 	}
 }

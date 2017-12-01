@@ -218,6 +218,16 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitExpressionList(@NotNull HelloParser.ExpressionListContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link HelloParser#relationalOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterRelationalOp(@NotNull HelloParser.RelationalOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#relationalOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitRelationalOp(@NotNull HelloParser.RelationalOpContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link HelloParser#typeBound}.
 	 * @param ctx the parse tree
 	 */
@@ -401,6 +411,16 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitFormalParameter(@NotNull HelloParser.FormalParameterContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#addSubOneOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterAddSubOneOp(@NotNull HelloParser.AddSubOneOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#addSubOneOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitAddSubOneOp(@NotNull HelloParser.AddSubOneOpContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#parExpression}.
 	 * @param ctx the parse tree
@@ -1039,6 +1059,16 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTenaryOpExpr(@NotNull HelloParser.TenaryOpExprContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#whileStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterWhileStatement(@NotNull HelloParser.WhileStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#whileStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitWhileStatement(@NotNull HelloParser.WhileStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#packageDeclaration}.
 	 * @param ctx the parse tree

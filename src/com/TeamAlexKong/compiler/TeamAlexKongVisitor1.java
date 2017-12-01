@@ -141,9 +141,9 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
             type = Predefined.integerType;
             typeIndicator = "I";
         }
-        else if (typeName.equalsIgnoreCase("double")) {
+        else if (typeName.equalsIgnoreCase("float")) {
             type = Predefined.realType;
-            typeIndicator = "D";
+            typeIndicator = "F";
         } 
         else if (typeName.equals("bool")) {
             type = Predefined.booleanType;
