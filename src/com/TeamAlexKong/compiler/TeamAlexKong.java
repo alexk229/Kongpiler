@@ -1,6 +1,7 @@
 package com.TeamAlexKong.compiler;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
+
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.ParserRuleContext;
 import org.antlr.v4.runtime.Token;
@@ -12,11 +13,19 @@ import com.pcl2.parser.Pass2Visitor;
 import com.pcl2.parser.Pcl2Lexer;
 import com.pcl2.parser.Pcl2Parser;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+
+import java.awt.Desktop;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
 
 public class TeamAlexKong 
 {

@@ -9,6 +9,7 @@ import com.TeamAlexKong.parser.HelloParser;
 import com.TeamAlexKong.parser.HelloParser.BooleanConstContext;
 import com.TeamAlexKong.parser.HelloParser.ClassDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.CompilationUnitContext;
+import com.TeamAlexKong.parser.HelloParser.ConstructorBodyContext;
 import com.TeamAlexKong.parser.HelloParser.ConstructorDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.EqualityExprContext;
 import com.TeamAlexKong.parser.HelloParser.ExpressionContext;
@@ -25,6 +26,7 @@ import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorIdContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorsContext;
 import com.TeamAlexKong.parser.HelloParser.VariableExprContext;
+import com.TeamAlexKong.parser.HelloParser.VariableInitializerContext;
 import com.TeamAlexKong.parser.HelloParser.VariableTypeContext;
 import com.pcl2.parser.Pcl2Parser;
 
@@ -88,8 +90,6 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     
     @Override
     public Integer visitConstructorDeclaration(ConstructorDeclarationContext ctx) {
-    	
-        Integer value = visitChildren(ctx); 
         
         // Emit the class constructor.
         jFile.println();
@@ -97,25 +97,35 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         jFile.println();
         jFile.println("\taload_0");
         jFile.println("\tinvokenonvirtual    java/lang/Object/<init>()V");
+        
+        Integer value = visit(ctx.constructorBody());
+        
         jFile.println("\treturn");
         jFile.println();
-        jFile.println(".limit locals 1");
-        jFile.println(".limit stack 1");
+        jFile.println(".limit locals 20");
+        jFile.println(".limit stack 20");
         jFile.println(".end method");
         
         return value;
     }
     
     @Override
-    public Integer visitFieldDeclaration(FieldDeclarationContext ctx) {
-    	jFile.println("\n; " + ctx.getText() + "\n");
-        return visitChildren(ctx); 
-    }
-    
-    @Override
     public Integer visitVariableDeclarators(VariableDeclaratorsContext ctx) {
     	variableIdList = new ArrayList<SymTabEntry>();
     	return visitChildren(ctx);  
+    }
+    
+    @Override
+    public Integer visitVariableDeclarator(VariableDeclaratorContext ctx) {
+    	Integer value = visit(ctx.variableDeclaratorId());
+    	
+    	value = visit(ctx.variableType());
+    	
+    	if(ctx.variableInitializer() != null) {
+    		value = visit(ctx.variableInitializer());
+    	}
+    	
+    	return value;
     }
     
     @Override
@@ -145,10 +155,14 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
             type = Predefined.realType;
             typeIndicator = "F";
         } 
-        else if (typeName.equals("bool")) {
+        else if (typeName.equalsIgnoreCase("bool")) {
             type = Predefined.booleanType;
             typeIndicator = "Z";
+        } else if (typeName.equalsIgnoreCase("string")) {
+        	type = Predefined.stringType;
+        	typeIndicator = "Ljava/lang/String;";
         }
+        
         else {
             type = null;
             typeIndicator = "?";
@@ -158,10 +172,24 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
             id.setTypeSpec(type);
             
             // Emit a field declaration.
-            jFile.println(".field private static " +
+            jFile.print(".field private static " +
                                id.getName() + " " + typeIndicator);
         }
+        
         return visitChildren(ctx);
+    }
+    
+    @Override
+    public Integer visitVariableInitializer(VariableInitializerContext ctx) {
+    	Integer value = visitChildren(ctx);
+    	
+    	if(ctx.expression() != null) {
+    		jFile.print(" = " + ctx.expression().getText());
+    	}
+    	
+    	jFile.println();
+    	
+    	return value;
     }
     
     @Override
@@ -188,7 +216,7 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     
     @Override
     public Integer visitStringConst(StringConstContext ctx) {
-    	ctx.typeExpr = Predefined.charType;
+    	ctx.typeExpr = Predefined.stringType;
     	return visitChildren(ctx);
     }
     

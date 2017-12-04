@@ -423,6 +423,18 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(HelloParser.StatementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#ifStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfStatement(HelloParser.IfStatementContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#elseStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitElseStatement(HelloParser.ElseStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#whileStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -564,6 +576,13 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariableExpr(HelloParser.VariableExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code isExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIsExpr(HelloParser.IsExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code listExpr}
 	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
@@ -598,6 +617,13 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitTypeExpr(HelloParser.TypeExprContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code inExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInExpr(HelloParser.InExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code selfExpr}
 	 * labeled alternative in {@link HelloParser#expression}.
@@ -682,6 +708,12 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIdentifierExpr(HelloParser.IdentifierExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#isOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIsOp(HelloParser.IsOpContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#addSubOneOp}.
 	 * @param ctx the parse tree

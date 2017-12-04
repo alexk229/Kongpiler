@@ -1,0 +1,4 @@
+java -jar jasmin.jar C:\Users\KYOTO\eclipse-workspace\TeamAlexKong\HelloWorld.j
+java -jar classfileanalyzer.jar C:\Users\KYOTO\eclipse-workspace\TeamAlexKong\example\Main.class
+java -jar ../lib/antlr.jar -package com.TeamAlexKong.parser -o ../src/com/TeamAlexKong/parser -no-listener -visitor Hello.g4
+

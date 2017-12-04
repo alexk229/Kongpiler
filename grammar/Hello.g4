@@ -147,11 +147,11 @@ variableDeclarators
     ;
     
 variableDeclarator
-    :   variableDeclaratorId (':' variableType)? ('=' variableInitializer)? ';'*
+    :   variableDeclaratorId (':' variableType)? ('=' variableInitializer)? ';'?
     ;
     
 variableAssignment
-	:	variable ('=' variableInitializer) ';'*
+	:	variable ('=' expression) ';'
 	;
 
 constantDeclaratorsRest
@@ -218,6 +218,7 @@ primitiveType
     |   'Long'
     |   'Float'
     |   'Double'
+    |	'URL'
     ;
 
 // Let variableModifier
@@ -313,7 +314,7 @@ variableModifiers
 
 statement
     : block
-    |   'if' parExpression statement ('else' statement)?
+    |   ifStatement
     |   'for' '(' forControl ')' statement
     |   whileStatement
     |   'do' statement 'while' parExpression ';'
@@ -325,6 +326,14 @@ statement
     |	localVariableDeclarationStatement
     |   Identifier ':' statement
     ;
+    
+ifStatement
+	:	'if' parExpression statement elseStatement?
+	;
+	
+elseStatement
+	:	('else' statement)
+	;
     
 whileStatement
 	:	'while' parExpression statement
@@ -342,8 +351,6 @@ whenEntry
  
 whenCondition
   : expression
-  | ('in' | '!in') expression
-  | ('is' | '!is') type
   ;
   
 formalParameter
@@ -414,8 +421,14 @@ expression locals [ TypeSpec typeExpr = null ]
     |   expression '||' expression # logicalOrExpr
     |   expression '?' expression ':' expression # tenaryOpExpr
     |	expression ('..') expression # rangeExpr
+    |	expression isOp expression	# isExpr
+    |	('in' | '!in') expression	# inExpr
     |	variable	# variableExpr
     ;
+   
+isOp
+	:	('is' | '!is')
+;
     
 addSubOneOp
 	: ('++' | '--')

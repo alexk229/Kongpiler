@@ -1,13 +1,8 @@
 .class public HelloWorld
 .super java/lang/Object
-
-; varsomeInt:Int;
-
-.field private static someInt I
-
-; varsomeFloat:Float;
-
-.field private static someFloat F
+.field private static someInt I = 0
+.field private static someFloat F = 0
+.field private static someString Ljava/lang/String; = "Hello World"
 
 .method public <init>()V
 
@@ -15,8 +10,8 @@
 	invokenonvirtual    java/lang/Object/<init>()V
 	return
 
-.limit locals 1
-.limit stack 1
+.limit locals 20
+.limit stack 20
 .end method
 
 .method public static main([Ljava/lang/String;)V
@@ -24,121 +19,76 @@
 	ldc 0
 	putstatic	HelloWorld/someInt I
 
-end:
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	new java/lang/StringBuilder
-	dup
-	ldc "someInt= "
-	invokenonvirtual java/lang/StringBuilder/<init>(Ljava/lang/String;)V
-	getstatic	HelloWorld/someInt I
-	invokevirtual java/lang/StringBuilder/append(I)Ljava/lang/StringBuilder;
-	invokevirtual java/lang/StringBuilder/toString()Ljava/lang/String;
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
-
 	ldc 13.2
 	putstatic	HelloWorld/someFloat F
 
-end:
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	new java/lang/StringBuilder
-	dup
-	ldc "someFloat= "
-	invokenonvirtual java/lang/StringBuilder/<init>(Ljava/lang/String;)V
-	getstatic	HelloWorld/someFloat F
-	invokevirtual java/lang/StringBuilder/append(F)Ljava/lang/StringBuilder;
-	invokevirtual java/lang/StringBuilder/toString()Ljava/lang/String;
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+	getstatic	HelloWorld/someInt I
+	ldc 0
+	if_icmpge	IfLabel0
 
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	ldc "While Loop..."
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+	ldc 13.0
+	putstatic	HelloWorld/someFloat F
 
-	goto whileCompare
-whileLoop:
+	goto		ElseLabel0
+
+IfLabel0:
+	getstatic	HelloWorld/someInt I
+	ldc 0
+	if_icmple	IfLabel1
+
+	ldc 13.1
+	putstatic	HelloWorld/someFloat F
+
+	goto		ElseLabel0
+
+IfLabel1:
+	ldc 13.2
+	putstatic	HelloWorld/someFloat F
+
+ElseLabel0:
+
+WhileCompare2: 
+	getstatic	HelloWorld/someInt I
+	ldc 3
+	if_icmpge	Label2
+	goto		WhileLoop2
+
+WhileLoop2: 
 	getstatic	HelloWorld/someInt I
 	ldc 1
 	iadd
 	putstatic	HelloWorld/someInt I
-
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	ldc "When statement..."
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
-
 	getstatic	HelloWorld/someInt I
 	lookupswitch
-		0: whenLabel1
-		1: whenLabel2
-		default: whenLabel3
+		0: WhenLabel1
+		1: WhenLabel2
+		default: WhenLabel3
 
-whenLabel1:
+WhenLabel1:
 	ldc 13.0
 	putstatic	HelloWorld/someFloat F
 
-end:
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	new java/lang/StringBuilder
-	dup
-	ldc "someFloat= "
-	invokenonvirtual java/lang/StringBuilder/<init>(Ljava/lang/String;)V
-	getstatic	HelloWorld/someFloat F
-	invokevirtual java/lang/StringBuilder/append(F)Ljava/lang/StringBuilder;
-	invokevirtual java/lang/StringBuilder/toString()Ljava/lang/String;
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+	goto		WhenEnd2
 
-	goto end
-
-whenLabel2:
+WhenLabel2:
 	ldc 13.1
 	putstatic	HelloWorld/someFloat F
 
-end:
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	new java/lang/StringBuilder
-	dup
-	ldc "someFloat= "
-	invokenonvirtual java/lang/StringBuilder/<init>(Ljava/lang/String;)V
-	getstatic	HelloWorld/someFloat F
-	invokevirtual java/lang/StringBuilder/append(F)Ljava/lang/StringBuilder;
-	invokevirtual java/lang/StringBuilder/toString()Ljava/lang/String;
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+	goto		WhenEnd2
 
-	goto end
-
-whenLabel3:
+WhenLabel3:
 	ldc 13.2
 	putstatic	HelloWorld/someFloat F
 
-end:
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	new java/lang/StringBuilder
-	dup
-	ldc "someFloat= "
-	invokenonvirtual java/lang/StringBuilder/<init>(Ljava/lang/String;)V
-	getstatic	HelloWorld/someFloat F
-	invokevirtual java/lang/StringBuilder/append(F)Ljava/lang/StringBuilder;
-	invokevirtual java/lang/StringBuilder/toString()Ljava/lang/String;
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+	goto		WhenEnd2
 
-	goto end
+WhenEnd2:
+	goto		WhileCompare2
 
-end:
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	new java/lang/StringBuilder
-	dup
-	ldc "someInt= "
-	invokenonvirtual java/lang/StringBuilder/<init>(Ljava/lang/String;)V
-	getstatic	HelloWorld/someInt I
-	invokevirtual java/lang/StringBuilder/append(I)Ljava/lang/StringBuilder;
-	invokevirtual java/lang/StringBuilder/toString()Ljava/lang/String;
-	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
-
-whileCompare: 
-	getstatic	HelloWorld/someInt I
-	ldc 3
-	if_icmplt whileLoop
+Label2:
 
 	return
 
-.limit locals 32
-.limit stack 32
+.limit locals 100
+.limit stack 100
 .end method
