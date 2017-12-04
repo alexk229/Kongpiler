@@ -17,6 +17,7 @@ import com.TeamAlexKong.parser.HelloParser.ElseStatementContext;
 import com.TeamAlexKong.parser.HelloParser.EqualityExprContext;
 import com.TeamAlexKong.parser.HelloParser.FloatingPointConstContext;
 import com.TeamAlexKong.parser.HelloParser.ForControlContext;
+import com.TeamAlexKong.parser.HelloParser.FormalParameterContext;
 import com.TeamAlexKong.parser.HelloParser.IfStatementContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
 import com.TeamAlexKong.parser.HelloParser.IsExprContext;
@@ -51,6 +52,22 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     private int whenLabelNum;
     String className;
     
+    private String typeCheck(String typeName) {
+    	String type = typeName.equals("Int") ? "I"
+    			: typeName.equals("Float") ? "F"
+    		    : typeName.equals("String") ? "Ljava/lang/String;"
+    		    : "V";
+    	return type;
+    }
+    
+    private String typeCheckExpr(TypeSpec typeExpr) {
+    	String type = (typeExpr == Predefined.integerType) ? "I"
+				 : (typeExpr == Predefined.realType) ? "F"
+				 : (typeExpr == Predefined.realType) ? "Ljava/lang/String;"		 
+				 :	"?";
+    	return type;
+    }
+
     public TeamAlexKongVisitor2(PrintWriter jFile) {
     	this.jFile = jFile;
     }
@@ -71,14 +88,19 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	@Override
 	public Integer visitMethodDeclaration(HelloParser.MethodDeclarationContext ctx) { 
         String methodName = ctx.method().Identifier().getText();
-        
-        if (methodName.equals("main")) {
-            jFile.println();
-            jFile.println(".method public static "+ methodName + "([Ljava/lang/String;)V");
-            jFile.println();
+        String type = "V";
+        if(ctx.type() != null) {
+        	String typeName = ctx.type().getText();
+        	type = typeCheck(typeName);
         }
         
-        Integer value = visitChildren(ctx);
+        jFile.println();
+        jFile.print(".method public static "+ methodName + "(");
+        Integer value = visit(ctx.method());
+        jFile.println(")" + type);
+        jFile.println();
+        
+        value = visit(ctx.methodDeclarationRest());
         
         jFile.println();
         jFile.println("\treturn");
@@ -91,14 +113,20 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	}
 	
 	@Override
+	public Integer visitFormalParameter(FormalParameterContext ctx) {
+		String typeName = ctx.type().getText();
+    	String type = typeCheck(typeName);
+    	
+		jFile.print(type);
+		return visitChildren(ctx);
+	}
+	
+	@Override
 	public Integer visitVariableAssignment(VariableAssignmentContext ctx) {
 		
 		Integer value = visit(ctx.expression());
 		
-		String typeIndicator = (ctx.expression().typeExpr == Predefined.integerType) ? "I"
-							 : (ctx.expression().typeExpr == Predefined.realType) ? "F"
-							 : (ctx.expression().typeExpr == Predefined.realType) ? "Ljava/lang/String;"		 
-							 :	"?";
+		String typeIndicator = typeCheckExpr(ctx.expression().typeExpr);
 								 
         // Emit a field put instruction.
 		jFile.println("\tldc " + ctx.expression().getText());
@@ -113,11 +141,8 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	@Override
 	public Integer visitVariableExpr(VariableExprContext ctx) {
         String variableName = ctx.variable().Identifier().toString();
-        TypeSpec type = ctx.typeExpr;
         
-        String typeIndicator = (type == Predefined.integerType) ? "I"
-                             : (type == Predefined.realType)    ? "F"
-                             :                                    "?";
+        String typeIndicator = typeCheckExpr(ctx.typeExpr);
         
         // Emit a field get instruction.
         jFile.println("\tgetstatic\t" + className +

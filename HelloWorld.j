@@ -14,7 +14,7 @@
 .limit stack 20
 .end method
 
-.method public static main([Ljava/lang/String;)V
+.method public static main()V
 
 	ldc 0
 	putstatic	HelloWorld/someInt I
@@ -86,6 +86,15 @@ WhenEnd2:
 	goto		WhileCompare2
 
 Label2:
+
+	return
+
+.limit locals 100
+.limit stack 100
+.end method
+
+.method public static someFunction(Ljava/lang/String;I)V
+
 
 	return
 

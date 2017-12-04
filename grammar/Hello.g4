@@ -201,7 +201,8 @@ typeName
     :   qualifiedName
     ;
 
-type:   classType ('[' ']')*
+type   	locals [ TypeSpec typeExpr = null ]
+	: 	classType ('[' ']')*
     |   primitiveType ('[' ']')*
     ;
 
@@ -218,7 +219,6 @@ primitiveType
     |   'Long'
     |   'Float'
     |   'Double'
-    |	'URL'
     ;
 
 // Let variableModifier
@@ -244,12 +244,16 @@ formalParameters
     ;
 
 formalParameterDecls
-    :   variableModifiers variableDeclaratorId ':' formalParameterDeclsRest
+    : formalParameter (',' formalParameter)* (',' lastFormalParameter)?
+    | lastFormalParameter
+    ;
+    
+formalParameter
+    :   variableModifiers variableDeclaratorId ':' type
     ;
 
-formalParameterDeclsRest
-    :   type (',' formalParameterDecls)?
-    |   '...' variableDeclaratorId
+lastFormalParameter
+    : variableModifier* type '...' variableDeclaratorId
     ;
 
 methodBody
@@ -352,10 +356,6 @@ whenEntry
 whenCondition
   : expression
   ;
-  
-formalParameter
-    :   variableModifiers type variableDeclaratorId
-    ;
 
 // For loop statement
 forControl

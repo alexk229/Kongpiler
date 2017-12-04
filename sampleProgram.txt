@@ -29,4 +29,8 @@ class HelloWorld {
 			}
 		}
 	}
+	
+	fun someFunction(something: String, some: Int) {
+	
+	}
 }

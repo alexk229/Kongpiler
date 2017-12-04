@@ -303,11 +303,17 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitFormalParameterDecls(HelloParser.FormalParameterDeclsContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link HelloParser#formalParameterDeclsRest}.
+	 * Visit a parse tree produced by {@link HelloParser#formalParameter}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFormalParameterDeclsRest(HelloParser.FormalParameterDeclsRestContext ctx);
+	T visitFormalParameter(HelloParser.FormalParameterContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#lastFormalParameter}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLastFormalParameter(HelloParser.LastFormalParameterContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#methodBody}.
 	 * @param ctx the parse tree
@@ -458,12 +464,6 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitWhenCondition(HelloParser.WhenConditionContext ctx);
-	/**
-	 * Visit a parse tree produced by {@link HelloParser#formalParameter}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitFormalParameter(HelloParser.FormalParameterContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#forControl}.
 	 * @param ctx the parse tree

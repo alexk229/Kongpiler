@@ -332,18 +332,6 @@ public class HelloBaseListener implements HelloListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterFormalParameterDeclsRest(@NotNull HelloParser.FormalParameterDeclsRestContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitFormalParameterDeclsRest(@NotNull HelloParser.FormalParameterDeclsRestContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterTypeParameters(@NotNull HelloParser.TypeParametersContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -351,6 +339,18 @@ public class HelloBaseListener implements HelloListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitTypeParameters(@NotNull HelloParser.TypeParametersContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterLastFormalParameter(@NotNull HelloParser.LastFormalParameterContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitLastFormalParameter(@NotNull HelloParser.LastFormalParameterContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

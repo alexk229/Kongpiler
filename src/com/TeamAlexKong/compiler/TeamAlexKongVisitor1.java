@@ -15,11 +15,13 @@ import com.TeamAlexKong.parser.HelloParser.EqualityExprContext;
 import com.TeamAlexKong.parser.HelloParser.ExpressionContext;
 import com.TeamAlexKong.parser.HelloParser.FieldDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.FloatingPointConstContext;
+import com.TeamAlexKong.parser.HelloParser.FormalParameterContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerLiteralContext;
 import com.TeamAlexKong.parser.HelloParser.LiteralContext;
 import com.TeamAlexKong.parser.HelloParser.PrimaryExpContext;
 import com.TeamAlexKong.parser.HelloParser.StringConstContext;
+import com.TeamAlexKong.parser.HelloParser.TypeContext;
 import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
 import com.TeamAlexKong.parser.HelloParser.VariableContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorContext;
@@ -125,6 +127,42 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     		value = visit(ctx.variableInitializer());
     	}
     	
+    	return value;
+    }
+    
+    @Override
+    public Integer visitFormalParameter(FormalParameterContext ctx) {
+    	String typeName = ctx.type().getText();
+        TypeSpec type;
+        String   typeIndicator;
+        
+        if (typeName.equalsIgnoreCase("int")) {
+            type = Predefined.integerType;
+            typeIndicator = "I";
+        }
+        else if (typeName.equalsIgnoreCase("float")) {
+            type = Predefined.realType;
+            typeIndicator = "F";
+        } 
+        else if (typeName.equalsIgnoreCase("bool")) {
+            type = Predefined.booleanType;
+            typeIndicator = "Z";
+        } else if (typeName.equalsIgnoreCase("string")) {
+        	type = Predefined.stringType;
+        	typeIndicator = "Ljava/lang/String;";
+        }
+        
+        else {
+            type = null;
+            typeIndicator = "?";
+        }
+        
+        Integer value = visitChildren(ctx);
+                    
+        for (SymTabEntry id : variableIdList) {
+            id.setTypeSpec(type);
+        }
+        
     	return value;
     }
     

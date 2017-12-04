@@ -290,16 +290,6 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitTypeName(@NotNull HelloParser.TypeNameContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link HelloParser#formalParameterDeclsRest}.
-	 * @param ctx the parse tree
-	 */
-	void enterFormalParameterDeclsRest(@NotNull HelloParser.FormalParameterDeclsRestContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link HelloParser#formalParameterDeclsRest}.
-	 * @param ctx the parse tree
-	 */
-	void exitFormalParameterDeclsRest(@NotNull HelloParser.FormalParameterDeclsRestContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link HelloParser#typeParameters}.
 	 * @param ctx the parse tree
 	 */
@@ -309,6 +299,16 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTypeParameters(@NotNull HelloParser.TypeParametersContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link HelloParser#lastFormalParameter}.
+	 * @param ctx the parse tree
+	 */
+	void enterLastFormalParameter(@NotNull HelloParser.LastFormalParameterContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#lastFormalParameter}.
+	 * @param ctx the parse tree
+	 */
+	void exitLastFormalParameter(@NotNull HelloParser.LastFormalParameterContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#constructorBody}.
 	 * @param ctx the parse tree
