@@ -25,6 +25,7 @@ import com.TeamAlexKong.parser.HelloParser.IsOpContext;
 import com.TeamAlexKong.parser.HelloParser.LocalVariableDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.RelationalExprContext;
 import com.TeamAlexKong.parser.HelloParser.StringConstContext;
+import com.TeamAlexKong.parser.HelloParser.TypeArgumentContext;
 import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
 import com.TeamAlexKong.parser.HelloParser.VariableContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorContext;
@@ -53,17 +54,22 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     String className;
     
     private String typeCheck(String typeName) {
-    	String type = typeName.equals("Int") ? "I"
-    			: typeName.equals("Float") ? "F"
-    		    : typeName.equals("String") ? "Ljava/lang/String;"
-    		    : "V";
+    	String type = "";
+        if (typeName.indexOf("Array") >= 0) {
+        	type = "[";
+        }
+        
+    	type += (typeName.indexOf("Int") >= 0) ? "I"
+    			: (typeName.indexOf("Float") >= 0) ? "F"
+    		    : (typeName.indexOf("String") >= 0) ? "Ljava/lang/String;"
+    		    : "?";
     	return type;
     }
     
     private String typeCheckExpr(TypeSpec typeExpr) {
     	String type = (typeExpr == Predefined.integerType) ? "I"
 				 : (typeExpr == Predefined.realType) ? "F"
-				 : (typeExpr == Predefined.realType) ? "Ljava/lang/String;"		 
+				 : (typeExpr == Predefined.charType) ? "Ljava/lang/String;"		 
 				 :	"?";
     	return type;
     }
@@ -114,11 +120,10 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	
 	@Override
 	public Integer visitFormalParameter(FormalParameterContext ctx) {
-		String typeName = ctx.type().getText();
-    	String type = typeCheck(typeName);
-    	
+		Integer value = visitChildren(ctx);
+		String type = typeCheck(ctx.type().getText());
 		jFile.print(type);
-		return visitChildren(ctx);
+		return value;
 	}
 	
 	@Override
@@ -251,12 +256,6 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
                 + " " + typeIndicator);
         
 		return value;
-	}
-	
-	@Override
-	public Integer visitIsExpr(IsExprContext ctx) {
-		// TODO Auto-generated method stub
-		return super.visitIsExpr(ctx);
 	}
 	
 	@Override

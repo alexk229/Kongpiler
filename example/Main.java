@@ -17,11 +17,8 @@ public class Main {
 		}
 	}
 	
-	public String method1(String someString, int someInt, float someFloat) {
-		if(someInt == 0) {
-			someVal = someString;
-		}
-		return someVal;
+	public String method1(String[] someString, int[] someInt, float[] someFloat) {
+		return "Hello World!";
 	}
 
 }

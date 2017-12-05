@@ -3,7 +3,7 @@
 .field private static someInt I = 0
 .field private static someFloat F = 0
 .field private static someString Ljava/lang/String; = "Hello World"
-
+.field private static someArray [I
 .method public <init>()V
 
 	aload_0
@@ -14,7 +14,7 @@
 .limit stack 20
 .end method
 
-.method public static main()V
+.method public static main([Ljava/lang/String;)V
 
 	ldc 0
 	putstatic	HelloWorld/someInt I
@@ -93,7 +93,7 @@ Label2:
 .limit stack 100
 .end method
 
-.method public static someFunction(Ljava/lang/String;I)V
+.method public static someFunction([Ljava/lang/String;[II)V
 
 
 	return

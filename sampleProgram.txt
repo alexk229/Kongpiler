@@ -3,12 +3,13 @@ class HelloWorld {
     private var someInt: Int = 0;
     private var someFloat: Float = 0;
     private var someString: String = "Hello World";
+    private var someArray: Array<Int>;
 	
 	init() {
 		super();
 	}
 
-	fun main() {
+	fun main(args: Array<String>) {
 		someInt = 0;
 		someFloat = 13.2;
 
@@ -30,7 +31,7 @@ class HelloWorld {
 		}
 	}
 	
-	fun someFunction(something: String, some: Int) {
+	fun someFunction(something: Array<String>, some: Array<Int>, someInt: Int)  {
 	
 	}
 }

@@ -134,24 +134,29 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     public Integer visitFormalParameter(FormalParameterContext ctx) {
     	String typeName = ctx.type().getText();
         TypeSpec type;
-        String   typeIndicator;
+        String typeIndicator = null;
         
-        if (typeName.equalsIgnoreCase("int")) {
+        if (typeName.indexOf("Array") >= 0) {
+        	typeName.replace("Array", "");
+        	typeIndicator = "[";
+        	System.out.println("contains");
+        }
+        
+        if (typeName.indexOf("Int") >= 0) {
             type = Predefined.integerType;
-            typeIndicator = "I";
+            typeIndicator += "I";
         }
-        else if (typeName.equalsIgnoreCase("float")) {
+        else if (typeName.indexOf("Float") >= 0) {
             type = Predefined.realType;
-            typeIndicator = "F";
+            typeIndicator += "F";
         } 
-        else if (typeName.equalsIgnoreCase("bool")) {
+        else if (typeName.indexOf("Bool") >= 0) {
             type = Predefined.booleanType;
-            typeIndicator = "Z";
-        } else if (typeName.equalsIgnoreCase("string")) {
+            typeIndicator += "Z";
+        } else if (typeName.indexOf("String") >= 0) {
         	type = Predefined.stringType;
-        	typeIndicator = "Ljava/lang/String;";
+        	typeIndicator += "Ljava/lang/String;";
         }
-        
         else {
             type = null;
             typeIndicator = "?";
@@ -183,29 +188,32 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     	String typeName = ctx.getText();
     	
         TypeSpec type;
-        String   typeIndicator;
+        String   typeIndicator = "";
         
-        if (typeName.equalsIgnoreCase("int")) {
+        if (typeName.indexOf("Array") >= 0) {
+        	typeIndicator = "[";
+        }
+        
+        if (typeName.indexOf("Int") >= 0) {
             type = Predefined.integerType;
-            typeIndicator = "I";
+            typeIndicator += "I";
         }
-        else if (typeName.equalsIgnoreCase("float")) {
+        else if (typeName.indexOf("Float") >= 0) {
             type = Predefined.realType;
-            typeIndicator = "F";
+            typeIndicator += "F";
         } 
-        else if (typeName.equalsIgnoreCase("bool")) {
+        else if (typeName.indexOf("Bool") >= 0) {
             type = Predefined.booleanType;
-            typeIndicator = "Z";
-        } else if (typeName.equalsIgnoreCase("string")) {
+            typeIndicator += "Z";
+        } else if (typeName.indexOf("String") >= 0) {
         	type = Predefined.stringType;
-        	typeIndicator = "Ljava/lang/String;";
+        	typeIndicator += "Ljava/lang/String;";
         }
-        
         else {
             type = null;
             typeIndicator = "?";
         }
-                    
+        
         for (SymTabEntry id : variableIdList) {
             id.setTypeSpec(type);
             
