@@ -14,6 +14,22 @@
 .limit stack 20
 .end method
 
+.method public static someFunctionA(I)Ljava/lang/String;
+
+	return
+
+.limit locals 100
+.limit stack 100
+.end method
+
+.method public static someFunction([Ljava/lang/String;[II)V
+
+	return
+
+.limit locals 100
+.limit stack 100
+.end method
+
 .method public static main([Ljava/lang/String;)V
 
 	ldc 0
@@ -86,16 +102,8 @@ WhenEnd2:
 	goto		WhileCompare2
 
 Label2:
-
-	return
-
-.limit locals 100
-.limit stack 100
-.end method
-
-.method public static someFunction([Ljava/lang/String;[II)V
-
-
+	invokestatic HelloWorld/someFunctionA()Ljava/lang/String;
+	getstatic	HelloWorld/someInt V
 	return
 
 .limit locals 100

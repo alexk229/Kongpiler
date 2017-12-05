@@ -624,6 +624,18 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitWhenEntry(@NotNull HelloParser.WhenEntryContext ctx);
 	/**
+	 * Enter a parse tree produced by the {@code functionExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterFunctionExpr(@NotNull HelloParser.FunctionExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code functionExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitFunctionExpr(@NotNull HelloParser.FunctionExprContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link HelloParser#variableModifier}.
 	 * @param ctx the parse tree
 	 */
@@ -697,18 +709,6 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIsExpr(@NotNull HelloParser.IsExprContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code listExpr}
-	 * labeled alternative in {@link HelloParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterListExpr(@NotNull HelloParser.ListExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code listExpr}
-	 * labeled alternative in {@link HelloParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitListExpr(@NotNull HelloParser.ListExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#constantDeclaratorsRest}.
 	 * @param ctx the parse tree

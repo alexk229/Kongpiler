@@ -569,6 +569,13 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitAdditiveExpr(HelloParser.AdditiveExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code functionExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFunctionExpr(HelloParser.FunctionExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code variableExpr}
 	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
@@ -582,13 +589,6 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIsExpr(HelloParser.IsExprContext ctx);
-	/**
-	 * Visit a parse tree produced by the {@code listExpr}
-	 * labeled alternative in {@link HelloParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitListExpr(HelloParser.ListExprContext ctx);
 	/**
 	 * Visit a parse tree produced by the {@code bitwiseXorExpr}
 	 * labeled alternative in {@link HelloParser#expression}.

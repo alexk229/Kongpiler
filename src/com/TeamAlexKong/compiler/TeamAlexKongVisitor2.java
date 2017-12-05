@@ -18,12 +18,14 @@ import com.TeamAlexKong.parser.HelloParser.EqualityExprContext;
 import com.TeamAlexKong.parser.HelloParser.FloatingPointConstContext;
 import com.TeamAlexKong.parser.HelloParser.ForControlContext;
 import com.TeamAlexKong.parser.HelloParser.FormalParameterContext;
+import com.TeamAlexKong.parser.HelloParser.FunctionExprContext;
 import com.TeamAlexKong.parser.HelloParser.IfStatementContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
 import com.TeamAlexKong.parser.HelloParser.IsExprContext;
 import com.TeamAlexKong.parser.HelloParser.IsOpContext;
 import com.TeamAlexKong.parser.HelloParser.LocalVariableDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.RelationalExprContext;
+import com.TeamAlexKong.parser.HelloParser.StatementExpressionContext;
 import com.TeamAlexKong.parser.HelloParser.StringConstContext;
 import com.TeamAlexKong.parser.HelloParser.TypeArgumentContext;
 import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
@@ -69,8 +71,8 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     private String typeCheckExpr(TypeSpec typeExpr) {
     	String type = (typeExpr == Predefined.integerType) ? "I"
 				 : (typeExpr == Predefined.realType) ? "F"
-				 : (typeExpr == Predefined.charType) ? "Ljava/lang/String;"		 
-				 :	"?";
+				 : (typeExpr == Predefined.stringType) ? "Ljava/lang/String;"		 
+				 :	"V";
     	return type;
     }
 
@@ -108,7 +110,6 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         
         value = visit(ctx.methodDeclarationRest());
         
-        jFile.println();
         jFile.println("\treturn");
         jFile.println();
         jFile.println(".limit locals 100");
@@ -124,6 +125,14 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 		String type = typeCheck(ctx.type().getText());
 		jFile.print(type);
 		return value;
+	}
+	
+	@Override
+	public Integer visitFunctionExpr(FunctionExprContext ctx) {
+		String methodName = ctx.expression().getText();
+		String typeIndicator = typeCheckExpr(ctx.typeExpr);
+		jFile.println("\tinvokestatic " + className + "/" + methodName + "()" + typeIndicator);
+		return visit(ctx.expressionList());
 	}
 	
 	@Override

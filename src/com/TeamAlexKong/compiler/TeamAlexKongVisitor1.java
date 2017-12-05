@@ -16,10 +16,14 @@ import com.TeamAlexKong.parser.HelloParser.ExpressionContext;
 import com.TeamAlexKong.parser.HelloParser.FieldDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.FloatingPointConstContext;
 import com.TeamAlexKong.parser.HelloParser.FormalParameterContext;
+import com.TeamAlexKong.parser.HelloParser.FunctionExprContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerLiteralContext;
 import com.TeamAlexKong.parser.HelloParser.LiteralContext;
+import com.TeamAlexKong.parser.HelloParser.MethodContext;
+import com.TeamAlexKong.parser.HelloParser.MethodDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.PrimaryExpContext;
+import com.TeamAlexKong.parser.HelloParser.StatementExpressionContext;
 import com.TeamAlexKong.parser.HelloParser.StringConstContext;
 import com.TeamAlexKong.parser.HelloParser.TypeContext;
 import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
@@ -117,6 +121,8 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     	return visitChildren(ctx);  
     }
     
+    
+    
     @Override
     public Integer visitVariableDeclarator(VariableDeclaratorContext ctx) {
     	Integer value = visit(ctx.variableDeclaratorId());
@@ -134,12 +140,10 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     public Integer visitFormalParameter(FormalParameterContext ctx) {
     	String typeName = ctx.type().getText();
         TypeSpec type;
-        String typeIndicator = null;
+        String typeIndicator = "";
         
         if (typeName.indexOf("Array") >= 0) {
-        	typeName.replace("Array", "");
         	typeIndicator = "[";
-        	System.out.println("contains");
         }
         
         if (typeName.indexOf("Int") >= 0) {
@@ -249,6 +253,61 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     }
     
     @Override
+    public Integer visitMethodDeclaration(MethodDeclarationContext ctx) {
+    	variableIdList = new ArrayList<SymTabEntry>();
+    	
+    	Integer value = visitChildren(ctx);
+    	
+    	String typeName = "";
+    	
+    	if(ctx.type() != null) {
+    		typeName = ctx.type().getText();
+    	}
+    	
+        TypeSpec type;
+        String   typeIndicator = "";
+        
+        if (typeName.indexOf("Array") >= 0) {
+        	typeIndicator = "[";
+        }
+        
+        if (typeName.indexOf("Int") >= 0) {
+            type = Predefined.integerType;
+            typeIndicator += "I";
+        }
+        else if (typeName.indexOf("Float") >= 0) {
+            type = Predefined.realType;
+            typeIndicator += "F";
+        } 
+        else if (typeName.indexOf("Bool") >= 0) {
+            type = Predefined.booleanType;
+            typeIndicator += "Z";
+        } else if (typeName.indexOf("String") >= 0) {
+        	type = Predefined.stringType;
+        	typeIndicator += "Ljava/lang/String;";
+        } else {
+        	type = Predefined.voidType;
+        	typeIndicator = "V";
+        }
+        
+    	SymTabEntry variableId = symTabStack.lookup(ctx.method().Identifier().toString());
+    	variableId.setTypeSpec(type);
+    	
+        return value;
+    }
+    
+    @Override
+    public Integer visitMethod(MethodContext ctx) {
+        String methodName = ctx.Identifier().toString();
+        
+        SymTabEntry methodId = symTabStack.enterLocal(methodName);
+        methodId.setDefinition(FUNCTION);
+        
+        variableIdList.add(methodId);
+        return visitChildren(ctx); 
+    }
+    
+    @Override
     public Integer visitIntegerConst(IntegerConstContext ctx) {
         ctx.typeExpr = Predefined.integerType;
         return visitChildren(ctx); 
@@ -276,6 +335,14 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     public Integer visitPrimaryExp(PrimaryExpContext ctx) {
     	Integer value = visit(ctx.primary());
     	ctx.typeExpr = ctx.primary().literal().typeExpr;
+    	return value;
+    }
+    
+    @Override
+    public Integer visitFunctionExpr(FunctionExprContext ctx) {
+    	Integer value = visit(ctx.expression());
+    	SymTabEntry variableId = symTabStack.lookup(ctx.expression().getText());
+    	ctx.typeExpr = variableId.getTypeSpec();
     	return value;
     }
 }

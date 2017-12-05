@@ -403,7 +403,7 @@ expression locals [ TypeSpec typeExpr = null ]
     |   expression '.' 'new' Identifier '(' expressionList? ')'	# newExpr
     |   expression '.' 'super' '.' Identifier arguments?	# superIndentifierExpr
     |   expression '[' expression ']'	# arrayExpr
-    |   expression '(' expressionList? ')'	# listExpr
+    |   expression '(' expressionList? ')'	# functionExpr
     |   expression addSubOneOp	# addSubOneExpr
     |   ('+'|'-'|'++'|'--') expression # unaryOpExpr
     |   ('~'|'!') expression	# notExpr

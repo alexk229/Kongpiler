@@ -4799,6 +4799,23 @@ public class HelloParser extends Parser {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitAdditiveExpr(this);
 		}
 	}
+	public static class FunctionExprContext extends ExpressionContext {
+		public ExpressionListContext expressionList() {
+			return getRuleContext(ExpressionListContext.class,0);
+		}
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public FunctionExprContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterFunctionExpr(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitFunctionExpr(this);
+		}
+	}
 	public static class VariableExprContext extends ExpressionContext {
 		public VariableContext variable() {
 			return getRuleContext(VariableContext.class,0);
@@ -4831,23 +4848,6 @@ public class HelloParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitIsExpr(this);
-		}
-	}
-	public static class ListExprContext extends ExpressionContext {
-		public ExpressionListContext expressionList() {
-			return getRuleContext(ExpressionListContext.class,0);
-		}
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public ListExprContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).enterListExpr(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof HelloListener ) ((HelloListener)listener).exitListExpr(this);
 		}
 	}
 	public static class BitwiseXorExprContext extends ExpressionContext {
@@ -5488,7 +5488,7 @@ public class HelloParser extends Parser {
 						break;
 					case 19:
 						{
-						_localctx = new ListExprContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new FunctionExprContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(860);
 						if (!(precpred(_ctx, 21))) throw new FailedPredicateException(this, "precpred(_ctx, 21)");

@@ -8,6 +8,14 @@ class HelloWorld {
 	init() {
 		super();
 	}
+	
+	fun someFunctionA(something: Int): String {
+		
+	}
+	
+	fun someFunction(something: Array<String>, some: Array<Int>, someInt: Int)  {
+		
+	}
 
 	fun main(args: Array<String>) {
 		someInt = 0;
@@ -29,9 +37,6 @@ class HelloWorld {
 				else -> someFloat = 13.2;
 			}
 		}
-	}
-	
-	fun someFunction(something: Array<String>, some: Array<Int>, someInt: Int)  {
-	
+		someFunctionA(someInt);
 	}
 }

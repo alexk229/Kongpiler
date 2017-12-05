@@ -15,10 +15,12 @@ public class Main {
 		while(someInt < 0) {
 			someInt++;
 		}
+		
+		function(someInt);
 	}
 	
-	public String method1(String[] someString, int[] someInt, float[] someFloat) {
-		return "Hello World!";
+	public static int function(int num) {
+		return num;
 	}
 
 }

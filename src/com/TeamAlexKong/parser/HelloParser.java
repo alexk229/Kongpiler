@@ -4922,6 +4922,20 @@ public class HelloParser extends Parser {
 			else return visitor.visitChildren(this);
 		}
 	}
+	public static class FunctionExprContext extends ExpressionContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public ExpressionListContext expressionList() {
+			return getRuleContext(ExpressionListContext.class,0);
+		}
+		public FunctionExprContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitFunctionExpr(this);
+			else return visitor.visitChildren(this);
+		}
+	}
 	public static class VariableExprContext extends ExpressionContext {
 		public VariableContext variable() {
 			return getRuleContext(VariableContext.class,0);
@@ -4947,20 +4961,6 @@ public class HelloParser extends Parser {
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
 			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitIsExpr(this);
-			else return visitor.visitChildren(this);
-		}
-	}
-	public static class ListExprContext extends ExpressionContext {
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public ExpressionListContext expressionList() {
-			return getRuleContext(ExpressionListContext.class,0);
-		}
-		public ListExprContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof HelloVisitor ) return ((HelloVisitor<? extends T>)visitor).visitListExpr(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -5642,7 +5642,7 @@ public class HelloParser extends Parser {
 						break;
 					case 19:
 						{
-						_localctx = new ListExprContext(new ExpressionContext(_parentctx, _parentState));
+						_localctx = new FunctionExprContext(new ExpressionContext(_parentctx, _parentState));
 						pushNewRecursionContext(_localctx, _startState, RULE_expression);
 						setState(860);
 						if (!(precpred(_ctx, 21))) throw new FailedPredicateException(this, "precpred(_ctx, 21)");

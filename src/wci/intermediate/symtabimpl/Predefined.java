@@ -30,9 +30,11 @@ public class Predefined
     public static TypeSpec booleanType;
     public static TypeSpec charType;
     public static TypeSpec undefinedType;
+    public static TypeSpec voidType;
     public static TypeSpec stringType;
 
     // Predefined identifiers.
+    public static SymTabEntry voidId;
     public static SymTabEntry stringId;
     public static SymTabEntry integerId;
     public static SymTabEntry complexId;
@@ -139,6 +141,13 @@ public class Predefined
         stringType.setIdentifier(stringId);
         stringId.setDefinition(DefinitionImpl.TYPE);
         stringId.setTypeSpec(stringType);
+        
+        // Type void
+        voidId = symTabStack.enterLocal("void");
+        voidType = TypeFactory.createType(SCALAR);
+        voidType.setIdentifier(voidId);
+        voidId.setDefinition(DefinitionImpl.TYPE);
+        voidId.setTypeSpec(voidType);
         
         // Type Array
         
