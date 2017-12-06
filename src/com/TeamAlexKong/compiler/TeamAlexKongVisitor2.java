@@ -57,6 +57,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     private int labelNum;
     private int endIfLabelNum;
     private int whenLabelNum;
+    private boolean containsReturnType = false;
     String className;
     
     private String typeCheck(String typeName) {
@@ -109,6 +110,9 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	public Integer visitMethodDeclaration(HelloParser.MethodDeclarationContext ctx) { 
         String methodName = ctx.method().Identifier().getText();
         String type = "V";
+        
+        containsReturnType = false;
+        
         if(ctx.type() != null) {
         	String typeName = ctx.type().getText();
         	type = typeCheck(typeName);
@@ -121,6 +125,10 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         jFile.println();
         
         value = visitChildren(ctx.methodDeclarationRest());
+        
+        if(!containsReturnType) {
+        	jFile.println("\treturn");
+        }
         
         jFile.println();
         jFile.println(".limit locals 100");
@@ -160,6 +168,8 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	public Integer visitReturnStatement(ReturnStatementContext ctx) {
 		Integer value = visit(ctx.expression());
 		String type = typeCheckForReturn(ctx.expression().typeExpr);
+		
+		containsReturnType = true;
 		
 		jFile.print("\t" + type + "return");
 		jFile.println();
@@ -327,15 +337,6 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	public Integer visitWhenStatement(WhenStatementContext ctx) {
 		
 		Integer value = visit(ctx.parExpression());
-		
-		TypeSpec type = ctx.parExpression().expression().typeExpr;
-
-		String variableName = ctx.parExpression().expression().getText();
-        boolean integerMode = (type == Predefined.integerType);
-        boolean realMode = (type == Predefined.realType);
-        String typeIndicator = integerMode ? "I"
-				: realMode ? "F"
-				: 			 "?";
 		
 		jFile.println("\tlookupswitch");
 		

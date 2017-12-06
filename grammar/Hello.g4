@@ -162,7 +162,7 @@ constantDeclaratorRest
     :   ('[' ']')* '=' variableInitializer
     ;
 
-variableDeclaratorId locals [ TypeSpec typeVar = null ]
+variableDeclaratorId
     :   Identifier
     ;
 	
@@ -249,11 +249,11 @@ formalParameterDecls
     ;
     
 formalParameter
-    :   variableModifiers variableDeclaratorId ':' type
+    :   variableModifiers Identifier ':' type
     ;
 
 lastFormalParameter
-    : variableModifier* type '...' variableDeclaratorId
+    : variableModifier* type '...' Identifier
     ;
 
 methodBody
