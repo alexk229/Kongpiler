@@ -16,11 +16,11 @@
 
 .method public static someFunctionA(ILjava/lang/String;)Ljava/lang/String;
 
-	aload_0
+	aload_1
 	areturn
 
-.limit locals 100
-.limit stack 100
+.limit locals 32
+.limit stack 32
 .end method
 
 .method public static someFunctionB(I)I
@@ -28,8 +28,8 @@
 	iload_0
 	ireturn
 
-.limit locals 100
-.limit stack 100
+.limit locals 32
+.limit stack 32
 .end method
 
 .method public static main([Ljava/lang/String;)V
@@ -111,6 +111,6 @@ Label2:
 
 	return
 
-.limit locals 100
-.limit stack 100
+.limit locals 32
+.limit stack 32
 .end method

@@ -1,6 +1,7 @@
 package com.TeamAlexKong.compiler;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import com.TeamAlexKong.parser.HelloBaseVisitor;
 import com.TeamAlexKong.parser.HelloParser;
@@ -31,6 +32,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     private int endIfLabelNum;
     private int whenLabelNum;
     private boolean containsReturnType;
+    private ArrayList<String> typeExprList;
     String className;
     
     private String typeCheck(String typeName) {
@@ -47,9 +49,9 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     }
     
     private String typeCheckExpr(TypeSpec typeExpr) {
-    	String type = (typeExpr == Predefined.integerType) ? "I"
-				 : (typeExpr == Predefined.realType) ? "F"
-				 : (typeExpr == Predefined.stringType) ? "Ljava/lang/String;"		 
+    	String type = (typeExpr == Predefined.integerType || typeExpr == Predefined.localIntegerType) ? "I"
+				 : (typeExpr == Predefined.realType || typeExpr == Predefined.localRealType) ? "F"
+				 : (typeExpr == Predefined.stringType || typeExpr == Predefined.localStringType) ? "Ljava/lang/String;"		 
 				 :	null;
     	return type;
     }
@@ -58,6 +60,12 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     	return (typeExpr == Predefined.integerType) 
     			|| (typeExpr == Predefined.realType) 
     			|| (typeExpr == Predefined.stringType);
+    }
+    
+    private boolean isLocalVariable(TypeSpec typeExpr) {
+    	return (typeExpr == Predefined.localIntegerType)
+    			|| (typeExpr == Predefined.localRealType)
+    			|| (typeExpr == Predefined.localStringType);
     }
     
     private String typeCheckForReturn(TypeSpec typeExpr) {
@@ -90,6 +98,8 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         String methodName = ctx.method().Identifier().getText();
         String type = "V";
         
+        typeExprList = new ArrayList<String>();
+        
         containsReturnType = false;
         
         if(ctx.type() != null) {
@@ -110,8 +120,8 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         }
         
         jFile.println();
-        jFile.println(".limit locals 100");
-        jFile.println(".limit stack 100");
+        jFile.println(".limit locals 32");
+        jFile.println(".limit stack 32");
         jFile.println(".end method");
         
         return value;
@@ -121,6 +131,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	public Integer visitFormalParameter(FormalParameterContext ctx) {
 		Integer value = visitChildren(ctx);
 		String type = typeCheck(ctx.type().getText());
+		typeExprList.add(type);
 		jFile.print(type);
 		return value;
 	}
@@ -177,16 +188,15 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	public Integer visitVariableExpr(VariableExprContext ctx) {
         String variableName = ctx.variable().Identifier().toString();
         
-        String typeIndicator;
-        
+        String typeIndicator = typeCheckExpr(ctx.typeExpr);
+       
         if(isGlobalVariable(ctx.typeExpr)) {
             // Emit a field get instruction.
-        	typeIndicator = typeCheckExpr(ctx.typeExpr);
             jFile.println("\tgetstatic\t" + className +
                           "/" + variableName + " " + typeIndicator);
         } else {
-        	typeIndicator = typeCheckForReturn(ctx.typeExpr);
-            jFile.println("\t" + typeIndicator + "load_0");
+        	String type = typeCheckForReturn(ctx.typeExpr);
+        	jFile.println("\t" + type + "load_" + typeExprList.indexOf(typeIndicator));
         }
         
         return visitChildren(ctx); 
@@ -322,15 +332,6 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	public Integer visitWhenStatement(WhenStatementContext ctx) {
 		
 		Integer value = visit(ctx.parExpression());
-		
-		TypeSpec type = ctx.parExpression().expression().typeExpr;
-
-		String variableName = ctx.parExpression().expression().getText();
-        boolean integerMode = (type == Predefined.integerType);
-        boolean realMode = (type == Predefined.realType);
-        String typeIndicator = integerMode ? "I"
-				: realMode ? "F"
-				: 			 "?";
 		
 		jFile.println("\tlookupswitch");
 		

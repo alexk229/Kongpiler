@@ -28,6 +28,10 @@ public class Predefined
 	public static TypeSpec localRealType;
 	public static TypeSpec localStringType;
 	public static TypeSpec localBoolType;
+	public static TypeSpec localFloatType;
+	public static TypeSpec localDoubleType;
+	public static TypeSpec localCharType;
+	public static TypeSpec localLongType;
 	
     public static TypeSpec integerType;
     public static TypeSpec realType;
@@ -37,12 +41,19 @@ public class Predefined
     public static TypeSpec undefinedType;
     public static TypeSpec voidType;
     public static TypeSpec stringType;
+    public static TypeSpec floatType;
+    public static TypeSpec doubleType;
+    public static TypeSpec longType;
 
     // Predefined identifiers.
     public static SymTabEntry localIntegerId;
     public static SymTabEntry localRealId;
     public static SymTabEntry localStringId;
     public static SymTabEntry localBoolId;
+    public static SymTabEntry localFloatId;
+    public static SymTabEntry localDoubleId;
+    public static SymTabEntry localCharId;
+    public static SymTabEntry localLongId;
     
     public static SymTabEntry voidId;
     public static SymTabEntry stringId;
@@ -54,6 +65,10 @@ public class Predefined
     public static SymTabEntry booleanId;
     public static SymTabEntry charId;
     public static SymTabEntry arrayId;
+    public static SymTabEntry floatId;
+    public static SymTabEntry doubleId;
+    public static SymTabEntry longId;
+    
     public static SymTabEntry falseId;
     public static SymTabEntry trueId;
     public static SymTabEntry readId;
@@ -126,6 +141,30 @@ public class Predefined
         localBoolId.setDefinition(DefinitionImpl.TYPE);
         localBoolId.setTypeSpec(localBoolType);
         
+        localFloatId = symTabStack.enterLocal("local float");
+        localFloatType = TypeFactory.createType(SCALAR);
+        localFloatType.setIdentifier(localFloatId);
+        localFloatId.setDefinition(DefinitionImpl.TYPE);
+        localFloatId.setTypeSpec(localFloatType);
+        
+        localDoubleId = symTabStack.enterLocal("local double");
+        localDoubleType = TypeFactory.createType(SCALAR);
+        localDoubleType.setIdentifier(localDoubleId);
+        localDoubleId.setDefinition(DefinitionImpl.TYPE);
+        localDoubleId.setTypeSpec(localDoubleType);
+        
+        localCharId = symTabStack.enterLocal("local char");
+        localCharType = TypeFactory.createType(SCALAR);
+        localCharType.setIdentifier(localCharId);
+        localCharId.setDefinition(DefinitionImpl.TYPE);
+        localCharId.setTypeSpec(localCharType);
+        
+        localLongId = symTabStack.enterLocal("local long");
+        localLongType = TypeFactory.createType(SCALAR);
+        localLongType.setIdentifier(localLongId);
+        localLongId.setDefinition(DefinitionImpl.TYPE);
+        localLongId.setTypeSpec(localLongType);
+        
         // Type real.
         realId = symTabStack.enterLocal("real");
         realType = TypeFactory.createType(SCALAR);
@@ -182,6 +221,24 @@ public class Predefined
         voidType.setIdentifier(voidId);
         voidId.setDefinition(DefinitionImpl.TYPE);
         voidId.setTypeSpec(voidType);
+        
+        floatId = symTabStack.enterLocal("float");
+        floatType = TypeFactory.createType(SCALAR);
+        floatType.setIdentifier(floatId);
+        floatId.setDefinition(DefinitionImpl.TYPE);
+        floatId.setTypeSpec(floatType);
+        
+        doubleId = symTabStack.enterLocal("double");
+        doubleType = TypeFactory.createType(SCALAR);
+        doubleType.setIdentifier(doubleId);
+        doubleId.setDefinition(DefinitionImpl.TYPE);
+        doubleId.setTypeSpec(doubleType);
+
+        longId = symTabStack.enterLocal("long");
+        longType = TypeFactory.createType(SCALAR);
+        longType.setIdentifier(longId);
+        longId.setDefinition(DefinitionImpl.TYPE);
+        longId.setTypeSpec(longType);
         
         // Type Array
         
