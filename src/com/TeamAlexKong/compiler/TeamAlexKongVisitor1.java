@@ -5,37 +5,27 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import com.TeamAlexKong.parser.HelloBaseVisitor;
-import com.TeamAlexKong.parser.HelloParser;
 import com.TeamAlexKong.parser.HelloParser.BooleanConstContext;
 import com.TeamAlexKong.parser.HelloParser.ClassDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.CompilationUnitContext;
-import com.TeamAlexKong.parser.HelloParser.ConstructorBodyContext;
 import com.TeamAlexKong.parser.HelloParser.ConstructorDeclarationContext;
-import com.TeamAlexKong.parser.HelloParser.EqualityExprContext;
-import com.TeamAlexKong.parser.HelloParser.ExpressionContext;
-import com.TeamAlexKong.parser.HelloParser.ExpressionListContext;
-import com.TeamAlexKong.parser.HelloParser.FieldDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.FloatingPointConstContext;
 import com.TeamAlexKong.parser.HelloParser.FormalParameterContext;
+import com.TeamAlexKong.parser.HelloParser.FormalParameterDeclsContext;
 import com.TeamAlexKong.parser.HelloParser.FunctionExprContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
-import com.TeamAlexKong.parser.HelloParser.IntegerLiteralContext;
-import com.TeamAlexKong.parser.HelloParser.LiteralContext;
 import com.TeamAlexKong.parser.HelloParser.MethodContext;
 import com.TeamAlexKong.parser.HelloParser.MethodDeclarationContext;
+import com.TeamAlexKong.parser.HelloParser.ParameterVariableIdContext;
 import com.TeamAlexKong.parser.HelloParser.PrimaryExpContext;
-import com.TeamAlexKong.parser.HelloParser.StatementExpressionContext;
+import com.TeamAlexKong.parser.HelloParser.ReturnStatementContext;
 import com.TeamAlexKong.parser.HelloParser.StringConstContext;
-import com.TeamAlexKong.parser.HelloParser.TypeContext;
-import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
-import com.TeamAlexKong.parser.HelloParser.VariableContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorIdContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorsContext;
 import com.TeamAlexKong.parser.HelloParser.VariableExprContext;
 import com.TeamAlexKong.parser.HelloParser.VariableInitializerContext;
 import com.TeamAlexKong.parser.HelloParser.VariableTypeContext;
-import com.pcl2.parser.Pcl2Parser;
 
 import wci.intermediate.*;
 import wci.intermediate.symtabimpl.*;
@@ -116,6 +106,7 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         return value;
     }
     
+    
     @Override
     public Integer visitVariableDeclarators(VariableDeclaratorsContext ctx) {
     	variableIdList = new ArrayList<SymTabEntry>();
@@ -139,6 +130,7 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     
     @Override
     public Integer visitFormalParameter(FormalParameterContext ctx) {
+    	
     	String typeName = ctx.type().getText();
         TypeSpec type;
         String typeIndicator = "";
@@ -148,18 +140,18 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         }
         
         if (typeName.indexOf("Int") >= 0) {
-            type = Predefined.integerType;
+            type = Predefined.localIntegerType;
             typeIndicator += "I";
         }
         else if (typeName.indexOf("Float") >= 0) {
-            type = Predefined.realType;
+            type = Predefined.localRealType;
             typeIndicator += "F";
         } 
         else if (typeName.indexOf("Bool") >= 0) {
-            type = Predefined.booleanType;
+            type = Predefined.localBoolType;
             typeIndicator += "Z";
         } else if (typeName.indexOf("String") >= 0) {
-        	type = Predefined.stringType;
+        	type = Predefined.localStringType;
         	typeIndicator += "Ljava/lang/String;";
         }
         else {
@@ -186,6 +178,18 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         variableIdList.add(variableId);
         
         return visitChildren(ctx); 
+    }
+    
+    @Override
+    public Integer visitParameterVariableId(ParameterVariableIdContext ctx) {
+    	String variableName = ctx.Identifier().toString();
+    	
+        SymTabEntry variableId = symTabStack.enterLocal(variableName);
+        variableId.setDefinition(VARIABLE);
+        
+        variableIdList.add(variableId);
+        
+    	return visitChildren(ctx);
     }
     
     @Override
@@ -294,6 +298,8 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     	SymTabEntry variableId = symTabStack.lookup(ctx.method().Identifier().toString());
     	variableId.setTypeSpec(type);
     	
+    	symTabStack.pop();
+    	
         return value;
     }
     
@@ -302,9 +308,9 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         String methodName = ctx.Identifier().toString();
         
         SymTabEntry methodId = symTabStack.enterLocal(methodName);
-        methodId.setDefinition(FUNCTION);
+        methodId.setDefinition(DefinitionImpl.FUNCTION);
+        methodId.setAttribute(ROUTINE_SYMTAB, symTabStack.push());
         
-        variableIdList.add(methodId);
         return visitChildren(ctx); 
     }
     
@@ -344,8 +350,15 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     	Integer value = visit(ctx.expression());
     	SymTabEntry variableId = symTabStack.lookup(ctx.expression().getText());
     	ctx.typeExpr = variableId.getTypeSpec();
-    	
     	return visit(ctx.expressionList());
+    }
+    
+    @Override
+    public Integer visitReturnStatement(ReturnStatementContext ctx) {
+    	Integer value = visitChildren(ctx.expression());
+    	SymTabEntry variableId = symTabStack.lookup(ctx.expression().getText());
+    	ctx.expression().typeExpr = variableId.getTypeSpec();
+    	return value;
     }
 }
 

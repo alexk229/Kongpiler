@@ -24,6 +24,11 @@ import static wci.intermediate.typeimpl.TypeKeyImpl.*;
 public class Predefined
 {
     // Predefined types.
+	public static TypeSpec localIntegerType;
+	public static TypeSpec localRealType;
+	public static TypeSpec localStringType;
+	public static TypeSpec localBoolType;
+	
     public static TypeSpec integerType;
     public static TypeSpec realType;
     public static TypeSpec complexType;
@@ -34,6 +39,11 @@ public class Predefined
     public static TypeSpec stringType;
 
     // Predefined identifiers.
+    public static SymTabEntry localIntegerId;
+    public static SymTabEntry localRealId;
+    public static SymTabEntry localStringId;
+    public static SymTabEntry localBoolId;
+    
     public static SymTabEntry voidId;
     public static SymTabEntry stringId;
     public static SymTabEntry integerId;
@@ -91,7 +101,31 @@ public class Predefined
         integerType.setIdentifier(integerId);
         integerId.setDefinition(DefinitionImpl.TYPE);
         integerId.setTypeSpec(integerType);
-
+        
+        localIntegerId = symTabStack.enterLocal("local integer");
+        localIntegerType = TypeFactory.createType(SCALAR);
+        localIntegerType.setIdentifier(localIntegerId);
+        localIntegerId.setDefinition(DefinitionImpl.TYPE);
+        localIntegerId.setTypeSpec(localIntegerType);
+        
+        localRealId = symTabStack.enterLocal("local real");
+        localRealType = TypeFactory.createType(SCALAR);
+        localRealType.setIdentifier(localRealId);
+        localRealId.setDefinition(DefinitionImpl.TYPE);
+        localRealId.setTypeSpec(localRealType);
+        
+        localStringId = symTabStack.enterLocal("local string");
+        localStringType = TypeFactory.createType(SCALAR);
+        localStringType.setIdentifier(localStringId);
+        localStringId.setDefinition(DefinitionImpl.TYPE);
+        localStringId.setTypeSpec(localStringType);
+        
+        localBoolId = symTabStack.enterLocal("local boolean");
+        localBoolType = TypeFactory.createType(SCALAR);
+        localBoolType.setIdentifier(localBoolId);
+        localBoolId.setDefinition(DefinitionImpl.TYPE);
+        localBoolId.setTypeSpec(localBoolType);
+        
         // Type real.
         realId = symTabStack.enterLocal("real");
         realType = TypeFactory.createType(SCALAR);

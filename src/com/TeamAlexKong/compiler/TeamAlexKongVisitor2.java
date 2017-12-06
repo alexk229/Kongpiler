@@ -1,55 +1,28 @@
 package com.TeamAlexKong.compiler;
 
-import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-
-import org.antlr.v4.runtime.tree.ParseTree;
 
 import com.TeamAlexKong.parser.HelloBaseVisitor;
 import com.TeamAlexKong.parser.HelloParser;
 import com.TeamAlexKong.parser.HelloParser.AddSubOneExprContext;
-import com.TeamAlexKong.parser.HelloParser.BlockContext;
-import com.TeamAlexKong.parser.HelloParser.BlockStatementContext;
-import com.TeamAlexKong.parser.HelloParser.BooleanConstContext;
 import com.TeamAlexKong.parser.HelloParser.ClassDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.CompilationUnitContext;
-import com.TeamAlexKong.parser.HelloParser.ConstructorDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.ElseStatementContext;
 import com.TeamAlexKong.parser.HelloParser.EqualityExprContext;
-import com.TeamAlexKong.parser.HelloParser.FloatingPointConstContext;
-import com.TeamAlexKong.parser.HelloParser.ForControlContext;
 import com.TeamAlexKong.parser.HelloParser.FormalParameterContext;
 import com.TeamAlexKong.parser.HelloParser.FunctionExprContext;
 import com.TeamAlexKong.parser.HelloParser.IfStatementContext;
-import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
-import com.TeamAlexKong.parser.HelloParser.IsExprContext;
-import com.TeamAlexKong.parser.HelloParser.IsOpContext;
-import com.TeamAlexKong.parser.HelloParser.LocalVariableDeclarationContext;
-import com.TeamAlexKong.parser.HelloParser.MethodDeclarationRestContext;
 import com.TeamAlexKong.parser.HelloParser.RelationalExprContext;
 import com.TeamAlexKong.parser.HelloParser.ReturnStatementContext;
-import com.TeamAlexKong.parser.HelloParser.StatementExpressionContext;
-import com.TeamAlexKong.parser.HelloParser.StringConstContext;
-import com.TeamAlexKong.parser.HelloParser.TypeArgumentContext;
 import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
-import com.TeamAlexKong.parser.HelloParser.VariableContext;
-import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorContext;
-import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorIdContext;
 import com.TeamAlexKong.parser.HelloParser.VariableExprContext;
-import com.TeamAlexKong.parser.HelloParser.VariableInitializerContext;
 import com.TeamAlexKong.parser.HelloParser.WhenConditionContext;
 import com.TeamAlexKong.parser.HelloParser.WhenEntryContext;
 import com.TeamAlexKong.parser.HelloParser.WhenStatementContext;
 import com.TeamAlexKong.parser.HelloParser.WhileStatementContext;
-import com.pcl2.parser.Pcl2Parser;
 
 import wci.intermediate.*;
 import wci.intermediate.symtabimpl.*;
-import wci.util.*;
-
-import static wci.intermediate.symtabimpl.SymTabKeyImpl.*;
-import static wci.intermediate.symtabimpl.DefinitionImpl.*;
 
 public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	
@@ -57,6 +30,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     private int labelNum;
     private int endIfLabelNum;
     private int whenLabelNum;
+    private boolean containsReturnType;
     String className;
     
     private String typeCheck(String typeName) {
@@ -76,15 +50,21 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     	String type = (typeExpr == Predefined.integerType) ? "I"
 				 : (typeExpr == Predefined.realType) ? "F"
 				 : (typeExpr == Predefined.stringType) ? "Ljava/lang/String;"		 
-				 :	"?";
+				 :	null;
     	return type;
     }
     
+    private boolean isGlobalVariable(TypeSpec typeExpr) {
+    	return (typeExpr == Predefined.integerType) 
+    			|| (typeExpr == Predefined.realType) 
+    			|| (typeExpr == Predefined.stringType);
+    }
+    
     private String typeCheckForReturn(TypeSpec typeExpr) {
-    	String type = (typeExpr == Predefined.integerType) ? "i"
-				 : (typeExpr == Predefined.realType) ? "f"
-				 : (typeExpr == Predefined.stringType) ? "a"		 
-				 :	"";
+    	String type = (typeExpr == Predefined.integerType ||  typeExpr ==  Predefined.localIntegerType) ? "i"
+				 : (typeExpr == Predefined.realType ||  typeExpr ==  Predefined.localRealType) ? "f"
+				 : (typeExpr == Predefined.stringType ||  typeExpr ==  Predefined.localStringType) ? "a"
+				 :	"?";
     	return type;
     }
 
@@ -109,6 +89,9 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	public Integer visitMethodDeclaration(HelloParser.MethodDeclarationContext ctx) { 
         String methodName = ctx.method().Identifier().getText();
         String type = "V";
+        
+        containsReturnType = false;
+        
         if(ctx.type() != null) {
         	String typeName = ctx.type().getText();
         	type = typeCheck(typeName);
@@ -121,6 +104,10 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         jFile.println();
         
         value = visitChildren(ctx.methodDeclarationRest());
+        
+        if(!containsReturnType) {
+        	jFile.println("\treturn");
+        }
         
         jFile.println();
         jFile.println(".limit locals 100");
@@ -161,6 +148,8 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 		Integer value = visit(ctx.expression());
 		String type = typeCheckForReturn(ctx.expression().typeExpr);
 		
+		containsReturnType = true;
+		
 		jFile.print("\t" + type + "return");
 		jFile.println();
 		
@@ -188,11 +177,17 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	public Integer visitVariableExpr(VariableExprContext ctx) {
         String variableName = ctx.variable().Identifier().toString();
         
-        String typeIndicator = typeCheckExpr(ctx.typeExpr);
+        String typeIndicator;
         
-        // Emit a field get instruction.
-        jFile.println("\tgetstatic\t" + className +
-                      "/" + variableName + " " + typeIndicator);
+        if(isGlobalVariable(ctx.typeExpr)) {
+            // Emit a field get instruction.
+        	typeIndicator = typeCheckExpr(ctx.typeExpr);
+            jFile.println("\tgetstatic\t" + className +
+                          "/" + variableName + " " + typeIndicator);
+        } else {
+        	typeIndicator = typeCheckForReturn(ctx.typeExpr);
+            jFile.println("\t" + typeIndicator + "load_0");
+        }
         
         return visitChildren(ctx); 
 	}

@@ -176,6 +176,18 @@ public class HelloBaseListener implements HelloListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterParameterVariableId(@NotNull HelloParser.ParameterVariableIdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitParameterVariableId(@NotNull HelloParser.ParameterVariableIdContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterForUpdate(@NotNull HelloParser.ForUpdateContext ctx) { }
 	/**
 	 * {@inheritDoc}

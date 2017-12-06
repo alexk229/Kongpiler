@@ -249,12 +249,16 @@ formalParameterDecls
     ;
     
 formalParameter
-    :   variableModifiers variableDeclaratorId ':' type
+    :   variableModifiers parameterVariableId ':' type
     ;
 
 lastFormalParameter
-    : variableModifier* type '...' variableDeclaratorId
+    : variableModifier* type '...' parameterVariableId
     ;
+    
+parameterVariableId
+	:	Identifier
+	;
 
 methodBody
     :   block

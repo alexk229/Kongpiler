@@ -156,6 +156,16 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitEnumBodyDeclarations(@NotNull HelloParser.EnumBodyDeclarationsContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link HelloParser#parameterVariableId}.
+	 * @param ctx the parse tree
+	 */
+	void enterParameterVariableId(@NotNull HelloParser.ParameterVariableIdContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#parameterVariableId}.
+	 * @param ctx the parse tree
+	 */
+	void exitParameterVariableId(@NotNull HelloParser.ParameterVariableIdContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link HelloParser#forUpdate}.
 	 * @param ctx the parse tree
 	 */

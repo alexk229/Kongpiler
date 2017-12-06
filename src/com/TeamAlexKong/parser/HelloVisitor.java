@@ -315,6 +315,12 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitLastFormalParameter(HelloParser.LastFormalParameterContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#parameterVariableId}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParameterVariableId(HelloParser.ParameterVariableIdContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#methodBody}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

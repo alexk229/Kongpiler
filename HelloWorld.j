@@ -16,7 +16,7 @@
 
 .method public static someFunctionA(ILjava/lang/String;)Ljava/lang/String;
 
-	getstatic	HelloWorld/someString Ljava/lang/String;
+	aload_0
 	areturn
 
 .limit locals 100
@@ -25,7 +25,7 @@
 
 .method public static someFunctionB(I)I
 
-	getstatic	HelloWorld/someInt I
+	iload_0
 	ireturn
 
 .limit locals 100
@@ -109,6 +109,7 @@ Label2:
 	invokestatic HelloWorld/someFunctionA(ILjava/lang/String;)Ljava/lang/String;
 	pop
 
+	return
 
 .limit locals 100
 .limit stack 100
