@@ -109,7 +109,6 @@ Label2:
 	invokestatic HelloWorld/someFunctionA(ILjava/lang/String;)Ljava/lang/String;
 	pop
 
-	return
 
 .limit locals 100
 .limit stack 100
