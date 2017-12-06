@@ -323,13 +323,17 @@ statement
     |   whileStatement
     |   'do' statement 'while' parExpression ';'
     |	whenStatement
-    |   'return' expression? ';'
+    |   returnStatement
     |   'break' Identifier? ';'
     |   ';'
     |   statementExpression ';'
     |	localVariableDeclarationStatement
     |   Identifier ':' statement
     ;
+    
+returnStatement
+	:	'return' expression? ';'
+;
     
 ifStatement
 	:	'if' parExpression statement elseStatement?

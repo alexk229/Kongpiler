@@ -13,6 +13,7 @@ import com.TeamAlexKong.parser.HelloParser.ConstructorBodyContext;
 import com.TeamAlexKong.parser.HelloParser.ConstructorDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.EqualityExprContext;
 import com.TeamAlexKong.parser.HelloParser.ExpressionContext;
+import com.TeamAlexKong.parser.HelloParser.ExpressionListContext;
 import com.TeamAlexKong.parser.HelloParser.FieldDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.FloatingPointConstContext;
 import com.TeamAlexKong.parser.HelloParser.FormalParameterContext;
@@ -343,7 +344,8 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     	Integer value = visit(ctx.expression());
     	SymTabEntry variableId = symTabStack.lookup(ctx.expression().getText());
     	ctx.typeExpr = variableId.getTypeSpec();
-    	return value;
+    	
+    	return visit(ctx.expressionList());
     }
 }
 

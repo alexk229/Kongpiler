@@ -9,6 +9,8 @@ import org.antlr.v4.runtime.tree.ParseTree;
 import com.TeamAlexKong.parser.HelloBaseVisitor;
 import com.TeamAlexKong.parser.HelloParser;
 import com.TeamAlexKong.parser.HelloParser.AddSubOneExprContext;
+import com.TeamAlexKong.parser.HelloParser.BlockContext;
+import com.TeamAlexKong.parser.HelloParser.BlockStatementContext;
 import com.TeamAlexKong.parser.HelloParser.BooleanConstContext;
 import com.TeamAlexKong.parser.HelloParser.ClassDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.CompilationUnitContext;
@@ -24,7 +26,9 @@ import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
 import com.TeamAlexKong.parser.HelloParser.IsExprContext;
 import com.TeamAlexKong.parser.HelloParser.IsOpContext;
 import com.TeamAlexKong.parser.HelloParser.LocalVariableDeclarationContext;
+import com.TeamAlexKong.parser.HelloParser.MethodDeclarationRestContext;
 import com.TeamAlexKong.parser.HelloParser.RelationalExprContext;
+import com.TeamAlexKong.parser.HelloParser.ReturnStatementContext;
 import com.TeamAlexKong.parser.HelloParser.StatementExpressionContext;
 import com.TeamAlexKong.parser.HelloParser.StringConstContext;
 import com.TeamAlexKong.parser.HelloParser.TypeArgumentContext;
@@ -72,7 +76,15 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     	String type = (typeExpr == Predefined.integerType) ? "I"
 				 : (typeExpr == Predefined.realType) ? "F"
 				 : (typeExpr == Predefined.stringType) ? "Ljava/lang/String;"		 
-				 :	"V";
+				 :	"?";
+    	return type;
+    }
+    
+    private String typeCheckForReturn(TypeSpec typeExpr) {
+    	String type = (typeExpr == Predefined.integerType) ? "i"
+				 : (typeExpr == Predefined.realType) ? "f"
+				 : (typeExpr == Predefined.stringType) ? "a"		 
+				 :	"";
     	return type;
     }
 
@@ -108,9 +120,8 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         jFile.println(")" + type);
         jFile.println();
         
-        value = visit(ctx.methodDeclarationRest());
+        value = visitChildren(ctx.methodDeclarationRest());
         
-        jFile.println("\treturn");
         jFile.println();
         jFile.println(".limit locals 100");
         jFile.println(".limit stack 100");
@@ -131,8 +142,29 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	public Integer visitFunctionExpr(FunctionExprContext ctx) {
 		String methodName = ctx.expression().getText();
 		String typeIndicator = typeCheckExpr(ctx.typeExpr);
-		jFile.println("\tinvokestatic " + className + "/" + methodName + "()" + typeIndicator);
-		return visit(ctx.expressionList());
+		String parameterTypes = "";
+		
+		for(int i = 0; i < ctx.expressionList().expression().size(); i++) {
+			parameterTypes += typeCheck(ctx.expressionList().expression(i).getText());
+		}
+		
+		Integer value = visit(ctx.expressionList());
+		
+		jFile.println("\tinvokestatic " + className + "/" + methodName + "(" +  parameterTypes + ")" + typeIndicator);
+		jFile.println("\tpop");
+		jFile.println();
+		return value;
+	}
+	
+	@Override
+	public Integer visitReturnStatement(ReturnStatementContext ctx) {
+		Integer value = visit(ctx.expression());
+		String type = typeCheckForReturn(ctx.expression().typeExpr);
+		
+		jFile.print("\t" + type + "return");
+		jFile.println();
+		
+		return value;
 	}
 	
 	@Override

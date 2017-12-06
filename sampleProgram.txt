@@ -9,12 +9,12 @@ class HelloWorld {
 		super();
 	}
 	
-	fun someFunctionA(something: Int): String {
-		
+	fun someFunctionA(something: Int, someString: String): String {
+		return someString;
 	}
 	
-	fun someFunction(something: Array<String>, some: Array<Int>, someInt: Int)  {
-		
+	fun someFunctionB(someInt: Int): Int {
+		return someInt;
 	}
 
 	fun main(args: Array<String>) {
@@ -37,6 +37,6 @@ class HelloWorld {
 				else -> someFloat = 13.2;
 			}
 		}
-		someFunctionA(someInt);
+		someFunctionA(someInt, someString);
 	}
 }

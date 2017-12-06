@@ -6,7 +6,7 @@ import java.net.URL;
 
 public class Main {
   
-  	String someVal = "HelloWorld";
+  	public static String someVal = "HelloWorld";
   	private static int someInt;
   	private static double someDouble;
 
@@ -15,12 +15,19 @@ public class Main {
 		while(someInt < 0) {
 			someInt++;
 		}
-		
-		function(someInt);
+		someFunction(someVal, someInt);
+	}
+	
+	public static String someFunction(String someString, int someInt) {
+		return someVal;
 	}
 	
 	public static int function(int num) {
 		return num;
+	}
+	
+	public static float functionFloat(float floater) {
+		return floater;
 	}
 
 }
