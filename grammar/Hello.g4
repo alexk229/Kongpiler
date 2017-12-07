@@ -323,7 +323,7 @@ variableModifiers
 statement
     : block
     |   ifStatement
-    |   'for' '(' forControl ')' statement
+    |   forLoopStatement
     |   whileStatement
     |   'do' statement 'while' parExpression ';'
     |	whenStatement
@@ -334,6 +334,10 @@ statement
     |	localVariableDeclarationStatement
     |   Identifier ':' statement
     ;
+    
+forLoopStatement
+	:	'for' '(' forControl ')' statement
+;
     
 returnStatement
 	:	'return' expression? ';'

@@ -111,11 +111,19 @@ WhenLabel1:
 	ldc 0.5F
 	putstatic	HelloWorld/aFloat F
 
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	ldc "number == 0"
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+
 	goto		WhenEnd1
 
 WhenLabel2:
 	ldc 1.0F
 	putstatic	HelloWorld/aFloat F
+
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	ldc "number == 1"
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
 	goto		WhenEnd1
 
@@ -123,13 +131,13 @@ WhenLabel3:
 	ldc 2.0F
 	putstatic	HelloWorld/aFloat F
 
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	ldc "number is neither 0 nor 1"
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+
 	goto		WhenEnd1
 
 WhenEnd1:
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	getstatic	HelloWorld/aFloat F
-	invokevirtual java/io/PrintStream/println(F)V
-
 	getstatic	HelloWorld/number I
 	iconst_1
 	iadd

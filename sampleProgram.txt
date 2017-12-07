@@ -37,11 +37,13 @@ public class HelloWorld {
 		
 		while(number < 3) {
 			when(number) {
-				0 -> aFloat = 0.5F;
-				1 -> aFloat = 1.0F;
-				else -> aFloat = 2.0F;
+				0 -> {	aFloat = 0.5F;
+						println("number == 0"); }
+				1 -> {	aFloat = 1.0F;
+						println("number == 1"); }
+				else -> { aFloat = 2.0F;
+						println("number is neither 0 nor 1"); }
 			}
-			println(aFloat);
 			number++;
 		}
 	}

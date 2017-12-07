@@ -620,6 +620,16 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitVariableAssignment(@NotNull HelloParser.VariableAssignmentContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link HelloParser#forLoopStatement}.
+	 * @param ctx the parse tree
+	 */
+	void enterForLoopStatement(@NotNull HelloParser.ForLoopStatementContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#forLoopStatement}.
+	 * @param ctx the parse tree
+	 */
+	void exitForLoopStatement(@NotNull HelloParser.ForLoopStatementContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code integerConst}
 	 * labeled alternative in {@link HelloParser#literal}.
 	 * @param ctx the parse tree
