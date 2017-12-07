@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import com.TeamAlexKong.parser.HelloBaseVisitor;
 import com.TeamAlexKong.parser.HelloParser.BooleanConstContext;
+import com.TeamAlexKong.parser.HelloParser.CharacterConstContext;
 import com.TeamAlexKong.parser.HelloParser.ClassDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.CompilationUnitContext;
 import com.TeamAlexKong.parser.HelloParser.ConstructorDeclarationContext;
@@ -144,7 +145,7 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
             typeIndicator += "I";
         }
         else if (typeName.indexOf("Float") >= 0) {
-            type = Predefined.localRealType;
+            type = Predefined.localFloatType;
             typeIndicator += "F";
         } 
         else if (typeName.indexOf("Bool") >= 0) {
@@ -208,7 +209,7 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
             typeIndicator += "I";
         }
         else if (typeName.indexOf("Float") >= 0) {
-            type = Predefined.realType;
+            type = Predefined.floatType;
             typeIndicator += "F";
         } 
         else if (typeName.indexOf("Bool") >= 0) {
@@ -281,7 +282,7 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
             typeIndicator += "I";
         }
         else if (typeName.indexOf("Float") >= 0) {
-            type = Predefined.realType;
+            type = Predefined.floatType;
             typeIndicator += "F";
         } 
         else if (typeName.indexOf("Bool") >= 0) {
@@ -322,7 +323,13 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     
     @Override
     public Integer visitFloatingPointConst(FloatingPointConstContext ctx) {
-    	ctx.typeExpr = Predefined.realType;
+    	ctx.typeExpr = Predefined.floatType;
+    	return visitChildren(ctx);
+    }
+    
+    @Override
+    public Integer visitCharacterConst(CharacterConstContext ctx) {
+    	ctx.typeExpr = Predefined.charType;
     	return visitChildren(ctx);
     }
     

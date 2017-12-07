@@ -8,16 +8,27 @@ import java.util.ArrayList;
 public class Main {
   
   	public static String someVal = "HelloWorld";
+  	public static String someString;
   	private static int someInt;
   	private static double someDouble;
   	private ArrayList<String> doubleList;
 
 	public static void main(String[] args) {
 		
-		while(someInt < 0) {
+		while(someInt < 13) {
 			someInt++;
 		}
-		someFunction(someVal, someInt);
+		
+		int index = 0;
+		if(index == 0) {
+			someInt++;
+		}
+		
+		if (someDouble < 13.23) {
+			someInt++;
+		}
+		
+		someString = someFunction(someVal, someInt);
 	}
 	
 	public static String someFunction(String someString, int someInt) {

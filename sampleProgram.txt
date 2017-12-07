@@ -1,4 +1,4 @@
-class HelloWorld {
+public class HelloWorld {
 
     private var someInt: Int = 0;
     private var someFloat: Float = 0;
@@ -14,7 +14,7 @@ class HelloWorld {
 	}
 	
 	fun someFunctionB(someInt: Int): Int {
-		return someInt;
+		return someFloat;
 	}
 
 	fun main(args: Array<String>) {
@@ -37,6 +37,6 @@ class HelloWorld {
 				else -> someFloat = 13.2;
 			}
 		}
-		someFunctionA(someInt, someString);
+		someString = someFunctionA(someInt, someString);
 	}
 }
