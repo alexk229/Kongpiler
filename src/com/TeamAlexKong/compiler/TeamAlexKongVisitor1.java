@@ -24,6 +24,7 @@ import com.TeamAlexKong.parser.HelloParser.ParameterVariableIdContext;
 import com.TeamAlexKong.parser.HelloParser.PrimaryExpContext;
 import com.TeamAlexKong.parser.HelloParser.ReturnStatementContext;
 import com.TeamAlexKong.parser.HelloParser.StringConstContext;
+import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorIdContext;
 import com.TeamAlexKong.parser.HelloParser.VariableDeclaratorsContext;
@@ -154,18 +155,20 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         	typeIndicator = "[";
         }
         
-        if (typeName.indexOf("Int") >= 0) {
+        if (typeName.indexOf(Literal.INT.toString()) >= 0) {
             type = Predefined.localIntegerType;
             typeIndicator += "I";
         }
-        else if (typeName.indexOf("Float") >= 0) {
+        else if (typeName.indexOf(Literal.FLOAT.toString()) >= 0) {
             type = Predefined.localFloatType;
             typeIndicator += "F";
-        } 
-        else if (typeName.indexOf("Bool") >= 0) {
+        } else if (typeName.indexOf(Literal.DOUBLE.toString()) >= 0) {
+        	type = Predefined.localDoubleType;
+        	typeIndicator += "D";
+        } else if (typeName.indexOf(Literal.BOOL.toString()) >= 0) {
             type = Predefined.localBoolType;
             typeIndicator += "Z";
-        } else if (typeName.indexOf("String") >= 0) {
+        } else if (typeName.indexOf(Literal.STRING.toString()) >= 0) {
         	type = Predefined.localStringType;
         	typeIndicator += "Ljava/lang/String;";
         }
@@ -182,6 +185,8 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         
     	return value;
     }
+    
+    
     
     @Override
     public Integer visitVariableDeclaratorId(VariableDeclaratorIdContext ctx) {
@@ -218,18 +223,20 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         	typeIndicator = "[";
         }
         
-        if (typeName.indexOf("Int") >= 0) {
+        if (typeName.indexOf(Literal.INT.toString()) >= 0) {
             type = isGlobalVariable ? Predefined.integerType : Predefined.localIntegerType;
             typeIndicator += "I";
         }
-        else if (typeName.indexOf("Float") >= 0) {
+        else if (typeName.indexOf(Literal.FLOAT.toString()) >= 0) {
             type = isGlobalVariable ? Predefined.floatType : Predefined.localFloatType;
             typeIndicator += "F";
-        } 
-        else if (typeName.indexOf("Bool") >= 0) {
+        } else if (typeName.indexOf(Literal.DOUBLE.toString()) >= 0) {
+        	type = isGlobalVariable ? Predefined.doubleType : Predefined.localDoubleType;
+        	typeIndicator += "D";
+        } else if (typeName.indexOf(Literal.BOOL.toString()) >= 0) {
             type = isGlobalVariable ? Predefined.booleanType : Predefined.localBoolType;
             typeIndicator += "Z";
-        } else if (typeName.indexOf("String") >= 0) {
+        } else if (typeName.indexOf(Literal.STRING.toString()) >= 0) {
         	type = isGlobalVariable ? Predefined.stringType : Predefined.localStringType;
         	typeIndicator += "Ljava/lang/String;";
         }
@@ -240,9 +247,10 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         
         for (SymTabEntry id : variableIdList) {
             id.setTypeSpec(type);
-            
             // Emit a field declaration.
-            if(isGlobalVariable) jFile.print(".field private static " + id.getName() + " " + typeIndicator);
+            if(isGlobalVariable) {
+            	jFile.print(".field private static " + id.getName() + " " + typeIndicator);
+            }
         }
         
         return visitChildren(ctx);
@@ -266,7 +274,9 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     	String variableName = ctx.variable().Identifier().toString();
     	SymTabEntry variableId = symTabStack.lookup(variableName);
     	
-    	ctx.typeExpr = variableId.getTypeSpec();
+    	if(variableId != null) {
+    		ctx.typeExpr = variableId.getTypeSpec();
+    	}
     	
     	return visitChildren(ctx); 
     }
@@ -290,18 +300,20 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         	typeIndicator = "[";
         }
         
-        if (typeName.indexOf("Int") >= 0) {
+        if (typeName.indexOf(Literal.INT.toString()) >= 0) {
             type = Predefined.integerType;
             typeIndicator += "I";
         }
-        else if (typeName.indexOf("Float") >= 0) {
+        else if (typeName.indexOf(Literal.FLOAT.toString()) >= 0) {
             type = Predefined.floatType;
             typeIndicator += "F";
-        } 
-        else if (typeName.indexOf("Bool") >= 0) {
+        } else if (typeName.indexOf(Literal.DOUBLE.toString()) >= 0) {
+        	type = Predefined.doubleType;
+        	typeIndicator += "D";
+        } else if (typeName.indexOf(Literal.BOOL.toString()) >= 0) {
             type = Predefined.booleanType;
             typeIndicator += "Z";
-        } else if (typeName.indexOf("String") >= 0) {
+        } else if (typeName.indexOf(Literal.STRING.toString()) >= 0) {
         	type = Predefined.stringType;
         	typeIndicator += "Ljava/lang/String;";
         } else {
@@ -348,7 +360,11 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     
     @Override
     public Integer visitFloatingPointConst(FloatingPointConstContext ctx) {
-    	ctx.typeExpr = Predefined.floatType;
+		if(ctx.getText().indexOf("F") >= 0) {
+			ctx.typeExpr = Predefined.floatType;
+		} else {
+			ctx.typeExpr = Predefined.doubleType;
+		}
     	return visitChildren(ctx);
     }
     
@@ -381,8 +397,14 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     public Integer visitFunctionExpr(FunctionExprContext ctx) {
     	Integer value = visit(ctx.expression());
     	SymTabEntry variableId = symTabStack.lookup(ctx.expression().getText());
-    	ctx.typeExpr = variableId.getTypeSpec();
-    	return visit(ctx.expressionList());
+    	if(variableId != null) {
+    		ctx.typeExpr = variableId.getTypeSpec();
+    	}
+    	if(ctx.expressionList() != null) {
+    		return visit(ctx.expressionList());
+    	} else {
+    		return null;
+    	}
     }
     
     @Override

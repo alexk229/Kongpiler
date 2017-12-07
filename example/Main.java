@@ -16,6 +16,8 @@ public class Main {
 
 	public static void main(String[] args) {
 		
+		someDouble = 13.2;
+		
 		someFloat = 13.3F;
 		
 		int num = 32;
@@ -41,16 +43,8 @@ public class Main {
 		String aString = "World";
 		int num = 32;
 		double num2 = 42;
+		System.out.println(someDouble);
 		num2 = 1 % 2;
 		return someVal;
 	}
-	
-	public static int function(int num) {
-		return 1 + 2 + 3 + 4 / 5;
-	}
-	
-	public static int functionFloat(float floater, int integer) {
-		return integer;
-	}
-
 }

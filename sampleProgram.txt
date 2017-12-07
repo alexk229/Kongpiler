@@ -1,40 +1,48 @@
 public class HelloWorld {
 
     private var number: Int = 12;
-    private var someFloat: Float;
-    private var someString: String = "Hello World";
-    private var someArray: Array<Int>;
+    private var aFloat: Float;
+    private var aDouble: Double;
+    var text: String = "Hello";
 	
-	fun someFunctionA(something: Int, someStringA: String): String {
-		var simpleString: String = "Hello";
-		someStringA = "Hello";
-		return simpleString;
+	fun getStr(index: Int): String {
+		if(number < 0) {
+			return "Hello";
+		} else if(number > 0) {
+			return "Hi";
+		} 
+		return "?";
 	}
 	
-	fun calculate(num: Int): Int {
-		return 1 + 2 + 3 + 4 / 5;
+	fun calculateNum(): Int {
+		return 1 + 2 + 3 + 4 / 5 - 4;
+	}
+	
+	fun calculateDouble(): Double {
+		return 1.2 + 1.3 * 1.4;
 	}
 
 	fun main(args: Array<String>) {
-		number = 0;
-		someFloat = 13.2F;
-
-		if(number < 0) {
-			someFloat = 13.0F;
-		} else if(number > 0) {
-			someFloat = 13.1F;
-		} else {
-			someFloat = 13.2F;
-		}
+		
+		number = calculateNum();
+		aDouble = calculateDouble();
+		
+		println(number);
+		println(aDouble);
+		
+		text = getStr(number);
+		println(text);
+		
+		number = number - 1;
 		
 		while(number < 3) {
-			number++;
 			when(number) {
-				0 -> someFloat = 13.0F;
-				1 -> someFloat = 13.1F;
-				else -> someFloat = 13.2F;
+				0 -> aFloat = 0.5F;
+				1 -> aFloat = 1.0F;
+				else -> aFloat = 2.0F;
 			}
+			println(aFloat);
+			number++;
 		}
-		someString = someFunctionA(number, someString);
 	}
 }

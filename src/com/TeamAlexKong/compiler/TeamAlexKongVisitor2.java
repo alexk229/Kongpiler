@@ -92,8 +92,8 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         }
         
         jFile.println();
-        jFile.println(".limit locals 32");
-        jFile.println(".limit stack 32");
+        jFile.println(".limit locals 100");
+        jFile.println(".limit stack 100");
         jFile.println(".end method");
         
         isDeclaringLocalVariable = false;
@@ -117,13 +117,27 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 		String typeIndicator = typeCheckExpr(ctx.typeExpr);
 		String parameterTypes = "";
 		
-		for(int i = 0; i < ctx.expressionList().expression().size(); i++) {
-			parameterTypes += typeCheckExpr(ctx.expressionList().expression(i).typeExpr);
+		Integer value = null;
+		
+		if(ctx.expressionList() != null) {
+			for(int i = 0; i < ctx.expressionList().expression().size(); i++) {
+				parameterTypes += typeCheckExpr(ctx.expressionList().expression(i).typeExpr);
+			}
+			if(methodName.equals("println")) {
+				jFile.println("\tgetstatic java/lang/System/out Ljava/io/PrintStream;");
+				value = visit(ctx.expressionList());
+				jFile.println("\tinvokevirtual java/io/PrintStream/println(" + parameterTypes + ")V");
+				jFile.println();
+			} else {
+				value = visit(ctx.expressionList());
+			}
 		}
 		
-		Integer value = visit(ctx.expressionList());
+		if(!methodName.equals("println")) {
+			jFile.println("\tinvokestatic " + className + "/" + methodName + "(" +  parameterTypes + ")" + typeIndicator);
+		}
 		
-		jFile.println("\tinvokestatic " + className + "/" + methodName + "(" +  parameterTypes + ")" + typeIndicator);
+
 		return value;
 	}
 	
@@ -157,7 +171,9 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 		Integer value = null;
 		
 		if(isDeclaringLocalVariable) {
-			value = visit(ctx.variableInitializer());
+			if(ctx.variableInitializer() != null) {
+				value = visit(ctx.variableInitializer());
+			}
 			String type = typeCheckForVariable(ctx.variableType().getText());
 			jFile.println("\t" + type + "store_" + variableNameList.indexOf(variableName));
 		}
@@ -216,6 +232,8 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
   			  		&& ((type2 == Predefined.integerType) || (type2 == Predefined.localIntegerType));
         boolean floatMode   =    ((type1 == Predefined.floatType) || (type1 == Predefined.localFloatType))
 				  	&& ((type1 == Predefined.floatType) || (type1 == Predefined.localFloatType));
+        boolean doubleMode   =    ((type1 == Predefined.doubleType) || (type1 == Predefined.localDoubleType))
+				  	&& ((type1 == Predefined.doubleType) || (type1 == Predefined.localDoubleType));
         
         String op = ctx.equalityOp().getText();
         String opcode;
@@ -223,10 +241,12 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         if (op.equals("==")) {
             opcode = integerMode ? "if_icmpeq"
                     : floatMode    ? "if_icmpeq"
+                    : doubleMode ? "if_icmpeq"
                     :               "f???";
         } else {
             opcode = integerMode ? "if_icmpne"
                     : floatMode    ? "if_icmpne"
+                    : doubleMode ? "if_icmpne"
                     :               "f???";
         }
         
@@ -245,9 +265,11 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         TypeSpec type2 = ctx.expression(1).typeExpr;
         
         boolean integerMode =    ((type1 == Predefined.integerType) || (type1 == Predefined.localIntegerType))
-        						&& ((type2 == Predefined.integerType) || (type2 == Predefined.localIntegerType));
+			  		&& ((type2 == Predefined.integerType) || (type2 == Predefined.localIntegerType));
         boolean floatMode   =    ((type1 == Predefined.floatType) || (type1 == Predefined.localFloatType))
-				  				&& ((type1 == Predefined.floatType) || (type1 == Predefined.localFloatType));
+			  		&& ((type1 == Predefined.floatType) || (type1 == Predefined.localFloatType));
+        boolean doubleMode   =    ((type1 == Predefined.doubleType) || (type1 == Predefined.localDoubleType))
+			  		&& ((type1 == Predefined.doubleType) || (type1 == Predefined.localDoubleType));
         
         String op = ctx.relationalOp().getText();
         String opcode;
@@ -255,10 +277,12 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         if (op.equals("<")) {
             opcode = integerMode ? "if_icmpge"
                     : floatMode    ? "if_icmpge"
+                    : doubleMode	? "if_icmpge"
                     :               "f???";
         } else {
             opcode = integerMode ? "if_icmple"
                     : floatMode    ? "if_icmple"
+                    : doubleMode ? "if_icmple"
                     :               "f???";
         }
         
@@ -276,9 +300,11 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 		
         boolean integerMode = (type == Predefined.integerType) || (type == Predefined.localIntegerType);
         boolean floatMode = (type == Predefined.floatType) || (type == Predefined.localIntegerType);
+        boolean doubleMode = (type == Predefined.doubleType) || (type == Predefined.localDoubleType);
         
         String typeIndicator = integerMode ? "I"
                 				: floatMode ? "F"
+                			    : doubleMode ? "D"
                 				: 			 "?";
         
         String op = ctx.addSubOneOp().getText();
@@ -295,7 +321,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         }
         
         // Emit an ++ or -- instruction.
-        jFile.println("\ticonst_1");
+        jFile.println("\t" + typeIndicator.toLowerCase() + "const_1");
         jFile.println("\t" + opcode);
         jFile.println("\tputstatic\t" + className
                 +  "/" + ctx.expression().getText()
@@ -312,9 +338,11 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         TypeSpec type2 = ctx.expression(1).typeExpr;
         
         boolean integerMode =    ((type1 == Predefined.integerType) || (type1 == Predefined.localIntegerType))
-                			  && ((type2 == Predefined.integerType) || (type2 == Predefined.localIntegerType));
+			  		&& ((type2 == Predefined.integerType) || (type2 == Predefined.localIntegerType));
         boolean floatMode   =    ((type1 == Predefined.floatType) || (type1 == Predefined.localFloatType))
-        					  && ((type1 == Predefined.floatType) || (type1 == Predefined.localFloatType));
+			  		&& ((type1 == Predefined.floatType) || (type1 == Predefined.localFloatType));
+        boolean doubleMode   =    ((type1 == Predefined.doubleType) || (type1 == Predefined.localDoubleType))
+			  		&& ((type1 == Predefined.doubleType) || (type1 == Predefined.localDoubleType));
         
         String op = ctx.additiveOp().getText();
         String opcode;
@@ -323,11 +351,13 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         case "+":
             opcode = integerMode ? "iadd"
                     : floatMode  ? "fadd"
+                    : doubleMode ? "dadd"
                     :              "f???";
         	break;
         case "-":
             opcode = integerMode ? "isub"
                     : floatMode  ? "fsub"
+                    : doubleMode ? "dadd"
                     :              "f???";
         	break;
         default:
@@ -349,9 +379,11 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         TypeSpec type2 = ctx.expression(1).typeExpr;
         
         boolean integerMode =    ((type1 == Predefined.integerType) || (type1 == Predefined.localIntegerType))
-                			  && ((type2 == Predefined.integerType) || (type2 == Predefined.localIntegerType));
+			  		&& ((type2 == Predefined.integerType) || (type2 == Predefined.localIntegerType));
         boolean floatMode   =    ((type1 == Predefined.floatType) || (type1 == Predefined.localFloatType))
-        					  && ((type1 == Predefined.floatType) || (type1 == Predefined.localFloatType));
+			  		&& ((type1 == Predefined.floatType) || (type1 == Predefined.localFloatType));
+        boolean doubleMode   =    ((type1 == Predefined.doubleType) || (type1 == Predefined.localDoubleType))
+			  		&& ((type1 == Predefined.doubleType) || (type1 == Predefined.localDoubleType));
         
         String op = ctx.multiplicativeOp().getText();
         String opcode;
@@ -360,11 +392,13 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         case "*":
             opcode = integerMode ? "imul"
                     : floatMode  ? "fmul"
+                    : doubleMode ? "dmul"
                     :              "f???";
         	break;
         case "/":
             opcode = integerMode ? "idiv"
                     : floatMode  ? "fdiv"
+                    : doubleMode ? "ddiv"
                     :              "f???";
         	break;
         default:
@@ -502,7 +536,11 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	
 	@Override
 	public Integer visitFloatingPointConst(FloatingPointConstContext ctx) {
-		jFile.println("\tldc " + ctx.getText());
+		if(ctx.getText().indexOf("F") >= 0) {
+			jFile.println("\tldc " + ctx.getText());
+		} else {
+			jFile.println("\tldc2_w " + ctx.getText());
+		}
 		return visitChildren(ctx);
 	}
 	
@@ -521,6 +559,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         
     	type += (typeName.indexOf(Literal.INT.toString()) >= 0) ? "I"
     			: (typeName.indexOf(Literal.FLOAT.toString()) >= 0) ? "F"
+    			: (typeName.indexOf(Literal.DOUBLE.toString()) >= 0) ? "D"
     		    : (typeName.indexOf(Literal.STRING.toString()) >= 0) ? "Ljava/lang/String;"
     		    : "?";
     	return type;
@@ -529,6 +568,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     private String typeCheckExpr(TypeSpec typeExpr) {
     	String type = (typeExpr == Predefined.integerType || typeExpr == Predefined.localIntegerType) ? "I"
 				 : (typeExpr == Predefined.floatType || typeExpr == Predefined.localFloatType) ? "F"
+				 : (typeExpr == Predefined.doubleType || typeExpr == Predefined.localDoubleType) ? "D" 
 				 : (typeExpr == Predefined.stringType || typeExpr == Predefined.localStringType) ? "Ljava/lang/String;"		 
 				 :	null;
     	return type;
@@ -537,18 +577,21 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     private boolean isGlobalVariable(TypeSpec typeExpr) {
     	return (typeExpr == Predefined.integerType) 
     			|| (typeExpr == Predefined.floatType) 
+    			|| (typeExpr == Predefined.doubleType)
     			|| (typeExpr == Predefined.stringType);
     }
     
     private boolean isLocalVariable(TypeSpec typeExpr) {
     	return (typeExpr == Predefined.localIntegerType)
     			|| (typeExpr == Predefined.localFloatType)
+    			|| (typeExpr == Predefined.localDoubleType)
     			|| (typeExpr == Predefined.localStringType);
     }
     
     private String typeCheckForVariable(TypeSpec typeExpr) {
     	String type = (typeExpr == Predefined.integerType ||  typeExpr ==  Predefined.localIntegerType) ? "i"
 				 : (typeExpr == Predefined.floatType ||  typeExpr ==  Predefined.localFloatType) ? "f"
+				 : (typeExpr == Predefined.doubleType || typeExpr == Predefined.localDoubleType) ? "d"
 				 : (typeExpr == Predefined.stringType ||  typeExpr ==  Predefined.localStringType) ? "a"
 				 :	"?";
     	return type;
@@ -557,6 +600,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     private String typeCheckForVariable(String typeName) {
     	String type = (typeName.indexOf(Literal.INT.toString()) >= 0) ? "i"
     				: (typeName.indexOf(Literal.FLOAT.toString()) >= 0) ? "f"
+    				: (typeName.indexOf(Literal.DOUBLE.toString()) >= 0) ? "d"
     	    		: (typeName.indexOf(Literal.STRING.toString()) >= 0) ? "a"
     	    		: "?";
     	return type;
