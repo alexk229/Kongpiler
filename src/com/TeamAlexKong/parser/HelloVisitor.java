@@ -539,6 +539,13 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitNewExpr(HelloParser.NewExprContext ctx);
 	/**
+	 * Visit a parse tree produced by the {@code thisExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitThisExpr(HelloParser.ThisExprContext ctx);
+	/**
 	 * Visit a parse tree produced by the {@code superIndentifierExpr}
 	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
@@ -637,13 +644,6 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInExpr(HelloParser.InExprContext ctx);
 	/**
-	 * Visit a parse tree produced by the {@code selfExpr}
-	 * labeled alternative in {@link HelloParser#expression}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitSelfExpr(HelloParser.SelfExprContext ctx);
-	/**
 	 * Visit a parse tree produced by the {@code tenaryOpExpr}
 	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
@@ -720,6 +720,18 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIdentifierExpr(HelloParser.IdentifierExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#multiplicativeOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitMultiplicativeOp(HelloParser.MultiplicativeOpContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#additiveOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitAdditiveOp(HelloParser.AdditiveOpContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#isOp}.
 	 * @param ctx the parse tree

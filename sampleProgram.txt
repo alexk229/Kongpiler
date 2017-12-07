@@ -1,43 +1,40 @@
 public class HelloWorld {
 
-    private var someInt: Int = 0;
-    private var someFloat: Float = 0;
+    private var number: Int = 12;
+    private var someFloat: Float;
     private var someString: String = "Hello World";
     private var someArray: Array<Int>;
 	
-	init() {
-		super();
+	fun someFunctionA(something: Int, someStringA: String): String {
+		var simpleString: String = "Hello";
+		someStringA = "Hello";
+		return simpleString;
 	}
 	
-	fun someFunctionA(something: Int, someString: String): String {
-		someString = "Hello";
-		return someString;
-	}
-	
-	fun someFunctionB(someInt: Int): Int {
-		return someFloat;
+	fun calculate(num: Int): Int {
+		return 1 + 2 + 3 + 4 / 5;
 	}
 
 	fun main(args: Array<String>) {
-		someInt = 0;
-		someFloat = 13.2;
+		number = 0;
+		someFloat = 13.2F;
 
-		if(someInt < 0) {
-			someFloat = 13.0;
-		} else if(someInt > 0) {
-			someFloat = 13.1;
+		if(number < 0) {
+			someFloat = 13.0F;
+		} else if(number > 0) {
+			someFloat = 13.1F;
 		} else {
-			someFloat = 13.2;
+			someFloat = 13.2F;
 		}
 		
-		while(someInt < 3) {
-			someInt++;
-			when(someInt) {
-				0 -> someFloat = 13.0;
-				1 -> someFloat = 13.1;
-				else -> someFloat = 13.2;
+		while(number < 3) {
+			number++;
+			when(number) {
+				0 -> someFloat = 13.0F;
+				1 -> someFloat = 13.1F;
+				else -> someFloat = 13.2F;
 			}
 		}
-		someString = someFunctionA(someInt, someString);
+		someString = someFunctionA(number, someString);
 	}
 }

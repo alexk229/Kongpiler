@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import com.TeamAlexKong.parser.HelloBaseVisitor;
+import com.TeamAlexKong.parser.HelloParser.AdditiveExprContext;
 import com.TeamAlexKong.parser.HelloParser.BooleanConstContext;
 import com.TeamAlexKong.parser.HelloParser.CharacterConstContext;
 import com.TeamAlexKong.parser.HelloParser.ClassDeclarationContext;
@@ -15,8 +16,10 @@ import com.TeamAlexKong.parser.HelloParser.FormalParameterContext;
 import com.TeamAlexKong.parser.HelloParser.FormalParameterDeclsContext;
 import com.TeamAlexKong.parser.HelloParser.FunctionExprContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
+import com.TeamAlexKong.parser.HelloParser.LocalVariableDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.MethodContext;
 import com.TeamAlexKong.parser.HelloParser.MethodDeclarationContext;
+import com.TeamAlexKong.parser.HelloParser.MultiplicativeExprContext;
 import com.TeamAlexKong.parser.HelloParser.ParameterVariableIdContext;
 import com.TeamAlexKong.parser.HelloParser.PrimaryExpContext;
 import com.TeamAlexKong.parser.HelloParser.ReturnStatementContext;
@@ -40,6 +43,7 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     private SymTabEntry programId;
     private ArrayList<SymTabEntry> variableIdList;
     private PrintWriter jFile;
+    private boolean isGlobalVariable;
     
     public TeamAlexKongVisitor1() {
     	symTabStack = SymTabFactory.createSymTabStack();
@@ -64,17 +68,13 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     @Override
     public Integer visitClassDeclaration(ClassDeclarationContext ctx) {
     	String className = ctx.Identifier().toString();
-    	String modifier = "";
-    	
-    	if(ctx.modifier(0) != null) {
-    		// Get modifier text
-    		modifier = ctx.modifier(0).getText();
-    	}
     	
         programId = symTabStack.enterLocal(className);
         programId.setDefinition(DefinitionImpl.PROGRAM);
         programId.setAttribute(ROUTINE_SYMTAB, symTabStack.push());
         symTabStack.setProgramId(programId);
+        
+        isGlobalVariable = true;
         
         // Create the assembly output file.
         try {
@@ -86,7 +86,7 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         }
         
         // Emit the program header.
-        jFile.println(".class " + modifier + " " + className);
+        jFile.println(".class public " + className);
         jFile.println(".super java/lang/Object");
 
         return visitChildren(ctx);
@@ -132,7 +132,15 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     		value = visit(ctx.variableInitializer());
     	}
     	
+    	jFile.println();
+    	
     	return value;
+    }
+    
+    @Override
+    public Integer visitLocalVariableDeclaration(LocalVariableDeclarationContext ctx) {
+    	isGlobalVariable = false;
+    	return visitChildren(ctx);
     }
     
     @Override
@@ -211,18 +219,18 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         }
         
         if (typeName.indexOf("Int") >= 0) {
-            type = Predefined.integerType;
+            type = isGlobalVariable ? Predefined.integerType : Predefined.localIntegerType;
             typeIndicator += "I";
         }
         else if (typeName.indexOf("Float") >= 0) {
-            type = Predefined.floatType;
+            type = isGlobalVariable ? Predefined.floatType : Predefined.localFloatType;
             typeIndicator += "F";
         } 
         else if (typeName.indexOf("Bool") >= 0) {
-            type = Predefined.booleanType;
+            type = isGlobalVariable ? Predefined.booleanType : Predefined.localBoolType;
             typeIndicator += "Z";
         } else if (typeName.indexOf("String") >= 0) {
-        	type = Predefined.stringType;
+        	type = isGlobalVariable ? Predefined.stringType : Predefined.localStringType;
         	typeIndicator += "Ljava/lang/String;";
         }
         else {
@@ -234,8 +242,7 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
             id.setTypeSpec(type);
             
             // Emit a field declaration.
-            jFile.print(".field private static " +
-                               id.getName() + " " + typeIndicator);
+            if(isGlobalVariable) jFile.print(".field private static " + id.getName() + " " + typeIndicator);
         }
         
         return visitChildren(ctx);
@@ -245,11 +252,11 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     public Integer visitVariableInitializer(VariableInitializerContext ctx) {
     	Integer value = visitChildren(ctx);
     	
-    	if(ctx.expression() != null) {
+    	if(ctx.expression() != null && isGlobalVariable) {
     		jFile.print(" = " + ctx.expression().getText());
     	}
     	
-    	jFile.println();
+    	isGlobalVariable = true;
     	
     	return value;
     }
@@ -305,8 +312,6 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     	SymTabEntry variableId = symTabStack.lookup(ctx.method().Identifier().toString());
     	variableId.setTypeSpec(type);
     	
-    	symTabStack.pop();
-    	
         return value;
     }
     
@@ -319,6 +324,20 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         methodId.setAttribute(ROUTINE_SYMTAB, symTabStack.push());
         
         return visitChildren(ctx); 
+    }
+    
+    @Override
+    public Integer visitAdditiveExpr(AdditiveExprContext ctx) {
+    	Integer value = visitChildren(ctx);
+    	ctx.typeExpr = ctx.expression(1).typeExpr;
+    	return value;
+    }
+    
+    @Override
+    public Integer visitMultiplicativeExpr(MultiplicativeExprContext ctx) {
+    	Integer value = visitChildren(ctx);
+    	ctx.typeExpr = ctx.expression(1).typeExpr;
+    	return value;
     }
     
     @Override
@@ -368,10 +387,11 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     
     @Override
     public Integer visitReturnStatement(ReturnStatementContext ctx) {
-    	Integer value = visitChildren(ctx.expression());
+    	Integer value = visitChildren(ctx);
     	SymTabEntry variableId = symTabStack.lookup(ctx.expression().getText());
-    	ctx.expression().typeExpr = variableId.getTypeSpec();
+    	if(variableId != null) {
+    		ctx.expression().typeExpr = variableId.getTypeSpec();
+    	}
     	return value;
     }
 }
-

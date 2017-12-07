@@ -236,6 +236,18 @@ public class HelloBaseListener implements HelloListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterAdditiveOp(@NotNull HelloParser.AdditiveOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitAdditiveOp(@NotNull HelloParser.AdditiveOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterRelationalExpr(@NotNull HelloParser.RelationalExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -476,6 +488,18 @@ public class HelloBaseListener implements HelloListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterMultiplicativeOp(@NotNull HelloParser.MultiplicativeOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitMultiplicativeOp(@NotNull HelloParser.MultiplicativeOpContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterEnumDeclaration(@NotNull HelloParser.EnumDeclarationContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -572,18 +596,6 @@ public class HelloBaseListener implements HelloListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterSelfExpr(@NotNull HelloParser.SelfExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
-	@Override public void exitSelfExpr(@NotNull HelloParser.SelfExprContext ctx) { }
-	/**
-	 * {@inheritDoc}
-	 *
-	 * <p>The default implementation does nothing.</p>
-	 */
 	@Override public void enterQualifiedNameList(@NotNull HelloParser.QualifiedNameListContext ctx) { }
 	/**
 	 * {@inheritDoc}
@@ -675,6 +687,18 @@ public class HelloBaseListener implements HelloListener {
 	 * <p>The default implementation does nothing.</p>
 	 */
 	@Override public void exitEnumConstantName(@NotNull HelloParser.EnumConstantNameContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void enterThisExpr(@NotNull HelloParser.ThisExprContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitThisExpr(@NotNull HelloParser.ThisExprContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

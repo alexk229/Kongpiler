@@ -206,6 +206,16 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitConstantDeclaratorRest(@NotNull HelloParser.ConstantDeclaratorRestContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link HelloParser#additiveOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterAdditiveOp(@NotNull HelloParser.AdditiveOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#additiveOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitAdditiveOp(@NotNull HelloParser.AdditiveOpContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code relationalExpr}
 	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree
@@ -412,6 +422,16 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitClassBody(@NotNull HelloParser.ClassBodyContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link HelloParser#multiplicativeOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterMultiplicativeOp(@NotNull HelloParser.MultiplicativeOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#multiplicativeOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitMultiplicativeOp(@NotNull HelloParser.MultiplicativeOpContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link HelloParser#enumDeclaration}.
 	 * @param ctx the parse tree
 	 */
@@ -493,18 +513,6 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitConstantExpression(@NotNull HelloParser.ConstantExpressionContext ctx);
-	/**
-	 * Enter a parse tree produced by the {@code selfExpr}
-	 * labeled alternative in {@link HelloParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void enterSelfExpr(@NotNull HelloParser.SelfExprContext ctx);
-	/**
-	 * Exit a parse tree produced by the {@code selfExpr}
-	 * labeled alternative in {@link HelloParser#expression}.
-	 * @param ctx the parse tree
-	 */
-	void exitSelfExpr(@NotNull HelloParser.SelfExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#qualifiedNameList}.
 	 * @param ctx the parse tree
@@ -589,6 +597,18 @@ public interface HelloListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitEnumConstantName(@NotNull HelloParser.EnumConstantNameContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code thisExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterThisExpr(@NotNull HelloParser.ThisExprContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code thisExpr}
+	 * labeled alternative in {@link HelloParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitThisExpr(@NotNull HelloParser.ThisExprContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link HelloParser#variableAssignment}.
 	 * @param ctx the parse tree

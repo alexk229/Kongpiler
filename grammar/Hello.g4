@@ -151,7 +151,7 @@ variableDeclarator
     ;
     
 variableAssignment
-	:	variable ('=' expression) ';'
+	:	expression ('=' expression) ';'
 	;
 
 constantDeclaratorsRest
@@ -406,7 +406,7 @@ constantExpression
 expression locals [ TypeSpec typeExpr = null ]
     :   primary		# primaryExp
     |   expression '.' Identifier	# identifierExpr
-    |   'self' '.' expression	# selfExpr
+    |   'this' '@' expression	# thisExpr
     |   expression '.' 'super' '(' expressionList? ')'	# superExprList
     |   expression '.' 'new' Identifier '(' expressionList? ')'	# newExpr
     |   expression '.' 'super' '.' Identifier arguments?	# superIndentifierExpr
@@ -416,8 +416,8 @@ expression locals [ TypeSpec typeExpr = null ]
     |   ('+'|'-'|'++'|'--') expression # unaryOpExpr
     |   ('~'|'!') expression	# notExpr
     |   '(' type ')' expression	# typeExpr
-    |   expression ('*'|'/'|'%') expression	# multiplicativeExpr
-    |   expression ('+'|'-') expression	# additiveExpr
+    |   expression multiplicativeOp expression	# multiplicativeExpr
+    |   expression additiveOp expression	# additiveExpr
     |   expression ('<' '<' | '>' '>' '>' | '>' '>') expression	# assignmentExpr
     |   expression relationalOp expression # relationalExpr
     |   expression 'instanceof' type	# instanceOfExpr
@@ -433,22 +433,30 @@ expression locals [ TypeSpec typeExpr = null ]
     |	('in' | '!in') expression	# inExpr
     |	variable	# variableExpr
     ;
+    
+multiplicativeOp
+	:	('*'|'/'|'%')
+	;
+    
+additiveOp
+	:	('+'|'-')
+	;
    
 isOp
 	:	('is' | '!is')
-;
+	;
     
 addSubOneOp
 	: ('++' | '--')
-;
+	;
     
 relationalOp
 	: ('<' '=' | '>' '=' | '>' | '<')
-;
+	;
     
 equalityOp
 	: ('==' | '!=')
-;
+	;
 
 primary
     :   '(' expression ')'

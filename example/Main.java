@@ -18,6 +18,8 @@ public class Main {
 		
 		someFloat = 13.3F;
 		
+		int num = 32;
+		
 		while(someInt < 13) {
 			someInt++;
 		}
@@ -35,11 +37,16 @@ public class Main {
 	}
 	
 	public static String someFunction(String someString, int someInt) {
+		someString = "Hello";
+		String aString = "World";
+		int num = 32;
+		double num2 = 42;
+		num2 = 1 % 2;
 		return someVal;
 	}
 	
 	public static int function(int num) {
-		return num;
+		return 1 + 2 + 3 + 4 / 5;
 	}
 	
 	public static int functionFloat(float floater, int integer) {
