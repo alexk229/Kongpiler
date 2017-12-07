@@ -13,8 +13,6 @@
 .limit locals 20
 .limit stack 20
 .end method
-	bipush 0
-	bipush 0
 
 .method public static someFunctionA(ILjava/lang/String;)Ljava/lang/String;
 
@@ -37,7 +35,6 @@
 .method public static main([Ljava/lang/String;)V
 
 	bipush 0
-	ldc 0
 	putstatic	HelloWorld/someInt I
 
 	ldc 13.2
@@ -111,7 +108,6 @@ Label2:
 	getstatic	HelloWorld/someString Ljava/lang/String;
 	invokestatic HelloWorld/someFunctionA(ILjava/lang/String;)Ljava/lang/String;
 
-	ldc someFunctionA(someInt,someString)
 	putstatic	HelloWorld/someString Ljava/lang/String;
 
 	return

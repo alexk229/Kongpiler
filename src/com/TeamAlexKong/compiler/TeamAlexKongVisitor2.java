@@ -11,6 +11,7 @@ import com.TeamAlexKong.parser.HelloParser.ClassDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.CompilationUnitContext;
 import com.TeamAlexKong.parser.HelloParser.ElseStatementContext;
 import com.TeamAlexKong.parser.HelloParser.EqualityExprContext;
+import com.TeamAlexKong.parser.HelloParser.FloatingPointConstContext;
 import com.TeamAlexKong.parser.HelloParser.FormalParameterContext;
 import com.TeamAlexKong.parser.HelloParser.FunctionExprContext;
 import com.TeamAlexKong.parser.HelloParser.IfStatementContext;
@@ -19,6 +20,7 @@ import com.TeamAlexKong.parser.HelloParser.RelationalExprContext;
 import com.TeamAlexKong.parser.HelloParser.ReturnStatementContext;
 import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
 import com.TeamAlexKong.parser.HelloParser.VariableExprContext;
+import com.TeamAlexKong.parser.HelloParser.VariableInitializerContext;
 import com.TeamAlexKong.parser.HelloParser.WhenConditionContext;
 import com.TeamAlexKong.parser.HelloParser.WhenEntryContext;
 import com.TeamAlexKong.parser.HelloParser.WhenStatementContext;
@@ -173,6 +175,11 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	}
 	
 	@Override
+	public Integer visitVariableInitializer(VariableInitializerContext ctx) {
+		return null;
+	}
+	
+	@Override
 	public Integer visitVariableAssignment(VariableAssignmentContext ctx) {
 		
 		Integer value = visit(ctx.expression());
@@ -180,7 +187,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 		String typeIndicator = typeCheckExpr(ctx.expression().typeExpr);
 								 
         // Emit a field put instruction.
-		jFile.println("\tldc " + ctx.expression().getText());
+		//jFile.println("\tldc " + ctx.expression().getText());
         jFile.println("\tputstatic\t" + className
                            +  "/" + ctx.variable().Identifier().toString()
                            + " " + typeIndicator);
@@ -425,6 +432,12 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	@Override
 	public Integer visitIntegerConst(IntegerConstContext ctx) {
 		jFile.println("\tbipush " + ctx.getText());
-		return super.visitIntegerConst(ctx);
+		return visitChildren(ctx);
+	}
+	
+	@Override
+	public Integer visitFloatingPointConst(FloatingPointConstContext ctx) {
+		jFile.println("\tldc " + ctx.getText());
+		return visitChildren(ctx);
 	}
 }

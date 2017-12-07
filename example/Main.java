@@ -11,9 +11,12 @@ public class Main {
   	public static String someString;
   	private static int someInt;
   	private static double someDouble;
+  	private static float someFloat;
   	private ArrayList<String> doubleList;
 
 	public static void main(String[] args) {
+		
+		someFloat = 13.3F;
 		
 		while(someInt < 13) {
 			someInt++;

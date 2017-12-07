@@ -28,7 +28,7 @@ importDeclaration
     ;
 
 typeDeclaration
-    :   modifier*
+    :   
         (   classDeclaration
         |   enumDeclaration
         )
@@ -36,7 +36,7 @@ typeDeclaration
     ;
 
 classDeclaration
-    :   'class' Identifier typeParameters? ('extends' type)?
+    :   modifier* 'class' Identifier typeParameters? ('extends' type)?
         (':' typeList)?
         classBody
     ;

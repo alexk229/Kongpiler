@@ -65,6 +65,10 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     public Integer visitClassDeclaration(ClassDeclarationContext ctx) {
     	String className = ctx.Identifier().toString();
     	
+    	if(ctx.modifier(0) != null) {
+    		
+    	}
+    	
         programId = symTabStack.enterLocal(className);
         programId.setDefinition(DefinitionImpl.PROGRAM);
         programId.setAttribute(ROUTINE_SYMTAB, symTabStack.push());
