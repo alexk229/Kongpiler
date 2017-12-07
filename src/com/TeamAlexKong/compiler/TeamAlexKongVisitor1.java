@@ -64,9 +64,11 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     @Override
     public Integer visitClassDeclaration(ClassDeclarationContext ctx) {
     	String className = ctx.Identifier().toString();
+    	String modifier = "";
     	
     	if(ctx.modifier(0) != null) {
-    		
+    		// Get modifier text
+    		modifier = ctx.modifier(0).getText();
     	}
     	
         programId = symTabStack.enterLocal(className);
@@ -84,7 +86,7 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         }
         
         // Emit the program header.
-        jFile.println(".class public " + className);
+        jFile.println(".class " + modifier + " " + className);
         jFile.println(".super java/lang/Object");
 
         return visitChildren(ctx);

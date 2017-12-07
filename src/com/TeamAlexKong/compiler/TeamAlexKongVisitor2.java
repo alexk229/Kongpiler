@@ -18,6 +18,7 @@ import com.TeamAlexKong.parser.HelloParser.IfStatementContext;
 import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
 import com.TeamAlexKong.parser.HelloParser.RelationalExprContext;
 import com.TeamAlexKong.parser.HelloParser.ReturnStatementContext;
+import com.TeamAlexKong.parser.HelloParser.StringConstContext;
 import com.TeamAlexKong.parser.HelloParser.VariableAssignmentContext;
 import com.TeamAlexKong.parser.HelloParser.VariableExprContext;
 import com.TeamAlexKong.parser.HelloParser.VariableInitializerContext;
@@ -438,6 +439,12 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	@Override
 	public Integer visitFloatingPointConst(FloatingPointConstContext ctx) {
 		jFile.println("\tldc " + ctx.getText());
+		return visitChildren(ctx);
+	}
+	
+	@Override
+	public Integer visitStringConst(StringConstContext ctx) {
+		jFile.println("\tldc " + '"' + ctx.getText() + '"');
 		return visitChildren(ctx);
 	}
 }

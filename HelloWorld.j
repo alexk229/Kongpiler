@@ -16,6 +16,9 @@
 
 .method public static someFunctionA(ILjava/lang/String;)Ljava/lang/String;
 
+	ldc ""Hello""
+	putstatic	HelloWorld/someString Ljava/lang/String;
+
 	aload_1
 	areturn
 
