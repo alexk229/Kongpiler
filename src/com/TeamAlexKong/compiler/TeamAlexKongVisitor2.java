@@ -631,7 +631,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 				 : (typeExpr == Predefined.floatType || typeExpr == Predefined.localFloatType) ? "F"
 				 : (typeExpr == Predefined.doubleType || typeExpr == Predefined.localDoubleType) ? "D" 
 				 : (typeExpr == Predefined.stringType || typeExpr == Predefined.localStringType) ? "Ljava/lang/String;"		 
-				 :	null;
+				 :	"V";
     	return type;
     }
     

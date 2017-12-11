@@ -1,0 +1,36 @@
+public class FunctionCalls {
+
+	var integerOne: Int = 12;
+	var integerTwo: Int = 24;
+	
+	var floatOne: Float = 0.4F;
+	var floatTwo: Float = 0.8F;
+	var floatSum: Float;
+	
+	fun calculateSum(numOne: Int, numTwo: Int): Int {
+		return numOne + numTwo;
+	}
+	
+	fun multiplicationOfFloats(floatNumOne: Float, floatNumTwo: Float): Float {
+		return floatNumOne * floatNumTwo * 1.6F;
+	}
+	
+	fun main(args: Array<String>) {
+	
+		//Pass by reference function calls
+	
+		var sum: Int = 0;
+		// sum = 12 + 24
+		sum = calculateSum(integerOne, integerTwo);
+		println(sum); // sum = 36
+		// sum = 36 + 12
+		sum = calculateSum(sum, integerOne);
+		println(sum); // sum = 48
+		
+		// floatSum = 0.4F * 0.8F * 1.6F = 0.512F
+		floatSum = multiplicationOfFloats(floatOne, floatTwo);
+		println(floatSum);
+		
+	}
+
+}
