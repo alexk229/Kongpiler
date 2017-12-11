@@ -83,6 +83,6 @@ WhenEnd0:
 Label0:
 	return
 
-.limit locals 100
-.limit stack 100
+.limit locals 2
+.limit stack 16
 .end method

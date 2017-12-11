@@ -11,20 +11,22 @@
 ForLoopLabel0:
 	iload_1
 	iload_2
-	if_icmpge Label0
+	if_icmpge EndForLoopLabel0
 	getstatic java/lang/System/out Ljava/io/PrintStream;
+	new java/lang/StringBuilder
+	dup
+	ldc "HelloWorld! "
+	invokenonvirtual java/lang/StringBuilder/<init>(Ljava/lang/String;)V
 	iload_1
-	invokevirtual java/io/PrintStream/println(I)V
-
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	ldc "Hello World!"
+	invokevirtual java/lang/StringBuilder/append(I)Ljava/lang/StringBuilder;
+	invokevirtual java/lang/StringBuilder/toString()Ljava/lang/String;
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
 	iinc 1 1
 	goto	ForLoopLabel0
-Label0:
+EndForLoopLabel0:
 	return
 
-.limit locals 100
-.limit stack 100
+.limit locals 32
+.limit stack 32
 .end method

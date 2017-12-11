@@ -19,8 +19,14 @@ WhileLoop0:
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
 	getstatic java/lang/System/out Ljava/io/PrintStream;
+	new java/lang/StringBuilder
+	dup
+	ldc "i = "
+	invokenonvirtual java/lang/StringBuilder/<init>(Ljava/lang/String;)V
 	iload_1
-	invokevirtual java/io/PrintStream/println(I)V
+	invokevirtual java/lang/StringBuilder/append(I)Ljava/lang/StringBuilder;
+	invokevirtual java/lang/StringBuilder/toString()Ljava/lang/String;
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
 	iload_1
 	iconst_1
@@ -31,6 +37,6 @@ WhileLoop0:
 Label0:
 	return
 
-.limit locals 100
-.limit stack 100
+.limit locals 2
+.limit stack 16
 .end method

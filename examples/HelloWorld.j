@@ -30,8 +30,8 @@ ElseLabel0:
 	ldc "?"
 	areturn
 
-.limit locals 100
-.limit stack 100
+.limit locals 32
+.limit stack 32
 .end method
 
 .method public static calculateNum()I
@@ -49,8 +49,8 @@ ElseLabel0:
 	isub
 	ireturn
 
-.limit locals 100
-.limit stack 100
+.limit locals 32
+.limit stack 32
 .end method
 
 .method public static calculateDouble()D
@@ -62,8 +62,8 @@ ElseLabel0:
 	dadd
 	dreturn
 
-.limit locals 100
-.limit stack 100
+.limit locals 32
+.limit stack 32
 .end method
 
 .method public static main([Ljava/lang/String;)V
@@ -71,8 +71,14 @@ ElseLabel0:
 	bipush 12
 	istore_1
 	getstatic java/lang/System/out Ljava/io/PrintStream;
+	new java/lang/StringBuilder
+	dup
+	ldc "num = "
+	invokenonvirtual java/lang/StringBuilder/<init>(Ljava/lang/String;)V
 	iload_1
-	invokevirtual java/io/PrintStream/println(I)V
+	invokevirtual java/lang/StringBuilder/append(I)Ljava/lang/StringBuilder;
+	invokevirtual java/lang/StringBuilder/toString()Ljava/lang/String;
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
 	invokestatic HelloWorld/calculateNum()I
 	putstatic	HelloWorld/number I
@@ -81,19 +87,37 @@ ElseLabel0:
 	putstatic	HelloWorld/aDouble D
 
 	getstatic java/lang/System/out Ljava/io/PrintStream;
+	new java/lang/StringBuilder
+	dup
+	ldc "num after calculateNum() = "
+	invokenonvirtual java/lang/StringBuilder/<init>(Ljava/lang/String;)V
 	getstatic	HelloWorld/number I
-	invokevirtual java/io/PrintStream/println(I)V
+	invokevirtual java/lang/StringBuilder/append(I)Ljava/lang/StringBuilder;
+	invokevirtual java/lang/StringBuilder/toString()Ljava/lang/String;
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
 	getstatic java/lang/System/out Ljava/io/PrintStream;
+	new java/lang/StringBuilder
+	dup
+	ldc "aDouble after calculateDouble() = "
+	invokenonvirtual java/lang/StringBuilder/<init>(Ljava/lang/String;)V
 	getstatic	HelloWorld/aDouble D
-	invokevirtual java/io/PrintStream/println(D)V
+	invokevirtual java/lang/StringBuilder/append(D)Ljava/lang/StringBuilder;
+	invokevirtual java/lang/StringBuilder/toString()Ljava/lang/String;
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
 	getstatic	HelloWorld/number I
 	invokestatic HelloWorld/getStr(I)Ljava/lang/String;
 	putstatic	HelloWorld/text Ljava/lang/String;
 
 	getstatic java/lang/System/out Ljava/io/PrintStream;
+	new java/lang/StringBuilder
+	dup
+	ldc "text after getStr(number) = "
+	invokenonvirtual java/lang/StringBuilder/<init>(Ljava/lang/String;)V
 	getstatic	HelloWorld/text Ljava/lang/String;
+	invokevirtual java/lang/StringBuilder/append(Ljava/lang/String;)Ljava/lang/StringBuilder;
+	invokevirtual java/lang/StringBuilder/toString()Ljava/lang/String;
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
 	getstatic	HelloWorld/number I
@@ -162,11 +186,13 @@ ForLoopLabel0:
 	iload_3
 	if_icmpge EndForLoopLabel0
 	getstatic java/lang/System/out Ljava/io/PrintStream;
+	new java/lang/StringBuilder
+	dup
+	ldc "ForLoop statement: "
+	invokenonvirtual java/lang/StringBuilder/<init>(Ljava/lang/String;)V
 	iload_2
-	invokevirtual java/io/PrintStream/println(I)V
-
-	getstatic java/lang/System/out Ljava/io/PrintStream;
-	ldc "Hello World!"
+	invokevirtual java/lang/StringBuilder/append(I)Ljava/lang/StringBuilder;
+	invokevirtual java/lang/StringBuilder/toString()Ljava/lang/String;
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
 	iinc 2 1
@@ -174,6 +200,6 @@ ForLoopLabel0:
 EndForLoopLabel0:
 	return
 
-.limit locals 100
-.limit stack 100
+.limit locals 32
+.limit stack 32
 .end method

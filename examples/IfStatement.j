@@ -1,5 +1,8 @@
 .class public IfStatement
 .super java/lang/Object
+.field private static isFour Ljava/lang/String; = "i is 4"
+.field private static isLessThanFour Ljava/lang/String; = "i is less than 4"
+.field private static isGreaterThanFour Ljava/lang/String; = "i is greater than 4"
 
 
 .method public static main([Ljava/lang/String;)V
@@ -17,7 +20,7 @@ ForLoopLabel0:
 	if_icmpne	IfLabel0
 
 	getstatic java/lang/System/out Ljava/io/PrintStream;
-	ldc "i is 4"
+	getstatic	IfStatement/isFour Ljava/lang/String;
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
 	goto		ElseLabel0
@@ -28,14 +31,14 @@ IfLabel0:
 	if_icmpge	IfLabel1
 
 	getstatic java/lang/System/out Ljava/io/PrintStream;
-	ldc "i is less than 4"
+	getstatic	IfStatement/isLessThanFour Ljava/lang/String;
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
 	goto		ElseLabel0
 
 IfLabel1:
 	getstatic java/lang/System/out Ljava/io/PrintStream;
-	ldc "i is greater than 4"
+	getstatic	IfStatement/isGreaterThanFour Ljava/lang/String;
 	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
 
 ElseLabel0:
@@ -44,6 +47,6 @@ ElseLabel0:
 EndForLoopLabel0:
 	return
 
-.limit locals 100
-.limit stack 100
+.limit locals 32
+.limit stack 32
 .end method

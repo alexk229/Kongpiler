@@ -1,13 +1,17 @@
 class IfStatement {
+
+	var isFour: String = "i is 4";
+	var isLessThanFour: String = "i is less than 4";
+	var isGreaterThanFour: String = "i is greater than 4";
 	
 	fun main(args: Array<String>) {
 		for(i in 0 .. 10) {
 			if(i == 4) {
-				println("i is 4");
+				println(isFour);
 			} else if (i < 4) {
-				println("i is less than 4");
+				println(isLessThanFour);
 			} else {
-				println("i is greater than 4");
+				println(isGreaterThanFour);
 			}
 		}
 	}

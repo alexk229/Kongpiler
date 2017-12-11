@@ -2,8 +2,7 @@ public class ForLoop {
 
 	fun main(args: Array<String>) {
 		for(i in 5 .. 12) {
-			println(i);
-			println("Hello World!");
+			println("HelloWorld! " + i);
 		}
 	}
 }

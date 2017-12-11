@@ -26,16 +26,16 @@ public class HelloWorld {
 	
 		var num: Int = 12;
 		
-		println(num);
+		println("num = " + num);
 		
 		number = calculateNum();
 		aDouble = calculateDouble();
 		
-		println(number);
-		println(aDouble);
+		println("num after calculateNum() = " + number);
+		println("aDouble after calculateDouble() = " + aDouble);
 		
 		text = getStr(number);
-		println(text);
+		println("text after getStr(number) = " + text);
 		
 		number = number - 1;
 		
@@ -52,8 +52,7 @@ public class HelloWorld {
 		}
 		
 		for(i in 5 .. 12) {
-			println(i);
-			println("Hello World!");
+			println("ForLoop statement: " + i);
 		}
 	}
 }

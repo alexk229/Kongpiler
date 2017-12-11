@@ -14,8 +14,8 @@
 	iadd
 	ireturn
 
-.limit locals 100
-.limit stack 100
+.limit locals 2
+.limit stack 16
 .end method
 
 .method public static multiplicationOfFloats(FF)F
@@ -27,8 +27,8 @@
 	fmul
 	freturn
 
-.limit locals 100
-.limit stack 100
+.limit locals 2
+.limit stack 16
 .end method
 
 .method public static main([Ljava/lang/String;)V
@@ -64,6 +64,6 @@
 
 	return
 
-.limit locals 100
-.limit stack 100
+.limit locals 2
+.limit stack 16
 .end method

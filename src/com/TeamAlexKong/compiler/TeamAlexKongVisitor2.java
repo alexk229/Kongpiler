@@ -45,6 +45,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     private int whenLabelNum;
     private int forLoopLabelNum;
     private boolean containsReturnType;
+    private boolean isStringType;
     private ArrayList<String> variableNameList;
     private boolean isDeclaringLocalVariable;
     String className;
@@ -96,8 +97,8 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         }
         
         jFile.println();
-        jFile.println(".limit locals 100");
-        jFile.println(".limit stack 100");
+        jFile.println(".limit locals 32");
+        jFile.println(".limit stack 32");
         jFile.println(".end method");
         
         isDeclaringLocalVariable = false;
@@ -121,6 +122,8 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 		String typeIndicator = typeCheckExpr(ctx.typeExpr);
 		String parameterTypes = "";
 		
+		isStringType = false;
+		
 		Integer value = null;
 		
 		if(ctx.expressionList() != null) {
@@ -130,12 +133,14 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 				}
 				parameterTypes += typeCheckExpr(ctx.expressionList().expression(i).typeExpr);
 			}
-			if(methodName.equals("println")) {
+			if(methodName.equals("println") || methodName.equals("print")) {
 				jFile.println("\tgetstatic java/lang/System/out Ljava/io/PrintStream;");
 				value = visit(ctx.expressionList());
-				jFile.println("\tinvokevirtual java/io/PrintStream/println(" + parameterTypes + ")V");
+				parameterTypes = isStringType ? "Ljava/lang/String;" : parameterTypes;
+				jFile.println("\tinvokevirtual java/io/PrintStream/" + methodName + "(" + parameterTypes + ")V");
 				jFile.println();
-			} else {
+				}
+			else {
 				value = visit(ctx.expressionList());
 			}
 		}
@@ -353,9 +358,26 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	
 	@Override
 	public Integer visitAdditiveExpr(AdditiveExprContext ctx) {
-		Integer value = visitChildren(ctx);
-		
         TypeSpec type1 = ctx.expression(0).typeExpr;
+        
+        boolean stringMode   = 	  (type1 == Predefined.stringType) || (type1 == Predefined.localStringType);
+        
+        Integer value = null;
+        
+        if(stringMode) {
+			jFile.println("\tnew java/lang/StringBuilder");
+			jFile.println("\tdup");
+			value = visit(ctx.expression(0));
+			jFile.println("\tinvokenonvirtual java/lang/StringBuilder/<init>(Ljava/lang/String;)V");
+			value = visit(ctx.expression(1));
+			jFile.println("\tinvokevirtual java/lang/StringBuilder/append("+ typeCheckExpr(ctx.expression(1).typeExpr) + ")Ljava/lang/StringBuilder;");
+			jFile.println("\tinvokevirtual java/lang/StringBuilder/toString()Ljava/lang/String;");
+			isStringType = true;
+        	return value;
+        }
+		
+        value = visitChildren(ctx);
+        
         TypeSpec type2 = ctx.expression(1).typeExpr;
         
         boolean integerMode =    ((type1 == Predefined.integerType) || (type1 == Predefined.localIntegerType))
@@ -386,8 +408,11 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         	break;
         }
         
-        // Emit an +, - instruction.
-        jFile.println("\t" + opcode);
+        if(!opcode.equals("f???")) {
+            // Emit an +, - instruction.
+            jFile.println("\t" + opcode);
+            
+        }
         
         return value;
 	}

@@ -13,29 +13,35 @@ public class BasicArithmeticOp {
 		integerOne = 1;
 		integerTwo = 2;
 		integerThree = 3;
+		println("integerOne = " + integerOne);
+		println("integerTwo = " + integerTwo);
+		println("integerThree = " + integerThree);
 		
 		sumInt = integerOne + integerTwo + integerThree;
-		println(sumInt); // sumInt = 6
+		println("integerOne + integerTwo + integerThree = " + sumInt); // sumInt = 6
 		
 		sumInt = integerThree - integerTwo - integerOne;
-		println(sumInt); // sumInt = 0
+		println("integerThree - integerTwo - integerOne = " + sumInt); // sumInt = 0
 		
 		sumInt = integerThree * integerTwo - integerOne + integerThree / integerOne;
-		println(sumInt); // sumInt = 8
+		println("integerThree * integerTwo - integerOne + integerThree / integerOne = " + sumInt); // sumInt = 8
 		
 		var sumDouble: Double = 0.0;
 		
 		doubleOne = 1.5;
 		doubleTwo = 2.5;
 		
+		println("doubleOne = " + doubleOne);
+		println("doubleTwo = " + doubleTwo);
+		
 		sumDouble = doubleOne + doubleTwo;
-		println(sumDouble); // sumDouble = 4.0
+		println("doubleOne + doubleTwo = " + sumDouble); // sumDouble = 4.0
 		
 		sumDouble = doubleTwo - doubleOne;
-		println(sumDouble); // sumDouble = 1.0
+		println("doubleTwo - doubleOne = " + sumDouble); // sumDouble = 1.0
 		
 		sumDouble = doubleOne * 3.04 + 3.2 - 4.5 * 1.4 / 1.2;
-		println(sumDouble); // sumDoulbe = 2.51....
+		println("doubleOne * 3.04 + 3.2 - 4.5 * 1.4 / 1.2 = " + sumDouble); // sumDouble = 2.51....
 	}
 	
 }
