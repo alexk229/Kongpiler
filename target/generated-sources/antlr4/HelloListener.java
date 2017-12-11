@@ -824,6 +824,16 @@ public interface HelloListener extends ParseTreeListener {
 	 */
 	void exitElseStatement(@NotNull HelloParser.ElseStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link HelloParser#rangeOp}.
+	 * @param ctx the parse tree
+	 */
+	void enterRangeOp(@NotNull HelloParser.RangeOpContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link HelloParser#rangeOp}.
+	 * @param ctx the parse tree
+	 */
+	void exitRangeOp(@NotNull HelloParser.RangeOpContext ctx);
+	/**
 	 * Enter a parse tree produced by the {@code primaryExp}
 	 * labeled alternative in {@link HelloParser#expression}.
 	 * @param ctx the parse tree

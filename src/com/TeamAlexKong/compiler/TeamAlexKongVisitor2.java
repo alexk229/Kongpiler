@@ -12,6 +12,8 @@ import com.TeamAlexKong.parser.HelloParser.CompilationUnitContext;
 import com.TeamAlexKong.parser.HelloParser.ElseStatementContext;
 import com.TeamAlexKong.parser.HelloParser.EqualityExprContext;
 import com.TeamAlexKong.parser.HelloParser.FloatingPointConstContext;
+import com.TeamAlexKong.parser.HelloParser.ForControlContext;
+import com.TeamAlexKong.parser.HelloParser.ForLoopStatementContext;
 import com.TeamAlexKong.parser.HelloParser.FormalParameterContext;
 import com.TeamAlexKong.parser.HelloParser.FunctionExprContext;
 import com.TeamAlexKong.parser.HelloParser.IfStatementContext;
@@ -19,6 +21,7 @@ import com.TeamAlexKong.parser.HelloParser.IntegerConstContext;
 import com.TeamAlexKong.parser.HelloParser.LocalVariableDeclarationContext;
 import com.TeamAlexKong.parser.HelloParser.LocalVariableDeclarationStatementContext;
 import com.TeamAlexKong.parser.HelloParser.MultiplicativeExprContext;
+import com.TeamAlexKong.parser.HelloParser.RangeExprContext;
 import com.TeamAlexKong.parser.HelloParser.RelationalExprContext;
 import com.TeamAlexKong.parser.HelloParser.ReturnStatementContext;
 import com.TeamAlexKong.parser.HelloParser.StringConstContext;
@@ -40,6 +43,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
     private int labelNum;
     private int endIfLabelNum;
     private int whenLabelNum;
+    private int forLoopLabelNum;
     private boolean containsReturnType;
     private ArrayList<String> variableNameList;
     private boolean isDeclaringLocalVariable;
@@ -121,6 +125,9 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 		
 		if(ctx.expressionList() != null) {
 			for(int i = 0; i < ctx.expressionList().expression().size(); i++) {
+				if(ctx.expressionList().expression(i).getText().equals("i")) {
+					ctx.expressionList().expression(i).typeExpr = Predefined.localIntegerType;
+				}
 				parameterTypes += typeCheckExpr(ctx.expressionList().expression(i).typeExpr);
 			}
 			if(methodName.equals("println")) {
@@ -165,7 +172,10 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 	@Override
 	public Integer visitVariableDeclarator(VariableDeclaratorContext ctx) {
 		String variableName = ctx.variableDeclaratorId().Identifier().toString();
-		String typeName = ctx.variableType().getText();
+		String typeName = "";
+		if(ctx.variableType() != null) {
+			typeName = ctx.variableType().getText();
+		}
 		variableNameList.add(variableName);
 		
 		Integer value = null;
@@ -174,7 +184,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 			if(ctx.variableInitializer() != null) {
 				value = visit(ctx.variableInitializer());
 			}
-			String type = typeCheckForVariable(ctx.variableType().getText());
+			String type = typeCheckForVariable(typeName);
 			jFile.println("\t" + type + "store_" + variableNameList.indexOf(variableName));
 		}
 		
@@ -525,6 +535,47 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 		jFile.println(Label.IF.toString() + labelNum + ":");
 		labelNum++;
 		Integer value = visit(ctx.statement());
+		return value;
+	}
+	
+	@Override
+	public Integer visitForLoopStatement(ForLoopStatementContext ctx) {
+		Integer value = visitChildren(ctx);
+		jFile.println("\tiinc " + (variableNameList.size() - 2) + " 1");
+		jFile.println("\tgoto\t" + Label.FOR_LOOP + forLoopLabelNum);
+		jFile.println(Label.LABEL.toString() + labelNum + ":");
+		labelNum++;
+		forLoopLabelNum++;
+		return value;
+	}
+	
+	@Override
+	public Integer visitForControl(ForControlContext ctx) {
+		
+		variableNameList.add(ctx.variableDeclarator().variableDeclaratorId().Identifier().toString());
+		
+		Integer value = visit(ctx.expression());
+		
+		return value;
+	}
+	
+	@Override
+	public Integer visitRangeExpr(RangeExprContext ctx) {
+		
+		Integer value = visit(ctx.expression(0));
+	
+		jFile.println("\tistore_" + (variableNameList.size() - 1));
+		
+		value = visit(ctx.expression(1));
+		
+		variableNameList.add("rangeExpr" + forLoopLabelNum);
+		
+		jFile.println("\tistore_" + (variableNameList.size() - 1));
+		jFile.println(Label.FOR_LOOP.toString() + forLoopLabelNum + ":");
+		jFile.println("\tiload_" + (variableNameList.size() - 2));
+		jFile.println("\tiload_" + (variableNameList.size() - 1));
+		jFile.println("\tif_icmpge " + Label.LABEL + labelNum);
+		
 		return value;
 	}
 	

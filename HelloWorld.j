@@ -5,6 +5,8 @@
 .field private static aDouble D
 .field private static text Ljava/lang/String; = "Hello"
 
+
+
 .method public static getStr(I)Ljava/lang/String;
 
 	getstatic	HelloWorld/number I
@@ -65,6 +67,12 @@ ElseLabel0:
 .end method
 
 .method public static main([Ljava/lang/String;)V
+
+	bipush 12
+	istore_1
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	iload_1
+	invokevirtual java/io/PrintStream/println(I)V
 
 	invokestatic HelloWorld/calculateNum()I
 	putstatic	HelloWorld/number I
@@ -145,6 +153,25 @@ WhenEnd1:
 	goto		WhileCompare1
 
 Label1:
+	bipush 5
+	istore_2
+	bipush 12
+	istore_3
+ForLoopLabel0:
+	iload_2
+	iload_3
+	if_icmpge Label3
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	iload_2
+	invokevirtual java/io/PrintStream/println(I)V
+
+	getstatic java/lang/System/out Ljava/io/PrintStream;
+	ldc "Hello World!"
+	invokevirtual java/io/PrintStream/println(Ljava/lang/String;)V
+
+	iinc 2 1
+	goto	ForLoopLabel0
+Label3:
 	return
 
 .limit locals 100

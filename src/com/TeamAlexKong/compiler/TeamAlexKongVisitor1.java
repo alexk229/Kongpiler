@@ -127,7 +127,9 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
     public Integer visitVariableDeclarator(VariableDeclaratorContext ctx) {
     	Integer value = visit(ctx.variableDeclaratorId());
     	
-    	value = visit(ctx.variableType());
+    	if (ctx.variableType() != null) {
+        	value = visit(ctx.variableType());
+    	}
     	
     	if(ctx.variableInitializer() != null) {
     		value = visit(ctx.variableInitializer());

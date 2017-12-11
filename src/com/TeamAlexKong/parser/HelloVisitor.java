@@ -435,6 +435,12 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStatement(HelloParser.StatementContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link HelloParser#forLoopStatement}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitForLoopStatement(HelloParser.ForLoopStatementContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link HelloParser#returnStatement}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
@@ -720,6 +726,12 @@ public interface HelloVisitor<T> extends ParseTreeVisitor<T> {
 	 * @return the visitor result
 	 */
 	T visitIdentifierExpr(HelloParser.IdentifierExprContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link HelloParser#rangeOp}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitRangeOp(HelloParser.RangeOpContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link HelloParser#multiplicativeOp}.
 	 * @param ctx the parse tree

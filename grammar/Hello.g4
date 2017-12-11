@@ -381,7 +381,7 @@ forInit
     ;
 
 enhancedForControl
-    :   variableModifiers type Identifier 'in' expression
+    :   variableModifiers Identifier ':' type 'in' expression
     ;
 
 forUpdate
@@ -432,11 +432,15 @@ expression locals [ TypeSpec typeExpr = null ]
     |   expression '&&' expression # logicalAndExpr
     |   expression '||' expression # logicalOrExpr
     |   expression '?' expression ':' expression # tenaryOpExpr
-    |	expression ('..') expression # rangeExpr
+    |	expression rangeOp expression # rangeExpr
     |	expression isOp expression	# isExpr
     |	('in' | '!in') expression	# inExpr
     |	variable	# variableExpr
     ;
+    
+rangeOp
+	:	('..')
+	;
     
 multiplicativeOp
 	:	('*'|'/'|'%')

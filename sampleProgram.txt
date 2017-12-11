@@ -23,6 +23,10 @@ public class HelloWorld {
 	}
 
 	fun main(args: Array<String>) {
+	
+		var num: Int = 12;
+		
+		println(num);
 		
 		number = calculateNum();
 		aDouble = calculateDouble();
@@ -45,6 +49,11 @@ public class HelloWorld {
 						println("number is neither 0 nor 1"); }
 			}
 			number++;
+		}
+		
+		for(i in 5 .. 12) {
+			println(i);
+			println("Hello World!");
 		}
 	}
 }
