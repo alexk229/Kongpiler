@@ -1,0 +1,15 @@
+class IfStatement {
+	
+	fun main(args: Array<String>) {
+		for(i in 0 .. 10) {
+			if(i == 4) {
+				println("i is 4");
+			} else if (i < 4) {
+				println("i is less than 4");
+			} else {
+				println("i is greater than 4");
+			}
+		}
+	}
+	
+}

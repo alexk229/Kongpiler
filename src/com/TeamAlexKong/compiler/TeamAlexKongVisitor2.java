@@ -183,9 +183,9 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 		if(isDeclaringLocalVariable) {
 			if(ctx.variableInitializer() != null) {
 				value = visit(ctx.variableInitializer());
+				String type = typeCheckForVariable(typeName);
+				jFile.println("\t" + type + "store_" + variableNameList.indexOf(variableName));
 			}
-			String type = typeCheckForVariable(typeName);
-			jFile.println("\t" + type + "store_" + variableNameList.indexOf(variableName));
 		}
 		
 		return value;
@@ -249,20 +249,25 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         String opcode;
         
         if (op.equals("==")) {
-            opcode = integerMode ? "if_icmpeq"
-                    : floatMode    ? "if_icmpeq"
-                    : doubleMode ? "if_icmpeq"
+            opcode = integerMode ? "if_icmpne"
+                    : floatMode    ? "ifne"
+                    : doubleMode ? "ifne"
                     :               "f???";
         } else {
-            opcode = integerMode ? "if_icmpne"
-                    : floatMode    ? "if_icmpne"
-                    : doubleMode ? "if_icmpne"
+            opcode = integerMode ? "if_icmpeq"
+                    : floatMode    ? "ifeq"
+                    : doubleMode ? "ifeq"
                     :               "f???";
         }
         
+        if(doubleMode) {
+        	jFile.println("\tdcmpg");
+        } else if(floatMode) {
+        	jFile.println("\tfcmpg");
+        }
+        
         // Emit an == or != instruction.
-        jFile.println("\t" + opcode);
-        jFile.println();
+        jFile.print("\t" + opcode);
         
         return value; 
 	}
@@ -323,19 +328,25 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         if (op.equals("++")) {
             opcode = integerMode ? "iadd"
             		: floatMode	 ? "fadd"
+            		: doubleMode ? "dadd"
                     :               "f???";
         } else {
             opcode = integerMode ? "isub"
             		: floatMode	 ? "fsub"
+            	    : doubleMode ? "dsub"
                     :               "f???";
         }
         
         // Emit an ++ or -- instruction.
         jFile.println("\t" + typeIndicator.toLowerCase() + "const_1");
         jFile.println("\t" + opcode);
-        jFile.println("\tputstatic\t" + className
-                +  "/" + ctx.expression().getText()
-                + " " + typeIndicator);
+        if(isGlobalVariable(type)) {
+            jFile.println("\tputstatic\t" + className
+                    +  "/" + ctx.expression().getText()
+                    + " " + typeIndicator);
+        } else {
+        	jFile.println("\t" + typeIndicator.toLowerCase() + "store_" + variableNameList.indexOf(ctx.expression().getText()));
+        }
         
 		return value;
 	}
@@ -367,7 +378,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
         case "-":
             opcode = integerMode ? "isub"
                     : floatMode  ? "fsub"
-                    : doubleMode ? "dadd"
+                    : doubleMode ? "dsub"
                     :              "f???";
         	break;
         default:
@@ -543,8 +554,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 		Integer value = visitChildren(ctx);
 		jFile.println("\tiinc " + (variableNameList.size() - 2) + " 1");
 		jFile.println("\tgoto\t" + Label.FOR_LOOP + forLoopLabelNum);
-		jFile.println(Label.LABEL.toString() + labelNum + ":");
-		labelNum++;
+		jFile.println(Label.FOR_LOOP_END.toString() + forLoopLabelNum + ":");
 		forLoopLabelNum++;
 		return value;
 	}
@@ -574,7 +584,7 @@ public class TeamAlexKongVisitor2 extends HelloBaseVisitor<Integer> {
 		jFile.println(Label.FOR_LOOP.toString() + forLoopLabelNum + ":");
 		jFile.println("\tiload_" + (variableNameList.size() - 2));
 		jFile.println("\tiload_" + (variableNameList.size() - 1));
-		jFile.println("\tif_icmpge " + Label.LABEL + labelNum);
+		jFile.println("\tif_icmpge " + Label.FOR_LOOP_END + forLoopLabelNum);
 		
 		return value;
 	}

@@ -1,0 +1,18 @@
+public class WhenStatement {
+	
+	fun main(args: Array<String>) {
+		var i: Int = 0;
+		while(i < 12) {
+			when(i) {
+				0 ->	println("i is 0");
+				2 ->	println("i is 2");
+				4 ->	println("i is 4");
+				6 ->	println("i is 6");
+				8 ->	println("i is 8");
+				10 ->	println("i is 10");
+				else -> println("i is not an even number");
+			}
+			i++;
+		}
+	}
+}

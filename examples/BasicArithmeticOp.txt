@@ -1,0 +1,41 @@
+public class BasicArithmeticOp {
+	
+	private var integerOne: Int;
+	private var integerTwo: Int;
+	private var integerThree: Int;
+	
+	private var doubleOne: Double;
+	private var doubleTwo: Double;
+	
+	fun main(args: Array<String>) {
+		var sumInt: Int = 0;
+		
+		integerOne = 1;
+		integerTwo = 2;
+		integerThree = 3;
+		
+		sumInt = integerOne + integerTwo + integerThree;
+		println(sumInt); // sumInt = 6
+		
+		sumInt = integerThree - integerTwo - integerOne;
+		println(sumInt); // sumInt = 0
+		
+		sumInt = integerThree * integerTwo - integerOne + integerThree / integerOne;
+		println(sumInt); // sumInt = 8
+		
+		var sumDouble: Double = 0.0;
+		
+		doubleOne = 1.5;
+		doubleTwo = 2.5;
+		
+		sumDouble = doubleOne + doubleTwo;
+		println(sumDouble); // sumDouble = 4.0
+		
+		sumDouble = doubleTwo - doubleOne;
+		println(sumDouble); // sumDouble = 1.0
+		
+		sumDouble = doubleOne * 3.04 + 3.2 - 4.5 * 1.4 / 1.2;
+		println(sumDouble); // sumDoulbe = 2.51....
+	}
+	
+}

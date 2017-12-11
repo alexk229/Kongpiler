@@ -8,7 +8,8 @@ public enum Label {
 	WHILE_COMPARE("WhileCompare"),
 	IF("IfLabel"),
 	ELSE("ElseLabel"),
-	FOR_LOOP("ForLoopLabel")
+	FOR_LOOP("ForLoopLabel"),
+	FOR_LOOP_END("EndForLoopLabel")
     ;
 
     private final String text;

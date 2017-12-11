@@ -1,0 +1,11 @@
+class WhileLoop {
+	
+	fun main(args: Array<String>) {
+		var i: Int = 0;
+		while(i < 12) {
+			println("Hello World!");
+			println(i);
+			i++;
+		}
+	}
+}

@@ -199,6 +199,10 @@ public class TeamAlexKongVisitor1 extends HelloBaseVisitor<Integer> {
         
         variableIdList.add(variableId);
         
+        if(variableId.getName().equals("i")) {
+        	variableId.setTypeSpec(Predefined.localIntegerType);
+        }
+        
         return visitChildren(ctx); 
     }
     
